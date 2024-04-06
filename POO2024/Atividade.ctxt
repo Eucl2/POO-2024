@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Atividade
+comment0.text=\r\n\ Atividade\r\n
+comment1.params=
+comment1.target=Atividade()
+comment2.params=nome\ duracao\ calorias
+comment2.target=Atividade(java.lang.String,\ int,\ int)
+comment3.params=
+comment3.target=java.lang.String\ getNome()
+comment4.params=nome
+comment4.target=void\ setNome(java.lang.String)
+comment5.params=
+comment5.target=int\ getDuracao()
+comment6.params=duracao
+comment6.target=void\ setDuracao(int)
+comment7.params=
+comment7.target=int\ getCalorias()
+comment8.params=calorias
+comment8.target=void\ setCalorias(int)
+comment9.params=
+comment9.target=java.lang.String\ toString()
+numComments=10
