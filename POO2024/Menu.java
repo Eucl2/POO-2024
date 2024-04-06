@@ -1,6 +1,4 @@
- 
-
-/**
+ /**
  * Esta classe implementa um menu em modo texto.
  * 
  * @author JosÃ© Creissac Campos 
@@ -12,11 +10,13 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-public class Menu {
+public class Menu 
+{
     private List<String> opcoes;
     private int op;
 
-    public Menu(String[] opcoes) {
+    public Menu(String[] opcoes) 
+    {
         this.opcoes = Arrays.asList(opcoes);
         this.op = 0;
     }
@@ -25,7 +25,8 @@ public class Menu {
      * para apresentar o menu e ler uma opcao
      * 
      */
-    public void executa() {
+    public void executa() 
+    {
         do {
             showMenu();
             this.op = lerOpcao();
@@ -33,7 +34,8 @@ public class Menu {
     }
 
     /** Apresentar o menu */
-    private void showMenu() {
+    private void showMenu() 
+    {
         System.out.println("\n *** Menu *** ");
         for (int i = 0; i < this.opcoes.size(); i++) {
             System.out.print(i + 1);
@@ -44,7 +46,8 @@ public class Menu {
     }
 
     /** Ler uma opcao valida */
-    private int lerOpcao() {
+    private int lerOpcao() 
+    {
         int op;
         Scanner is = new Scanner(System.in);
 
@@ -62,7 +65,8 @@ public class Menu {
         return op;
     }
 
-    public int getOpcao() {
+    public int getOpcao() 
+    {
         return this.op;
     }
 }

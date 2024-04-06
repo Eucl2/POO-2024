@@ -2,7 +2,8 @@
 /**
  * Enum com os tipos de Atletas
  */
-public enum TipoAtleta {
+public enum TipoAtleta 
+{
     Amador,
     Profissional,
     Ocasional,

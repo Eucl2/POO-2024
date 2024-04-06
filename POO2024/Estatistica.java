@@ -1,9 +1,6 @@
 
 /**
- * Escreva a descrição da classe Estatistica aqui.
- * 
- * @author (seu nome) 
- * @version (número de versão ou data)
+ * Estatísticas gerais do programa
  */
 public class Estatistica
 {

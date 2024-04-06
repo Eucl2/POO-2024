@@ -1,48 +1,58 @@
 /**
  * Atividade
  */
-public class Atividade {
+public class Atividade 
+{
 
     private String nome;
     private double duracao;
     private int calorias;
 
-    public Atividade() {
+    public Atividade() 
+    {
         duracao=0;
     }
 
-    public Atividade(String nome, double duracao) {
+    public Atividade(String nome, double duracao) 
+    {
         nome = nome;
         duracao = duracao;
         
     }
 
-    public String getNome() {
+    public String getNome() 
+    {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(String nome) 
+    {
         this.nome = nome;
     }
 
-    public double getDuracao() {
+    public double getDuracao() 
+    {
         return duracao;
     }
 
-    public void setDuracao(double duracao) {
+    public void setDuracao(double duracao) 
+    {
         this.duracao = duracao;
     }
 
-    public int getCalorias() {
+    public int getCalorias() 
+    {
         return calorias;
     }
 
-    public void setCalorias(int calorias) {
+    public void setCalorias(int calorias) 
+    {
         this.calorias = calorias;
     }
     
     //a funçao nao esta a ser chamada 
-    public int calculoCalorias(Atividade atividade, Utilizador utilizador){
+    public int calculoCalorias(Atividade atividade, Utilizador utilizador)
+    {
         double peso_utilizador = utilizador.getPesoUtilizador();
         int freq_cardiaca_utilizador = utilizador.getFreqCardiacaUtilizador();
         double factor_utilizador = utilizador.getFactorUtilizador();
@@ -56,7 +66,8 @@ public class Atividade {
     }  
     
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return "Atividade{" +
                 "Nome='" + nome + '\'' +
                 ", Duracao=" + duracao +

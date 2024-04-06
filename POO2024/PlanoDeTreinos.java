@@ -2,47 +2,57 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PlanoDeTreinos {
+public class PlanoDeTreinos 
+{
 
     private Date data;
     private List<Atividade> listaAtividades;
 
-    public PlanoDeTreinos() {
+    public PlanoDeTreinos() 
+    {
         this.data = new Date();
         this.listaAtividades = new ArrayList<>();
     }
 
-    public PlanoDeTreinos(Date data, List<Atividade> listaAtividades) {
+    public PlanoDeTreinos(Date data, List<Atividade> listaAtividades) 
+    {
         this.data = data;
         this.listaAtividades = listaAtividades;
     }
 
-    public Date getData() {
+    public Date getData() 
+    {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Date data) 
+    {
         this.data = data;
     }
 
-    public List<Atividade> getListaAtividades() {
+    public List<Atividade> getListaAtividades() 
+    {
         return listaAtividades;
     }
 
-    public void setListaAtividades(List<Atividade> listaAtividades) {
+    public void setListaAtividades(List<Atividade> listaAtividades) 
+    {
         this.listaAtividades = listaAtividades;
     }
 
-    public void adicionarAtividade(Atividade atividade) {
+    public void adicionarAtividade(Atividade atividade) 
+    {
         this.listaAtividades.add(atividade);
     }
 
-    public void removerAtividade(Atividade atividade) {
+    public void removerAtividade(Atividade atividade) 
+    {
         this.listaAtividades.remove(atividade);
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return "Plano de Treinos{" +
                 "data=" + data +
                 ", listaAtividades=" + listaAtividades +

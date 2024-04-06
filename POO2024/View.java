@@ -1,9 +1,6 @@
 
 /**
- * Escreva a descrição da classe View aqui.
- * 
- * @author (seu nome) 
- * @version (número de versão ou data)
+ * View
  */
 public class View
 {

@@ -1,8 +1,8 @@
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Utilizador {
+public class Utilizador 
+{
 
     private String nome_utilizador;
     private int id_utilizador;
@@ -15,7 +15,8 @@ public class Utilizador {
     private double peso_utilizador;
     private ArrayList<Atividade> historico_atividade;
 
-    public Utilizador() {
+    public Utilizador() 
+    {
         nome_utilizador = "";
         id_utilizador = 0;
         idade_utilizador = 0;
@@ -28,8 +29,12 @@ public class Utilizador {
         historico_atividade = new ArrayList<>();
     }
 
-    public Utilizador(String nome_u, int id_u, int idade_u, String morada_u, 
-        int freq_card_u, String email_u, String tipo_u, double factor_u, double peso_u, ArrayList<Atividade> historico_ati) {
+    public Utilizador(
+    String nome_u, int id_u, int idade_u, 
+    String morada_u, int freq_card_u, 
+    String email_u, String tipo_u, double factor_u, 
+    double peso_u, ArrayList<Atividade> historico_ati) 
+    {
         nome_utilizador = nome_u;
         id_utilizador = id_u;
         idade_utilizador = idade_u;
@@ -42,7 +47,8 @@ public class Utilizador {
         historico_atividade = historico_ati;
     }
 
-    public Utilizador(Utilizador u) {
+    public Utilizador(Utilizador u) 
+    {
         nome_utilizador = u.getNomeUtilizador();
         id_utilizador = u.getIdUtilizador();
         idade_utilizador = u.getIdadeUtilizador();
@@ -55,92 +61,114 @@ public class Utilizador {
         historico_atividade = u.getHistoricoAtividade();
     }
 
-    public String getNomeUtilizador() {
+    public String getNomeUtilizador() 
+    {
         return nome_utilizador;
     }
 
-    public void setNomeUtilizador(String nome_utilizador) {
+    public void setNomeUtilizador(String nome_utilizador) 
+    {
         this.nome_utilizador = nome_utilizador;
     }
 
-    public int getIdUtilizador() {
+    public int getIdUtilizador() 
+    {
         return id_utilizador;
     }
 
-    public void setIdUtilizador(int id_utilizador) {
+    public void setIdUtilizador(int id_utilizador) 
+    {
         this.id_utilizador = id_utilizador;
     }
 
-    public int getIdadeUtilizador() {
+    public int getIdadeUtilizador() 
+    {
         return idade_utilizador;
     }
 
-    public void setIdadeUtilizador(int idade_utilizador) {
+    public void setIdadeUtilizador(int idade_utilizador) 
+    {
         this.idade_utilizador= idade_utilizador;
     }
 
-    public String getMoradaUtilizador() {
+    public String getMoradaUtilizador() 
+    {
         return morada_utilizador;
     }
 
-    public void setMoradaUtilizador(String morada_utilizador) {
+    public void setMoradaUtilizador(String morada_utilizador) 
+    {
         this.morada_utilizador = morada_utilizador;
     }
 
-    public int getFreqCardiacaUtilizador() {
+    public int getFreqCardiacaUtilizador() 
+    {
         return freq_cardiaca_utilizador;
     }
 
-    public void setFreqCardiacaUtilizador(int freq_cardiaca_utilizador) {
+    public void setFreqCardiacaUtilizador(int freq_cardiaca_utilizador) 
+    {
         this.freq_cardiaca_utilizador= freq_cardiaca_utilizador;
     }
 
-    public String getEmailUtilizador() {
+    public String getEmailUtilizador() 
+    {
         return email_utilizador;
     }
 
-    public void setEmailUtilizador(String email_utilizador) {
+    public void setEmailUtilizador(String email_utilizador) 
+    {
         this.email_utilizador = email_utilizador;
     }
 
-    public String getTipoUtilizador() {
+    public String getTipoUtilizador() 
+    {
         return tipo_utilizador;
     }
 
-    public void setTipoUtilizador(String tipo_utilizador) {
+    public void setTipoUtilizador(String tipo_utilizador) 
+    {
         this.tipo_utilizador = tipo_utilizador;
     }
 
-    public double getFactorUtilizador() {
+    public double getFactorUtilizador() 
+    {
         return factor_utilizador;
     }
 
-    public void setFactorUtilizador(double factor_utilizador) {
+    public void setFactorUtilizador(double factor_utilizador) 
+    {
         this.factor_utilizador = factor_utilizador;
     }
     
-    public double getPesoUtilizador() {
+    public double getPesoUtilizador() 
+    {
         return peso_utilizador;
     }
     
-    public void setPesoUtilizador(double peso_utilizador) {
+    public void setPesoUtilizador(double peso_utilizador) 
+    {
         this.peso_utilizador= peso_utilizador;
     }
     
-    public ArrayList<Atividade> getHistoricoAtividade() {
+    public ArrayList<Atividade> getHistoricoAtividade() 
+    {
         return historico_atividade;
     }
     
-    public void setHistoricoAtividade(ArrayList<Atividade> historico_atividade) {
+    public void setHistoricoAtividade(ArrayList<Atividade> historico_atividade) 
+    {
         this.historico_atividade = historico_atividade;
     }
 
-    public Utilizador clone(){
+    public Utilizador clone()
+    {
         return new Utilizador(this);
     }
     
     @Override
-    public String toString() {
+    public String toString() 
+    {
         StringBuilder sb = new StringBuilder();
         sb.append("\nNome: ").append(this.nome_utilizador).append('\n').append("Id: ").append(this.id_utilizador)
                 .append('\n').append("Idade: ").append(this.idade_utilizador).append('\n').append("Morada: ")
