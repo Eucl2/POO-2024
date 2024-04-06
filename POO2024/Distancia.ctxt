@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=Distancia
-comment1.params=nome\ duracao\ calorias\ dist
-comment1.target=Distancia(java.lang.String,\ int,\ int,\ int)
+comment1.params=nome\ duracao\ dist
+comment1.target=Distancia(java.lang.String,\ int,\ double)
 comment2.params=d
 comment2.target=Distancia(Distancia)
 comment3.params=

@@ -1,21 +1,18 @@
-
-/**
- * Subclasse Distancia
- */
+ 
 import java.util.ArrayList;
 
 public class Distancia extends Atividade {
     private double distancia;
-
-    public Distancia(String nome, int duracao, int calorias, int dist) {
-        super(nome,duracao,calorias);
+    
+    public Distancia(String nome, int duracao, double dist) {
+        super(nome,duracao);
         distancia = dist;
 
     }
     
     public Distancia(Distancia d) {
-    super(d.getNome(), d.getDuracao(), d.getCalorias());
-    this.distancia = d.getDistancia();
+        super(d.getNome(), d.getDuracao());
+        this.distancia = d.getDistancia();
     }
 
     public double getDistancia() {

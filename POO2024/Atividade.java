@@ -1,20 +1,20 @@
-
 /**
  * Atividade
  */
 public class Atividade {
 
     private String nome;
-    private int duracao;
+    private double duracao;
     private int calorias;
 
     public Atividade() {
+        duracao=0;
     }
 
-    public Atividade(String nome, int duracao, int calorias) {
-        this.nome = nome;
-        this.duracao = duracao;
-        this.calorias = calorias;
+    public Atividade(String nome, double duracao) {
+        nome = nome;
+        duracao = duracao;
+        
     }
 
     public String getNome() {
@@ -25,11 +25,11 @@ public class Atividade {
         this.nome = nome;
     }
 
-    public int getDuracao() {
+    public double getDuracao() {
         return duracao;
     }
 
-    public void setDuracao(int duracao) {
+    public void setDuracao(double duracao) {
         this.duracao = duracao;
     }
 
@@ -40,13 +40,27 @@ public class Atividade {
     public void setCalorias(int calorias) {
         this.calorias = calorias;
     }
-
+    
+    //a funçao nao esta a ser chamada 
+    public int calculoCalorias(Atividade atividade, Utilizador utilizador){
+        double peso_utilizador = utilizador.getPesoUtilizador();
+        int freq_cardiaca_utilizador = utilizador.getFreqCardiacaUtilizador();
+        double factor_utilizador = utilizador.getFactorUtilizador();
+        double duracao_atividade = atividade.getDuracao();
+        
+        double calorias = (peso_utilizador * duracao_atividade) * (freq_cardiaca_utilizador / 100) * factor_utilizador;
+        
+        return (int) calorias;
+        
+    
+    }  
+    
     @Override
     public String toString() {
         return "Atividade{" +
-                "nome='" + nome + '\'' +
-                ", duracao=" + duracao +
-                ", calorias=" + calorias +
+                "Nome='" + nome + '\'' +
+                ", Duracao=" + duracao +
+                ", Calorias=" + calorias +
                 '}';
     }
 }
