@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Distancia_Altimetria
+comment1.params=nome\ duracao\ dist\ alt
+comment1.target=Distancia_Altimetria(java.lang.String,\ int,\ double,\ double)
+comment2.params=d
+comment2.target=Distancia_Altimetria(Distancia_Altimetria)
+comment3.params=
+comment3.target=double\ getDistancia()
+comment4.params=distancia
+comment4.target=void\ setDistancia(double)
+comment5.params=
+comment5.target=double\ getAltura()
+comment6.params=altura
+comment6.target=void\ setAltura(double)
+comment7.params=
+comment7.target=Distancia_Altimetria\ clone()
+numComments=8

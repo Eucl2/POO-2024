@@ -10,6 +10,9 @@ public class Controller
         
         String[] s = { "Criacao", "Pesquisa", "Editar", "Carregar Ficheiro", "Save", "Load" };
         Menu menu = new Menu(s);
+        menu.menuInicial();
+
+
         
 
     }

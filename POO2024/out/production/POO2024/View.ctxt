@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=View
+comment0.text=\r\n\ View\r\n
+comment1.params=
+comment1.target=View()
+comment1.text=\r\n\ COnstrutor\ para\ objetos\ da\ classe\ View\r\n
+comment2.params=y
+comment2.target=int\ sampleMethod(int)
+comment2.text=\r\n\ Exemplo\ de\ m\u00E9todo\ -\ substitua\ este\ coment\u00E1rio\ pelo\ seu\ pr\u00F3prio\r\n\ \r\n\ @param\ \ y\ \ \ exemplo\ de\ um\ par\u00E2metro\ de\ m\u00E9todo\r\n\ @return\ \ \ \ \ a\ soma\ de\ x\ com\ y\ \r\n
+numComments=3

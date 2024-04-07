@@ -18,19 +18,36 @@ public class Menu
     public Menu(String[] opcoes) 
     {
         this.opcoes = Arrays.asList(opcoes);
-        this.op = 0;
     }
 
     /**
      * para apresentar o menu e ler uma opcao
-     * 
      */
-    public void executa() 
+    public void menuInicial()
     {
-        do {
-            showMenu();
-            this.op = lerOpcao();
-        } while (this.op == -1);
+        showMenu();
+        lerOpcao();
+
+        switch(getOpcao()){
+            case 0:
+                System.out.println("Adeus!");
+            case 1:
+                this.menuCriacao();
+        }
+    }
+
+    public void menuCriacao()
+    {
+        showCriacao();
+        lerOpcao();
+        int valor = getOpcao();
+
+        switch(valor){
+            case 0:
+                menuInicial();
+
+
+        }
     }
 
     /** Apresentar o menu */
@@ -45,8 +62,17 @@ public class Menu
         System.out.println("0 - Sair");
     }
 
+    /**Criar Utilizadores, Atividades, Planos de treino */
+    private void showCriacao()
+    {
+        System.out.println("\n *** Criacao ***");
+        System.out.println("1 - Utilizador:");
+        System.out.println("2 - Atividades:");
+        System.out.println("3 - Planos de treino:");
+        System.out.println("0 - Voltar");
+    }
     /** Ler uma opcao valida */
-    private int lerOpcao() 
+    private void lerOpcao()
     {
         int op;
         Scanner is = new Scanner(System.in);
@@ -59,14 +85,18 @@ public class Menu
         }
         if (op < 0 || op > this.opcoes.size()) {
             System.out.println("Opcao invalida");
-            op = -1;
+            lerOpcao();
         }
 
-        return op;
+        setOpcao(op);
     }
 
     public int getOpcao() 
     {
         return this.op;
+    }
+
+    public void setOpcao(int op){
+        this.op = op;
     }
 }
