@@ -166,6 +166,29 @@ public class Utilizador
         return new Utilizador(this);
     }
     
+    public static Utilizador parse(String linha) 
+    {
+      String[] campo = linha.split(",");
+      if (campo.length != 7) 
+      {
+        throw new IllegalArgumentException("Input inválido.");
+      }
+    
+      int id = Integer.parseInt(campo[0]);
+      String nome = campo[1];
+      int idade = Integer.parseInt(campo[2]);
+      String email = campo[3];
+      String morada = campo[4];
+      int freq_cardiaca = Integer.parseInt(campo[5]);
+      TipoAtleta tipo = TipoAtleta.valueOf(campo[6]); 
+      double peso = Double.parseDouble(campo[7]);
+    
+      ArrayList t = null; //to change
+      ArrayList u = null; //to change
+    
+      return new Utilizador(id, nome, idade, peso, morada, email, freq_cardiaca, tipo, t, u); //to change
+    }
+    
     @Override
     public String toString() 
     {
