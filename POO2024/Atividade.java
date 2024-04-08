@@ -1,15 +1,15 @@
 /**
  * Atividade
  */
-public class Atividade 
+public abstract class Atividade 
 {
 
     private String nome;
     private double duracao;
-    private int calorias;
 
     public Atividade() 
     {
+        nome="";
         duracao=0;
     }
 
@@ -17,6 +17,13 @@ public class Atividade
     {
         nome = nome;
         duracao = duracao;
+        
+    }
+    
+    public Atividade(Atividade a) 
+    {
+        nome = getNome();
+        duracao = getDuracao();
         
     }
 
@@ -39,39 +46,18 @@ public class Atividade
     {
         this.duracao = duracao;
     }
-
-    public int getCalorias() 
-    {
-        return calorias;
-    }
-
-    public void setCalorias(int calorias) 
-    {
-        this.calorias = calorias;
-    }
     
-    //a funçao nao esta a ser chamada 
-    public int calculoCalorias(Atividade atividade, Utilizador utilizador)
-    {
-        double peso_utilizador = utilizador.getPesoUtilizador();
-        int freq_cardiaca_utilizador = utilizador.getFreqCardiacaUtilizador();
-        double factor_utilizador = utilizador.getFactorUtilizador();
-        double duracao_atividade = atividade.getDuracao();
-        
-        double calorias = (peso_utilizador * duracao_atividade) * (freq_cardiaca_utilizador / 100) * factor_utilizador;
-        
-        return (int) calorias;
-        
+    public abstract Atividade clone();
     
-    }  
+    
+    public abstract int calcularCalorias(Utilizador utilizador, int freq_cardiaca_atividade);
     
     @Override
     public String toString() 
     {
-        return "Atividade{" +
-                "Nome='" + nome + '\'' +
-                ", Duracao=" + duracao +
-                ", Calorias=" + calorias +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nAtividade: ").append(this.nome).append('\n').append("Duracao: ").append(this.duracao).append('\n');
+        
+        return sb.toString();
     }
 }

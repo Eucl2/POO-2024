@@ -1,21 +1,24 @@
  
 import java.util.ArrayList;
 
-public class Distancia extends Atividade 
+public class DistanciaAltimetria extends Atividade 
 {
     private double distancia;
+    private double altura;
     
-    public Distancia(String nome, double duracao, double dist) 
+    public DistanciaAltimetria(String nome, double duracao, double dist, double alt) 
     {
         super(nome,duracao);
         distancia = dist;
+        altura = alt;
 
     }
     
-    public Distancia(Distancia d) 
+    public DistanciaAltimetria(DistanciaAltimetria da) 
     {
-        super(d);
-        this.distancia = d.getDistancia();
+        super(da);
+        this.distancia = da.getDistancia();
+        this.altura = da.getAltura();
     }
 
     public double getDistancia() 
@@ -27,18 +30,28 @@ public class Distancia extends Atividade
     {
         this.distancia = distancia;
     }
-
-    public Distancia clone() 
-    {
-        return new Distancia(this);
+    
+    public double getAltura() {
+        return this.altura;
     }
+    
+    public void setAltura(double altura) 
+    {
+        this.altura= altura;
+    }
+
+    public DistanciaAltimetria clone() 
+    {
+        return new DistanciaAltimetria(this);
+    }
+    
     //to string da caracteristica da atividade
     public String extraCaracteristicas() {
-        return "Distancia: " + getDistancia();
+        return "Distancia: " + getDistancia() + "\n Altimetria: " + getAltura();
     }
     //nome do tipo de atividade 
     public String getTipoAtividade() {
-        return ("Distancia");
+        return ("Distancia_Altimetria");
     }
     
     public boolean equals(Object obj) {
@@ -46,8 +59,8 @@ public class Distancia extends Atividade
             return true;
         if (obj == null || obj.getClass() != this.getClass())
             return false;
-        Distancia d = (Distancia) obj;
-        return super.equals(d);
+        DistanciaAltimetria da = (DistanciaAltimetria) obj;
+        return super.equals(da);
 
     }
     
@@ -56,5 +69,4 @@ public class Distancia extends Atividade
         // Fórmula para calcular calorias para corrida
         return 0;
     }
-
 }

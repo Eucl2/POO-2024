@@ -1,0 +1,33 @@
+#BlueJ class context
+comment0.target=AtividadeRealizada
+comment0.text=\r\n\ AtividadeRealizada\r\n
+comment1.params=
+comment1.target=AtividadeRealizada()
+comment10.params=
+comment10.target=int\ getFrequenciaCardiacaAtividade()
+comment11.params=freq_cardiaca_atividade
+comment11.target=void\ setFrequenciaCardiacaAtividade(int)
+comment12.params=
+comment12.target=int\ getCalorias()
+comment13.params=calorias
+comment13.target=void\ setCalorias(int)
+comment14.params=
+comment14.target=java.lang.String\ toString()
+comment14.text=\r\n\ \ \ \ public\ int\ calculoCalorias(AtividadeRealizada\ atividade,\ Utilizador\ utilizador)\r\n\ \ \ \ {\r\n\ \ \ \ \ \ \ \ double\ peso_utilizador\ \=\ utilizador.getPesoUtilizador();\r\n\ \ \ \ \ \ \ \ int\ freq_cardiaca_utilizador\ \=\ utilizador.getFreqCardiacaUtilizador();\r\n\ \ \ \ \ \ \ \ double\ factor_utilizador\ \=\ utilizador.getFactorUtilizador();\r\n\ \ \ \ \ \ \ \ double\ duracao_atividade\ \=\ atividade.getDuracao();\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ \ \ \ \ double\ calorias\ \=\ (peso_utilizador\ *\ duracao_atividade)\ *\ (freq_cardiaca_utilizador\ /\ 100)\ *\ factor_utilizador;\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ \ \ \ \ return\ (int)\ calorias;\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ \r\n\ \ \ \ }\r\n
+comment2.params=data\ utilizador\ atividade\ freq_cardiaca_atividade
+comment2.target=AtividadeRealizada(java.time.LocalDate,\ Utilizador,\ Atividade,\ int)
+comment3.params=ar
+comment3.target=AtividadeRealizada(AtividadeRealizada)
+comment4.params=
+comment4.target=java.time.LocalDate\ getData()
+comment5.params=data
+comment5.target=void\ setData(java.time.LocalDate)
+comment6.params=
+comment6.target=Utilizador\ getUtilizador()
+comment7.params=utilizador
+comment7.target=void\ setUtilizador(Utilizador)
+comment8.params=
+comment8.target=Atividade\ getAtividade()
+comment9.params=atividade
+comment9.target=void\ setAtividade(Atividade)
+numComments=15

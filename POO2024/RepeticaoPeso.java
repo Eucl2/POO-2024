@@ -1,21 +1,24 @@
  
 import java.util.ArrayList;
 
-public class Repeticao extends Atividade 
+public class RepeticaoPeso extends Atividade 
 {
     private int repeticoes;
+    private double peso;
 
-    public Repeticao(String nome, int duracao, int rep) 
+    public RepeticaoPeso(String nome, int duracao, int rep, double p) 
     {
         super(nome,duracao);
         repeticoes = rep;
+        peso = p;
 
     }
     
-    public Repeticao(Repeticao r) 
+    public RepeticaoPeso(RepeticaoPeso rp) 
     {
-        super(r);
-        this.repeticoes = r.getRepeticao();
+        super(rp);
+        this.repeticoes = rp.getRepeticao();
+        this.peso = rp.getPeso();
     }
 
     public int getRepeticao() 
@@ -27,19 +30,29 @@ public class Repeticao extends Atividade
     {
         this.repeticoes = repeticoes;
     }
-
-    public Repeticao clone() 
+    
+    public double getPeso() 
     {
-        return new Repeticao(this);
+        return this.peso;
+    }
+    
+    public void setPeso(double peso) 
+    {
+        this.peso = peso;
+    }
+
+    public RepeticaoPeso clone() 
+    {
+        return new RepeticaoPeso(this);
     }
     
     //to string da caracteristica da atividade
     public String extraCaracteristicas() {
-        return "Repeticoes: " + getRepeticao();
+        return "Repeticoes: " + getRepeticao() + "\n Peso: " + getPeso();
     }
     //nome do tipo de atividade 
     public String getTipoAtividade() {
-        return ("Repeticao");
+        return ("Repeticao_Peso");
     }
     
     public boolean equals(Object obj) {
@@ -47,8 +60,8 @@ public class Repeticao extends Atividade
             return true;
         if (obj == null || obj.getClass() != this.getClass())
             return false;
-        Repeticao r = (Repeticao) obj;
-        return super.equals(r);
+        RepeticaoPeso rp = (RepeticaoPeso) obj;
+        return super.equals(rp);
 
     }
     
