@@ -8,7 +8,6 @@ public class PlanoTreino implements Serializable
 {
     private String nome_plano;
     private Map<String, Atividade> atividades;
-    private Map<Integer, Atividade> repeticao_atividade;
     private ArrayList<Recorrencia> recorrencia;
     private int minimo_calorias;
     
@@ -17,7 +16,6 @@ public class PlanoTreino implements Serializable
     {
         this.nome_plano = "";
         this.atividades = new HashMap<>();
-        this.repeticao_atividade = new HashMap<>();
         this.recorrencia = new ArrayList<>();
         this.minimo_calorias = 0;
     }
@@ -26,7 +24,6 @@ public class PlanoTreino implements Serializable
     {
         this.nome_plano = nome_plano;
         this.atividades = new HashMap<>();
-        this.repeticao_atividade = new HashMap<>();
         this.recorrencia = new ArrayList<>();
         this.minimo_calorias = 0;
     }
@@ -35,7 +32,6 @@ public class PlanoTreino implements Serializable
     {
         this.nome_plano = pt.getNomePlano();
         this.atividades = pt.getAtividades();
-        this.repeticao_atividade = pt.getRepeticaoAtividade();
         this.recorrencia = pt.getRecorrencia();
         this.minimo_calorias = pt.getMinimoCalorias();
     }
@@ -61,17 +57,6 @@ public class PlanoTreino implements Serializable
                 
     }
     
-    public Map<Atividade, Integer> getRepeticaoAtividade()
-    {
-        return this.repeticao_atividade.values().stream().collect(Collectors.toMap(pt -> pt.clone(), pt -> pt.getNumeroAtividade()));
-    }
-    
-    public void setAtividades(Map<String, Atividade> nAtividades)
-    {
-        this.atividades = nAtividades.values().stream().collect(Collectors.toMap(pt -> pt.getNomeAtividade(), pt -> pt.clone()));
-                
-    }
-    
     public ArrayList<Recorrencia> getRecorrencia() 
     {
         return recorrencia;
@@ -80,16 +65,6 @@ public class PlanoTreino implements Serializable
     public void setRecorrencia(ArrayList<Recorrencia> recorrencia) 
     {
         this.recorrencia = recorrencia;
-    }
-    
-    public ArrayList<Atividade> getListaAtividades() 
-    {
-        return lista_atividades;
-    }
-
-    public void setListaAtividades(ArrayList<Atividade> lista_atividades) 
-    {
-        this.lista_atividades = lista_atividades;
     }
     
     public int getMinimoCalorias()
@@ -102,20 +77,74 @@ public class PlanoTreino implements Serializable
         this.minimo_calorias= minimo_calorias;
     }
     
+    public void insereAtividade(Atividade a)
+    {
+        this.atividades.put(a.getNomeAtividade(),a.clone());
+        //a.insereHistoricoDePlanos(this.getNomeAtividade());
+    }
+    
+    public void setAtividade(Atividade a) throws AtividadeNaoExisteException
+    {
+        if(this.atividades.containsKey(a.getNomeAtividade()))
+            throw new AtividadeNaoExisteException("Nao existe atividade com esse nome");
+        else
+            this.atividades.put(a.getNomeAtividade(), a.clone());
+    }
+    
+    public void removeAtividade(Atividade a) throws AtividadeNaoExisteException
+    {
+        String n = a.getNomeAtividade();
+        if (!this.atividades.containsKey(n))
+            throw new AtividadeNaoExisteException("Atividade nao existe");
+        else{
+            this.atividades.remove(n);
+        }
+    }
+
+    public String toString() {
+        String r = "Plano de treino:" + nome_plano + "\n";
+        // String r = "\n";
+        for (Atividade a : atividades.values()) {
+            r += a.toString();
+        }
+        return r;
+    }
+    
     public PlanoTreino clone()
     {
         return new PlanoTreino(this);
     }
+    
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+        if (obj == null || obj.getClass() != this.getClass())
+            return false;
+        PlanoTreino pt = (PlanoTreino) obj;
+        return pt.getNomePlano().equals(this.nome_plano) && pt.getAtividades() == (this.atividades);
 
-
-    @Override
-    public String toString() 
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\nPlano de Treino: ").append(this.nome_plano).append('\n').append("Atividades: ").append(this.lista_atividades.toString())
-                .append('\n').append("Recorrencia: ").append(this.recorrencia.toString()).append('\n').append("Calorias Minimas: ")
-                .append(this.minimo_calorias).append('\n');
-        
-        return sb.toString();
     }
+    
+    public static PlanoTreino parse(String input) {
+        String[] campos = input.split(",");
+        return new PlanoTreino(campos[0]);
+    }
+    
+    public void save() throws IOException {
+
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("PlanoTreinoSave.obj"));
+        oos.writeObject(this);
+        oos.flush();
+        oos.close();
+    }
+
+    public void load() throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("PlanoTreinoSave.obj"));
+        PlanoTreino pt = (PlanoTreino) ois.readObject();
+        ois.close();
+        this.nome_plano = pt.nome_plano;
+        this.atividades = pt.atividades;
+
+    }
+
 }
