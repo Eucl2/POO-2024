@@ -21,27 +21,27 @@ public abstract class Atividade implements Serializable
     
     public Atividade(Atividade a) 
     {
-        nome = getNome();
-        duracao = getDuracao();
+        nome = getNomeAtividade();
+        duracao = getDuracaoAtividade();
         
     }
 
-    public String getNome() 
+    public String getNomeAtividade() 
     {
         return nome;
     }
 
-    public void setNome(String nome) 
+    public void setNomeAtividade(String nome) 
     {
         this.nome = nome;
     }
 
-    public double getDuracao() 
+    public double getDuracaoAtividade() 
     {
         return duracao;
     }
 
-    public void setDuracao(double duracao) 
+    public void setDuracaoAtividade(double duracao) 
     {
         this.duracao = duracao;
     }
