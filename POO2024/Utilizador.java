@@ -1,7 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Utilizador 
+public class Utilizador implements Serializable 
 {
     private int id_utilizador;
     private String nome_utilizador;
@@ -11,7 +11,6 @@ public class Utilizador
     private String email_utilizador;
     private int freq_cardiaca_media;
     private TipoAtleta tipo_atleta;
-    private ArrayList<AtividadeRealizada> historico_atividades_realizadas;
     private ArrayList<PlanoTreino> planos_de_treino;
 
     public Utilizador() 
@@ -24,7 +23,6 @@ public class Utilizador
         email_utilizador = "";
         freq_cardiaca_media = 0;
         tipo_atleta = null;
-        historico_atividades_realizadas = new ArrayList<>();
         planos_de_treino = new ArrayList<>();
     }
 
@@ -32,7 +30,7 @@ public class Utilizador
     int id_u, String nome_u, int idade_u, double peso_u,
     String morada_u, String email_u, 
     int freq_card_m, TipoAtleta tipo_a, 
-    ArrayList<AtividadeRealizada> historico_ati_rea, ArrayList<PlanoTreino> planos_treino) 
+    ArrayList<PlanoTreino> planos_treino) 
     {
         id_utilizador = id_u;
         nome_utilizador = nome_u;
@@ -42,7 +40,6 @@ public class Utilizador
         email_utilizador = email_u;
         freq_cardiaca_media = freq_card_m;
         tipo_atleta = tipo_a;
-        historico_atividades_realizadas = historico_ati_rea;
         planos_de_treino = planos_treino;
     }
 
@@ -56,7 +53,6 @@ public class Utilizador
         email_utilizador = u.getEmailUtilizador();
         freq_cardiaca_media = u.getFreqCardiacaMedia();
         tipo_atleta = u.getTipoAtleta();
-        historico_atividades_realizadas = u.getHistoricoAtividadeRealizada();
         planos_de_treino = u.getPlanosTreino();
     }
     
@@ -140,16 +136,6 @@ public class Utilizador
         this.tipo_atleta = tipo_atleta;
     }
     
-    public ArrayList<AtividadeRealizada> getHistoricoAtividadeRealizada() 
-    {
-        return historico_atividades_realizadas;
-    }
-    
-    public void setHistoricoAtividadeRealizada(ArrayList<AtividadeRealizada> historico_atividades_realizadas) 
-    {
-        this.historico_atividades_realizadas = historico_atividades_realizadas;
-    }
-    
     public ArrayList<PlanoTreino> getPlanosTreino() 
     {
         return planos_de_treino;
@@ -160,7 +146,6 @@ public class Utilizador
         this.planos_de_treino = planos_de_treino;
     }
     
-
     public Utilizador clone()
     {
         return new Utilizador(this);
@@ -183,10 +168,10 @@ public class Utilizador
       TipoAtleta tipo = TipoAtleta.valueOf(campo[6]); 
       double peso = Double.parseDouble(campo[7]);
     
-      ArrayList t = null; //to change
+      //ArrayList t = null; //to change
       ArrayList u = null; //to change
     
-      return new Utilizador(id, nome, idade, peso, morada, email, freq_cardiaca, tipo, t, u); //to change
+      return new Utilizador(id, nome, idade, peso, morada, email, freq_cardiaca, tipo, u); //to change
     }
     
     @Override
@@ -197,8 +182,7 @@ public class Utilizador
                 .append('\n').append("Idade: ").append(this.idade_utilizador).append('\n').append("Peso: ").append(this.peso_utilizador)
                 .append('\n').append("Morada: ").append(this.morada_utilizador).append('\n').append("Email: ")
                 .append(this.email_utilizador ).append('\n').append("Frequencia Cardiaca Media: ").append(this.freq_cardiaca_media).append('\n')
-                .append("Tipo de Atleta: ").append(this.tipo_atleta).append('\n').append("Historico de Atividades Realizadas: ")
-                .append(this.historico_atividades_realizadas.toString()).append('\n').append("Planos de Treino: ")
+                .append("Tipo de Atleta: ").append(this.tipo_atleta).append('\n').append("Planos de Treino: ")
                 .append(this.planos_de_treino.toString()).append('\n');
         
         return sb.toString();

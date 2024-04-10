@@ -6,7 +6,7 @@ public class RepeticaoPeso extends Atividade
     private int repeticoes;
     private double peso;
 
-    public RepeticaoPeso(String nome, int duracao, int rep, double p) 
+    public RepeticaoPeso(String nome, double duracao, int rep, double p) 
     {
         super(nome,duracao);
         repeticoes = rep;
@@ -53,6 +53,13 @@ public class RepeticaoPeso extends Atividade
     //nome do tipo de atividade 
     public String getTipoAtividade() {
         return ("Repeticao_Peso");
+    }
+    
+    public static RepeticaoPeso parse(String input)
+    {
+        String[] campos = input.split(",");
+        return new RepeticaoPeso(campos[0], Double.parseDouble(campos[1]), Integer.parseInt(campos[2])
+                    ,Double.parseDouble(campos[3]));
     }
     
     public boolean equals(Object obj) {

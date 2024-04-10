@@ -41,6 +41,12 @@ public class Distancia extends Atividade
         return ("Distancia");
     }
     
+    public static Distancia parse(String input)
+    {
+        String[] campos = input.split(",");
+        return new Distancia(campos[0], Double.parseDouble(campos[1]), Double.parseDouble(campos[2]));
+    }
+    
     public boolean equals(Object obj) {
         if (obj == this)
             return true;

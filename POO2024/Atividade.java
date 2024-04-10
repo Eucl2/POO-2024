@@ -1,7 +1,6 @@
-/**
- * Atividade
- */
-public abstract class Atividade 
+import java.io.Serializable;
+
+public abstract class Atividade implements Serializable 
 {
 
     private String nome;

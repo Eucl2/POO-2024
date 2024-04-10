@@ -5,7 +5,7 @@ public class Repeticao extends Atividade
 {
     private int repeticoes;
 
-    public Repeticao(String nome, int duracao, int rep) 
+    public Repeticao(String nome, double duracao, int rep) 
     {
         super(nome,duracao);
         repeticoes = rep;
@@ -40,6 +40,12 @@ public class Repeticao extends Atividade
     //nome do tipo de atividade 
     public String getTipoAtividade() {
         return ("Repeticao");
+    }
+    
+    public static Repeticao parse(String input)
+    {
+        String[] campos = input.split(",");
+        return new Repeticao(campos[0], Double.parseDouble(campos[1]), Integer.parseInt(campos[2]));
     }
     
     public boolean equals(Object obj) {

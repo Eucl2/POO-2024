@@ -54,6 +54,13 @@ public class DistanciaAltimetria extends Atividade
         return ("Distancia_Altimetria");
     }
     
+    public static DistanciaAltimetria parse(String input)
+    {
+        String[] campos = input.split(",");
+        return new DistanciaAltimetria(campos[0], Double.parseDouble(campos[1]), Double.parseDouble(campos[2])
+                    ,Double.parseDouble(campos[3]));
+    }
+    
     public boolean equals(Object obj) {
         if (obj == this)
             return true;
