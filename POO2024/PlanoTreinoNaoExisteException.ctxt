@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=PlanoTreinoNaoExisteException
+comment0.text=\r\n\ Exception\ triggered\ when\ PlanoTreino\ doesn't\ exist\r\n
+comment1.params=
+comment1.target=PlanoTreinoNaoExisteException()
+comment2.params=s
+comment2.target=PlanoTreinoNaoExisteException(java.lang.String)
+numComments=3
