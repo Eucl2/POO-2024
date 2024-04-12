@@ -13,7 +13,6 @@ comment13.params=calorias
 comment13.target=void\ setCalorias(int)
 comment14.params=
 comment14.target=java.lang.String\ toString()
-comment14.text=\r\n\ \ \ \ public\ int\ calculoCalorias(AtividadeRealizada\ atividade,\ Utilizador\ utilizador)\r\n\ \ \ \ {\r\n\ \ \ \ \ \ \ \ double\ peso_utilizador\ \=\ utilizador.getPesoUtilizador();\r\n\ \ \ \ \ \ \ \ int\ freq_cardiaca_utilizador\ \=\ utilizador.getFreqCardiacaUtilizador();\r\n\ \ \ \ \ \ \ \ double\ factor_utilizador\ \=\ utilizador.getFactorUtilizador();\r\n\ \ \ \ \ \ \ \ double\ duracao_atividade\ \=\ atividade.getDuracao();\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ \ \ \ \ double\ calorias\ \=\ (peso_utilizador\ *\ duracao_atividade)\ *\ (freq_cardiaca_utilizador\ /\ 100)\ *\ factor_utilizador;\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ \ \ \ \ return\ (int)\ calorias;\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ \r\n\ \ \ \ }\r\n
 comment2.params=data\ utilizador\ atividade\ freq_cardiaca_atividade
 comment2.target=AtividadeRealizada(java.time.LocalDate,\ Utilizador,\ Atividade,\ int)
 comment3.params=ar

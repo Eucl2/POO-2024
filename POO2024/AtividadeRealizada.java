@@ -94,23 +94,6 @@ public class AtividadeRealizada
         this.calorias = calorias;
     }
     
-    //a funçao nao esta a ser chamada 
-    /**
-    public int calculoCalorias(AtividadeRealizada atividade, Utilizador utilizador)
-    {
-        double peso_utilizador = utilizador.getPesoUtilizador();
-        int freq_cardiaca_utilizador = utilizador.getFreqCardiacaUtilizador();
-        double factor_utilizador = utilizador.getFactorUtilizador();
-        double duracao_atividade = atividade.getDuracao();
-        
-        double calorias = (peso_utilizador * duracao_atividade) * (freq_cardiaca_utilizador / 100) * factor_utilizador;
-        
-        return (int) calorias;
-        
-    
-    }
-    */
-    
     @Override
     public String toString() 
     {

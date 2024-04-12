@@ -6,33 +6,30 @@ import java.util.*;
 
 public class PlanoTreino implements Serializable
 {
+    /*
     private String nome_plano;
-    private Map<String, Atividade> atividades;
-    private ArrayList<Recorrencia> recorrencia;
+    private Map<Recorrencia, ArrayList<Tuple>> atividades_por_dia;
     private int minimo_calorias;
     
 
     public PlanoTreino() 
     {
         this.nome_plano = "";
-        this.atividades = new HashMap<>();
-        this.recorrencia = new ArrayList<>();
+        this.atividades_por_dia = new HashMap<>();
         this.minimo_calorias = 0;
     }
 
     public PlanoTreino(String nome_plano) 
     {
         this.nome_plano = nome_plano;
-        this.atividades = new HashMap<>();
-        this.recorrencia = new ArrayList<>();
+        this.atividades_por_dia = new HashMap<>();
         this.minimo_calorias = 0;
     }
     
     public PlanoTreino(PlanoTreino pt) 
     {
         this.nome_plano = pt.getNomePlano();
-        this.atividades = pt.getAtividades();
-        this.recorrencia = pt.getRecorrencia();
+        this.atividades_por_dia = pt.getAtividades();
         this.minimo_calorias = pt.getMinimoCalorias();
     }
     
@@ -46,27 +43,21 @@ public class PlanoTreino implements Serializable
         this.nome_plano = nome_plano;
     }
     
-    public Map<String, Atividade> getAtividades()
-    {
-        return this.atividades.values().stream().collect(Collectors.toMap(pt -> pt.getNomeAtividade(), pt -> pt.clone()));
-    }
+    //ainda nao esta a funcionar 
     
+    public Map<Recorrencia, ArrayList<Tuple>> getAtividadesPorDia()
+    {
+        return this.atividades_por_dia.values().stream().collect(Collectors.toMap(pt -> pt.getDiaDaSemana(), pt -> );
+    }
+
+   
     public void setAtividades(Map<String, Atividade> nAtividades)
     {
         this.atividades = nAtividades.values().stream().collect(Collectors.toMap(pt -> pt.getNomeAtividade(), pt -> pt.clone()));
                 
     }
     
-    public ArrayList<Recorrencia> getRecorrencia() 
-    {
-        return recorrencia;
-    }
-
-    public void setRecorrencia(ArrayList<Recorrencia> recorrencia) 
-    {
-        this.recorrencia = recorrencia;
-    }
-    
+   
     public int getMinimoCalorias()
     {
         return minimo_calorias;
@@ -100,7 +91,7 @@ public class PlanoTreino implements Serializable
             this.atividades.remove(n);
         }
     }
-
+    
     public String toString() {
         String r = "Plano de treino:" + nome_plano + "\n";
         // String r = "\n";
@@ -114,6 +105,7 @@ public class PlanoTreino implements Serializable
     {
         return new PlanoTreino(this);
     }
+    
     
     public boolean equals(Object obj) {
         if (obj == this)
@@ -137,7 +129,7 @@ public class PlanoTreino implements Serializable
         oos.flush();
         oos.close();
     }
-
+    /*
     public void load() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("PlanoTreinoSave.obj"));
         PlanoTreino pt = (PlanoTreino) ois.readObject();
@@ -146,5 +138,6 @@ public class PlanoTreino implements Serializable
         this.atividades = pt.atividades;
 
     }
-
+    */
+   
 }

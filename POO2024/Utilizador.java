@@ -1,5 +1,5 @@
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Utilizador implements Serializable 
 {
@@ -12,6 +12,7 @@ public class Utilizador implements Serializable
     private int freq_cardiaca_media;
     private TipoAtleta tipo_atleta;
     private ArrayList<PlanoTreino> planos_de_treino;
+    private ArrayList<AtividadeRealizada> historico;
 
     public Utilizador() 
     {
@@ -24,13 +25,15 @@ public class Utilizador implements Serializable
         freq_cardiaca_media = 0;
         tipo_atleta = null;
         planos_de_treino = new ArrayList<>();
+        historico = new ArrayList<>();
+        
+        
     }
 
     public Utilizador(
     int id_u, String nome_u, int idade_u, double peso_u,
     String morada_u, String email_u, 
-    int freq_card_m, TipoAtleta tipo_a, 
-    ArrayList<PlanoTreino> planos_treino) 
+    int freq_card_m, TipoAtleta tipo_a) 
     {
         id_utilizador = id_u;
         nome_utilizador = nome_u;
@@ -40,7 +43,8 @@ public class Utilizador implements Serializable
         email_utilizador = email_u;
         freq_cardiaca_media = freq_card_m;
         tipo_atleta = tipo_a;
-        planos_de_treino = planos_treino;
+        planos_de_treino = new ArrayList<>();
+        historico = new ArrayList<>();
     }
 
     public Utilizador(Utilizador u) 
@@ -54,6 +58,7 @@ public class Utilizador implements Serializable
         freq_cardiaca_media = u.getFreqCardiacaMedia();
         tipo_atleta = u.getTipoAtleta();
         planos_de_treino = u.getPlanosTreino();
+        historico = u.getHistorico();
     }
     
     public int getIdUtilizador() 
@@ -146,6 +151,16 @@ public class Utilizador implements Serializable
         this.planos_de_treino = planos_de_treino;
     }
     
+    public ArrayList<AtividadeRealizada> getHistorico() 
+    {
+        return historico;
+    }
+    
+    public void setHistorico(ArrayList<AtividadeRealizada> atividade_realizada) 
+    {
+        this.historico = atividade_realizada;
+    }
+    
     public Utilizador clone()
     {
         return new Utilizador(this);
@@ -169,9 +184,9 @@ public class Utilizador implements Serializable
       double peso = Double.parseDouble(campo[7]);
     
       //ArrayList t = null; //to change
-      ArrayList u = null; //to change
+      //ArrayList u = null; //to change
     
-      return new Utilizador(id, nome, idade, peso, morada, email, freq_cardiaca, tipo, u); //to change
+      return new Utilizador(id, nome, idade, peso, morada, email, freq_cardiaca, tipo); //to change
     }
     
     @Override
@@ -183,7 +198,8 @@ public class Utilizador implements Serializable
                 .append('\n').append("Morada: ").append(this.morada_utilizador).append('\n').append("Email: ")
                 .append(this.email_utilizador ).append('\n').append("Frequencia Cardiaca Media: ").append(this.freq_cardiaca_media).append('\n')
                 .append("Tipo de Atleta: ").append(this.tipo_atleta).append('\n').append("Planos de Treino: ")
-                .append(this.planos_de_treino.toString()).append('\n');
+                .append(this.planos_de_treino.toString()).append('\n').append("Historico de Atividade: ")
+                .append(this.historico.toString()).append('\n');
         
         return sb.toString();
 
