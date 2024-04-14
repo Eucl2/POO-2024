@@ -6,9 +6,10 @@ import java.util.*;
 
 public class PlanoTreino implements Serializable
 {
-    /*
+    
     private String nome_plano;
-    private Map<Recorrencia, ArrayList<Tuple>> atividades_por_dia;
+    private Map<String, ArrayList<Tuple>> atividades_por_dia;
+    private Recorrencia recorrencia;
     private int minimo_calorias;
     
 
@@ -45,9 +46,10 @@ public class PlanoTreino implements Serializable
     
     //ainda nao esta a funcionar 
     
-    public Map<Recorrencia, ArrayList<Tuple>> getAtividadesPorDia()
+    public Map<String, ArrayList<Tuple>> getAtividadesPorDia() 
     {
-        return this.atividades_por_dia.values().stream().collect(Collectors.toMap(pt -> pt.getDiaDaSemana(), pt -> );
+    return this.atividades_por_dia.entrySet().stream()
+            .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue()));
     }
 
    
@@ -129,7 +131,7 @@ public class PlanoTreino implements Serializable
         oos.flush();
         oos.close();
     }
-    /*
+    
     public void load() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("PlanoTreinoSave.obj"));
         PlanoTreino pt = (PlanoTreino) ois.readObject();
@@ -138,6 +140,6 @@ public class PlanoTreino implements Serializable
         this.atividades = pt.atividades;
 
     }
-    */
+    
    
 }

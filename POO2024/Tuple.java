@@ -5,7 +5,7 @@
 public class Tuple
 {
   private Atividade atividade;
-  int numeroRepeticoes;
+  private int numeroRepeticoes;
 
   public Tuple(Atividade atividade, int numeroRepeticoes) {
     this.atividade = atividade;
