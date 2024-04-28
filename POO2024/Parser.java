@@ -13,22 +13,18 @@ import java.util.Map;
 
 public class Parser 
 {
-
-    private Map<String, Atividade> atividades;
-    private Map<String, Utilizador> utilizadores;
-    private List<PlanoTreino> plano_de_treino;
+    private Map<Integer, Utilizador> utilizadores;
+    private Map<Integer, Atividade> atividades;
+    private Map<String, PlanoTreino> planostreino;
 
     public void parse() throws LinhaIncorretaException 
     {
         List<String> linhas = lerFicheiro("output.txt");
-        this.atividades = new HashMap<>(); // 
-        this.utilizadores = new HashMap<>();//email,utilizador
-        this.plano_de_treino = new ArrayList<>();
-        Distancia d=null;
-        Repeticao r =null;
-        RepeticaoPeso rp =null;
-        DistanciaAltimetria t=null;
-        Utilizador user=null;
+        this.utilizadores = new HashMap<>();
+        this.atividades = new HashMap<>();
+        this.planostreino = new HashMap<>();
+        PlanoTreino novoplano = null;
+        Atividade a = null;
         String[] linhaPartida;
         for (String linha : linhas) 
         {
@@ -37,11 +33,151 @@ public class Parser
             {
                 case "Utilizador":
                     Utilizador u = Utilizador.parse(linhaPartida[1]);
-                    utilizadores.put(u.getEmailUtilizador(), u);
-                    user=u;
+                    utilizadores.put(u.getId(), u);
+                    break;
+                case "Corrida":
+                    a = Corrida.parse(linhaPartida[1]);
+                    if (this.atividades.containsKey(a.getCodigo()))
+                    {
+                        if(novoplano == null)
+                        {
+                            throw new LinhaIncorretaException();
+                        }
+                        novoplano.insereAtividade(a.clone());
+                    }
+                    else
+                    {
+                        atividades.put(a.getCodigo(), a);  
+                    }   
+                    break;
+                case "Patinagem":
+                    a = Patinagem.parse(linhaPartida[1]);
+                    if (this.atividades.containsKey(a.getCodigo()))
+                    {
+                        if(novoplano == null)
+                        {
+                            throw new LinhaIncorretaException();
+                        }
+                        novoplano.insereAtividade(a.clone());
+                    }
+                    else
+                    {
+                        atividades.put(a.getCodigo(), a);  
+                    }   
+                    break;
+                case "Remo":
+                    a = Remo.parse(linhaPartida[1]);
+                    if (this.atividades.containsKey(a.getCodigo()))
+                    {
+                        if(novoplano == null)
+                        {
+                            throw new LinhaIncorretaException();
+                        }
+                        novoplano.insereAtividade(a.clone());
+                    }
+                    else
+                    {
+                        atividades.put(a.getCodigo(), a);  
+                    }   
+                    break;
+                case "Bicicleta":
+                    a = Bicicleta.parse(linhaPartida[1]);
+                    if (this.atividades.containsKey(a.getCodigo()))
+                    {
+                        if(novoplano == null)
+                        {
+                            throw new LinhaIncorretaException();
+                        }
+                        novoplano.insereAtividade(a.clone());
+                    }
+                    else
+                    {
+                        atividades.put(a.getCodigo(), a);  
+                    }   
+                    break;
+                case "Abdominais":
+                    a = Abdominais.parse(linhaPartida[1]);
+                    if (this.atividades.containsKey(a.getCodigo()))
+                    {
+                        if(novoplano == null)
+                        {
+                            throw new LinhaIncorretaException();
+                        }
+                        novoplano.insereAtividade(a.clone());
+                    }
+                    else
+                    {
+                        atividades.put(a.getCodigo(), a);  
+                    }   
+                    break;
+                case "Alongamentos":
+                    a = Alongamentos.parse(linhaPartida[1]);
+                    if (this.atividades.containsKey(a.getCodigo()))
+                    {
+                        if(novoplano == null)
+                        {
+                            throw new LinhaIncorretaException();
+                        }
+                        novoplano.insereAtividade(a.clone());
+                    }
+                    else
+                    {
+                        atividades.put(a.getCodigo(), a);  
+                    }   
+                    break;
+                case "LevantaPeso":
+                    a = LevantaPeso.parse(linhaPartida[1]);
+                    if (this.atividades.containsKey(a.getCodigo()))
+                    {
+                        if(novoplano == null)
+                        {
+                            throw new LinhaIncorretaException();
+                        }
+                        novoplano.insereAtividade(a.clone());
+                    }
+                    else
+                    {
+                        atividades.put(a.getCodigo(), a);  
+                    }   
+                    break;
+                case "ExtensaoPernas":
+                    a = ExtensaoPernas.parse(linhaPartida[1]);
+                    if (this.atividades.containsKey(a.getCodigo()))
+                    {
+                        if(novoplano == null)
+                        {
+                            throw new LinhaIncorretaException();
+                        }
+                        novoplano.insereAtividade(a.clone());
+                    }
+                    else
+                    {
+                        atividades.put(a.getCodigo(), a);  
+                    }   
+                    break;
+                case "Flexoes":
+                    a = Flexoes.parse(linhaPartida[1]);
+                    if (this.atividades.containsKey(a.getCodigo()))
+                    {
+                        if(novoplano == null)
+                        {
+                            throw new LinhaIncorretaException();
+                        }
+                        novoplano.insereAtividade(a.clone());
+                    }
+                    else
+                    {
+                        atividades.put(a.getCodigo(), a);  
+                    }   
+                    break;
+                 case "PlanoTreino":
+                    PlanoTreino pt = PlanoTreino.parse(linhaPartida[1]);
+                    planostreino.put(pt.getNome(), pt);
+                    novoplano = pt;
                     break;
                 default:
                     throw new LinhaIncorretaException();
+                
 
             }
         }
@@ -61,5 +197,20 @@ public class Parser
         }
         return lines;
     }
-
+    
+    public Map<Integer, Utilizador> getUtilizadores()
+    {
+        return this.utilizadores.values().stream().collect(Collectors.toMap(u -> u.getId(), u -> u.clone()));
+    }
+    
+    public Map<Integer, Atividade> getAtividades()
+    {
+        return this.atividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
+    }
+    
+    public Map<String , PlanoTreino> getPlanosTreino()
+    {
+        return this.planostreino.values().stream().collect(Collectors.toMap(pt -> pt.getNome(), pt -> pt.clone()));
+    }
+    
 }

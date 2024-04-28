@@ -1,0 +1,27 @@
+#BlueJ class context
+comment0.target=LevantaPeso
+comment1.params=
+comment1.target=LevantaPeso()
+comment10.params=o
+comment10.target=boolean\ equals(java.lang.Object)
+comment11.params=
+comment11.target=java.lang.String\ toString()
+comment12.params=utilizador\ freq_cardiaca_atividade
+comment12.target=double\ calcularCalorias(Utilizador,\ int)
+comment2.params=codigo\ nome\ descricao\ duracao\ repeticoes\ peso\ data_realizada
+comment2.target=LevantaPeso(int,\ java.lang.String,\ java.lang.String,\ int,\ int,\ double,\ java.time.LocalDate)
+comment3.params=lp
+comment3.target=LevantaPeso(LevantaPeso)
+comment4.params=
+comment4.target=int\ getRepeticoes()
+comment5.params=
+comment5.target=double\ getPeso()
+comment6.params=repeticoes
+comment6.target=void\ setRepeticoes(int)
+comment7.params=peso
+comment7.target=void\ setPeso(double)
+comment8.params=
+comment8.target=Atividade\ clone()
+comment9.params=input
+comment9.target=LevantaPeso\ parse(java.lang.String)
+numComments=13

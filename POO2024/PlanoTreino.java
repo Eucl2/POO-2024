@@ -3,90 +3,100 @@ import java.io.*;
 import java.io.Serializable;
 import java.util.stream.Collectors;
 import java.util.*;
+import java.time.LocalDate;
 
 public class PlanoTreino implements Serializable
 {
     
-    private String nome_plano;
-    private Map<String, ArrayList<Tuple>> atividades_por_dia;
-    private Recorrencia recorrencia;
-    private int minimo_calorias;
+    private String nome;
+    private LocalDate data;
+    private Map<Integer, Atividade> atividades;
+    private int n_iteracoes;
     
 
     public PlanoTreino() 
     {
-        this.nome_plano = "";
-        this.atividades_por_dia = new HashMap<>();
-        this.minimo_calorias = 0;
+        this.nome = "";
+        this.data = LocalDate.EPOCH;
+        this.atividades = new HashMap<>();
+        this.n_iteracoes = 0;
     }
 
-    public PlanoTreino(String nome_plano) 
+    public PlanoTreino(String nome, LocalDate data, int iteracoes) 
     {
-        this.nome_plano = nome_plano;
-        this.atividades_por_dia = new HashMap<>();
-        this.minimo_calorias = 0;
+        this.nome = nome;
+        this.data = data;
+        this.atividades = new HashMap<>();
+        this.n_iteracoes = iteracoes;
     }
     
     public PlanoTreino(PlanoTreino pt) 
     {
-        this.nome_plano = pt.getNomePlano();
-        this.atividades_por_dia = pt.getAtividades();
-        this.minimo_calorias = pt.getMinimoCalorias();
+        this.nome = pt.getNome();
+        this.data = pt.getData();
+        this.atividades= pt.getAtividades();
+        this.n_iteracoes = pt.getIteracoes();
     }
     
-    public String getNomePlano()
+    public String getNome()
     {
-        return nome_plano;
+        return nome;
     }
     
-    public void setNomePlano(String nome_plano)
+    public LocalDate getData()
     {
-        this.nome_plano = nome_plano;
+        return data;
     }
     
-    //ainda nao esta a funcionar 
-    
-    public Map<String, ArrayList<Tuple>> getAtividadesPorDia() 
+    public Map<Integer, Atividade> getAtividades()
     {
-    return this.atividades_por_dia.entrySet().stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue()));
-    }
-
-   
-    public void setAtividades(Map<String, Atividade> nAtividades)
-    {
-        this.atividades = nAtividades.values().stream().collect(Collectors.toMap(pt -> pt.getNomeAtividade(), pt -> pt.clone()));
-                
+        return this.atividades.values().stream().collect(Collectors.toMap(pt -> pt.getCodigo(), pt -> pt.clone()));
     }
     
-   
-    public int getMinimoCalorias()
+    public int getIteracoes()
     {
-        return minimo_calorias;
+        return n_iteracoes;
     }
     
-    public void setMinimoCalorias(int minimo_calorias)
+    public void setNome(String nome)
     {
-        this.minimo_calorias= minimo_calorias;
+        this.nome = nome;
     }
     
+    public void setData(LocalDate data)
+    {
+        this.data = data;
+    }
+    
+    public void setAtividades(Map<Integer, Atividade> nAtividades)
+    {
+        this.atividades = nAtividades.values().stream()
+                .collect(Collectors.toMap(pt -> pt.getCodigo(), pt -> pt.clone()));
+    }
+    
+    public void setIteracoes(int iteracoes)
+    {
+        this.n_iteracoes = iteracoes;
+    }
+      
     public void insereAtividade(Atividade a)
     {
-        this.atividades.put(a.getNomeAtividade(),a.clone());
+        this.atividades.put(a.getCodigo(),a.clone());
         //a.insereHistoricoDePlanos(this.getNomeAtividade());
     }
     
+    
     public void setAtividade(Atividade a) throws AtividadeNaoExisteException
     {
-        if(this.atividades.containsKey(a.getNomeAtividade()))
-            throw new AtividadeNaoExisteException("Nao existe atividade com esse nome");
+        if(this.atividades.containsKey(a.getCodigo()))
+            throw new AtividadeNaoExisteException("Nao existe atividade com esse codigo");
         else
-            this.atividades.put(a.getNomeAtividade(), a.clone());
+            this.atividades.put(a.getCodigo(), a.clone());
     }
     
     public void removeAtividade(Atividade a) throws AtividadeNaoExisteException
     {
-        String n = a.getNomeAtividade();
+        int n = a.getCodigo();
         if (!this.atividades.containsKey(n))
             throw new AtividadeNaoExisteException("Atividade nao existe");
         else{
@@ -94,8 +104,10 @@ public class PlanoTreino implements Serializable
         }
     }
     
+    
     public String toString() {
-        String r = "Plano de treino:" + nome_plano + "\n";
+        String r = "Plano de treino:" + nome + "\n" +
+        "Data:" + data + "\n" + "Numero de Iteracoes:" + n_iteracoes + "\n";
         // String r = "\n";
         for (Atividade a : atividades.values()) {
             r += a.toString();
@@ -115,13 +127,18 @@ public class PlanoTreino implements Serializable
         if (obj == null || obj.getClass() != this.getClass())
             return false;
         PlanoTreino pt = (PlanoTreino) obj;
-        return pt.getNomePlano().equals(this.nome_plano) && pt.getAtividades() == (this.atividades);
+        return pt.getNome().equals(this.nome)
+        && pt.getData().equals(this.data)
+        && pt.getAtividades().equals(this.atividades)
+        && pt.getIteracoes() == (this.n_iteracoes);
 
     }
     
     public static PlanoTreino parse(String input) {
         String[] campos = input.split(",");
-        return new PlanoTreino(campos[0]);
+        String[] data_execucao = campos[1].split("-");
+        return new PlanoTreino(campos[0], LocalDate.of(Integer.parseInt(data_execucao[0]), Integer.parseInt(data_execucao[1]), 
+      Integer.parseInt(data_execucao[2])), Integer.parseInt(campos[2]));
     }
     
     public void save() throws IOException {
@@ -136,10 +153,10 @@ public class PlanoTreino implements Serializable
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("PlanoTreinoSave.obj"));
         PlanoTreino pt = (PlanoTreino) ois.readObject();
         ois.close();
-        this.nome_plano = pt.nome_plano;
+        this.nome = pt.nome;
+        this.data = pt.data;
         this.atividades = pt.atividades;
+        this.n_iteracoes = pt.n_iteracoes;
 
     }
-    
-   
 }

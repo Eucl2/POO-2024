@@ -1,62 +1,118 @@
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public abstract class Atividade implements Serializable 
 {
-
+    private int codigo;
     private String nome;
-    private double duracao;
+    private String descricao;
+    private int duracao;
+    private LocalDate data_realizada;
 
     public Atividade() 
     {
-        nome="";
-        duracao=0;
+        codigo = 0;
+        nome= "";
+        descricao= "";
+        duracao= 0;
+        data_realizada= LocalDate.EPOCH;
     }
 
-    public Atividade(String nome, double duracao) 
+    public Atividade(int codigo, String nome, String descricao, double duracao, LocalDate data_realizada) 
     {
+        codigo = codigo;
         nome = nome;
+        descricao = descricao;
         duracao = duracao;
+        data_realizada= data_realizada;
         
     }
     
     public Atividade(Atividade a) 
     {
-        nome = getNomeAtividade();
-        duracao = getDuracaoAtividade();
+        codigo = getCodigo();
+        nome = getNome();
+        descricao = getDescricao();
+        duracao = getDuracao();
+        data_realizada= getDataRealizada();
         
     }
+    
+    public int getCodigo() 
+    {
+        return codigo;
+    }
 
-    public String getNomeAtividade() 
+    public String getNome() 
     {
         return nome;
     }
-
-    public void setNomeAtividade(String nome) 
+    
+    public String getDescricao() 
     {
-        this.nome = nome;
+        return descricao;
     }
-
-    public double getDuracaoAtividade() 
+    
+    public int getDuracao() 
     {
         return duracao;
     }
-
-    public void setDuracaoAtividade(double duracao) 
+    
+    public LocalDate getDataRealizada()
     {
-        this.duracao = duracao;
+        return data_realizada;
+    }
+
+    public void setCodigo(int codigo) 
+    {
+        this.codigo = codigo;
+    }
+    
+    public void setNome(String nome) 
+    {
+        this.nome = nome;
+    }
+    
+    public void setDescricao(String descricao) 
+    {
+        this.descricao = descricao;
+    }
+    
+    public void setDurcacao(int duracao) 
+    {
+        this.duracao= duracao;
+    }
+    
+    public void setDataRealizada(LocalDate data)
+    {
+        this.data_realizada = data;
     }
     
     public abstract Atividade clone();
     
-    
-    public abstract int calcularCalorias(Utilizador utilizador, int freq_cardiaca_atividade);
+    public abstract double calcularCalorias(Utilizador utilizador, int freq_cardiaca_atividade);
     
     @Override
     public String toString() 
     {
         StringBuilder sb = new StringBuilder();
-        sb.append("\nAtividade: ").append(this.nome).append('\n').append("Duracao: ").append(this.duracao).append('\n');
+        sb.append("\nAtividade: ").append(this.nome).append('\n').append("Codigo: ")
+        .append(this.codigo).append('\n').append("\nDescricao: ").append(this.descricao)
+        .append('\n').append("\nDuracao: ").append(this.duracao).append('\n')
+        .append('\n').append("\nData Realizada: ").append(this.data_realizada).append('\n');
         
         return sb.toString();
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Atividade atividade = (Atividade) o;
+        return this.duracao == atividade.getDuracao()
+                && this.codigo == atividade.getCodigo()
+                && this.descricao.equals(atividade.getDescricao())
+                && this.nome.equals(atividade.getNome())
+                && this.data_realizada.equals(atividade.getDataRealizada());
     }
 }

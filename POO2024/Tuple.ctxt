@@ -1,6 +1,0 @@
-#BlueJ class context
-comment0.target=Tuple
-comment0.text=\r\n\ Esta\ class\ so\ serve\ para\ poder\ ter\ tuplos\r\n
-comment1.params=atividade\ numeroRepeticoes
-comment1.target=Tuple(Atividade,\ int)
-numComments=2
