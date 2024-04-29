@@ -85,7 +85,7 @@ public class PlanoTreino implements Serializable
         //a.insereHistoricoDePlanos(this.getNomeAtividade());
     }
     
-    
+    /*
     public void setAtividade(Atividade a) throws AtividadeNaoExisteException
     {
         if(this.atividades.containsKey(a.getCodigo()))
@@ -93,7 +93,9 @@ public class PlanoTreino implements Serializable
         else
             this.atividades.put(a.getCodigo(), a.clone());
     }
-    
+    */
+    /*
+     * Sem utilidade ainda 
     public void removeAtividade(Atividade a) throws AtividadeNaoExisteException
     {
         int n = a.getCodigo();
@@ -103,7 +105,7 @@ public class PlanoTreino implements Serializable
             this.atividades.remove(n);
         }
     }
-    
+    */
     
     public String toString() {
         /*
@@ -143,7 +145,8 @@ public class PlanoTreino implements Serializable
         return new PlanoTreino(campos[0], LocalDate.of(Integer.parseInt(data_execucao[0]), Integer.parseInt(data_execucao[1]), 
       Integer.parseInt(data_execucao[2])), Integer.parseInt(campos[2]));
     }
-    
+    /*
+     * Verificar se é necessario
     public void save() throws IOException {
 
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("PlanoTreinoSave.obj"));
@@ -162,4 +165,5 @@ public class PlanoTreino implements Serializable
         this.n_iteracoes = pt.n_iteracoes;
 
     }
+    */
 }

@@ -195,7 +195,7 @@ public class Controller
                         ap.inserePlanoTreinoNoUtilizador(u.getId(),pt);
                         view.printPlanoTreinoEscolhido(u.getNome(), pt.getNomePlano());
                     } 
-                    catch (PlanoTreinoNaoExisteException | UtilizadorNaoExisteException e) 
+                    catch (PlanoTreinoExisteException | PlanoTreinoNaoExisteException e) 
                     {
                         view.msg(e.getMessage());
                     }

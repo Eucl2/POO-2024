@@ -117,13 +117,13 @@ public class Aplicacao
     }
     
     public void inserePlanoTreinoNoUtilizador(int idUtilizador, PlanoTreino pt)
-            throws UtilizadorNaoExisteException, PlanoTreinoNaoExisteException {
+            throws PlanoTreinoExisteException {
 
-        if (this.utilizadores.containsKey(idUtilizador)) {
+        if (this.planos_treino.containsKey(pt.getNomePlano())) {
             this.utilizadores.get(idUtilizador).adicionaPlanoTreino(pt);
 
         } else
-            throw new UtilizadorNaoExisteException("Utilizador nao existe");
+            throw new PlanoTreinoExisteException("Plano Treino ja adicionado");
         ;// exemption
     }
     
@@ -149,7 +149,8 @@ public class Aplicacao
             throw new PlanoTreinoNaoExisteException("Plano de Treino nao existe");
         ;// exemption
     }
-    
+    /*
+     * Ainda nao tem utilidade por enquanto
     public void removePlanoTreinoDoUtilizador(int idUtilizador, PlanoTreino pt)
             throws UtilizadorNaoExisteException, PlanoTreinoNaoExisteException {
         if (this.utilizadores.containsKey(idUtilizador)) {
@@ -191,7 +192,7 @@ public class Aplicacao
         } else
             throw new AtividadeNaoExisteException("Atividade nao existe"); // exemption
     }
-    
+    */
     public String toString() {
         String r = "\n";
         for (Utilizador u : utilizadores.values()) {

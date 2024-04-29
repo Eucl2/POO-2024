@@ -16,6 +16,7 @@ public class Utilizador implements Serializable
     private double pesoUtilizador;
     private int frequencia_cardiaca_media;
     private TipoAtleta tipo_atleta;
+    private double total_calorias;
     private Map<Integer, Atividade> historico_atividades;
     private Map<String, PlanoTreino> planos_treino;
 
@@ -219,10 +220,14 @@ public class Utilizador implements Serializable
         
     }
     
-    public void adicionaPlanoTreino(PlanoTreino pt) {
-        this.planos_treino.put(pt.getNomePlano(), pt.clone());
+    public void adicionaPlanoTreino(PlanoTreino pt) throws PlanoTreinoExisteException {
+        if (this.planos_treino.containsKey(pt.getNomePlano()))
+            throw new PlanoTreinoExisteException("Plano de Treino ja adicionado");
+        else
+            this.planos_treino.put(pt.getNomePlano(), pt.clone());
 
     }
+    /*
     // verificar se é necessaria
     public void setPlanoTreino(PlanoTreino pt) throws PlanoTreinoExisteException {
         if (this.planos_treino.containsKey(pt.getNomePlano()))
@@ -230,7 +235,9 @@ public class Utilizador implements Serializable
         else
             this.planos_treino.put(pt.getNomePlano(), pt.clone());
     }
-
+    */
+    /* 
+     * Ainda nao utilizadada
     public void removePlanoTreino(PlanoTreino pt) throws PlanoTreinoNaoExisteException {
         String n = pt.getNomePlano();
         if (!this.planos_treino.containsKey(n))
@@ -240,7 +247,7 @@ public class Utilizador implements Serializable
             this.planos_treino.remove(n);
         }
     }
-    
+    */
     public static Utilizador parse(String linha) 
     {
       String[] campo = linha.split(",");
