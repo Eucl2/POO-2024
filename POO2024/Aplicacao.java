@@ -8,7 +8,7 @@ import java.time.LocalDate;
 /**
 Classe que tem acesso a todos os elementos das classes 
  */
-public class Aplicacao
+public class Aplicacao implements Serializable
 {
     private Map<Integer, Utilizador> utilizadores;
     private Map<Integer, Atividade> atividades;

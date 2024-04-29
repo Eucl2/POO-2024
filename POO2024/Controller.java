@@ -13,7 +13,7 @@ public class Controller
         //PlanoTreino novo_plano = new PlanoTreino();
         
         String[] s = { "Log In", "Sign In", "Estatisitica", "Administrador", "Salto Temporal",
-            "Carregar Ficheiro Inicial", "Save", "Load", "Sair" };
+            "Carregar Ficheiro Inicial", "Save", "Load" };
         Menu menu = new Menu(s);
         Scanner sc = new Scanner(System.in);
         View view = new View();
