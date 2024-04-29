@@ -39,7 +39,8 @@ public class Utilizador implements Serializable
 
     public Utilizador(int id, String pass, String nome, String email, String genero,
     LocalDate data_nascimento, double altura, double peso, int freq_cardiaca,
-    TipoAtleta atleta) 
+    TipoAtleta atleta, Map<Integer, Atividade> historico_atividades, 
+    Map<String, PlanoTreino> planos_treino ) 
     {
         id = id;
         password = pass;
@@ -51,8 +52,8 @@ public class Utilizador implements Serializable
         peso = peso;
         frequencia_cardiaca_media = freq_cardiaca;
         tipo_atleta = atleta;
-        historico_atividades = new HashMap<>();
-        planos_treino = new HashMap<>();
+        historico_atividades = historico_atividades;
+        planos_treino = planos_treino;
         
         
     }
@@ -238,7 +239,7 @@ public class Utilizador implements Serializable
     public static Utilizador parse(String linha) 
     {
       String[] campo = linha.split(",");
-      if (campo.length != 9) 
+      if (campo.length != 10) 
       {
         throw new IllegalArgumentException("Input inválido.");
       }
@@ -247,7 +248,7 @@ public class Utilizador implements Serializable
       return new Utilizador(Integer.parseInt(campo[0]), campo[1], campo[2], campo[3], 
       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-      Integer.parseInt(campo[8]), TipoAtleta.valueOf(campo[9]));
+      Integer.parseInt(campo[8]), TipoAtleta.valueOf(campo[9]), new HashMap<>(), new HashMap<>() );
     }
     
     @Override

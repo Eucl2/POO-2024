@@ -80,6 +80,18 @@ public class Corrida extends Atividade
         Double.parseDouble(campos[5]), campos[6], LocalDate.EPOCH);
     }
     
+    public String getTipoAtividade()
+    {
+        return("Corrida");
+    }
+
+    public String caracteristicasExtra()
+    {
+        return "Distancia:" + getDistancia() + "\n" +
+                "Altimetria:" + getAltimetria() + "\n" +
+                "Percurso:" + getPercurso();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

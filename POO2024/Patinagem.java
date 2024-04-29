@@ -67,6 +67,17 @@ public class Patinagem extends Atividade
         campos[5], LocalDate.EPOCH);
     }
     
+    public String getTipoAtividade()
+    {
+        return("Patinagem");
+    }
+
+    public String caracteristicasExtra()
+    {
+        return "Distancia:" + getDistancia() + "\n" +
+                "Percurso:" + getPercurso();
+    }
+    
     
     @Override
     public boolean equals(Object o) {

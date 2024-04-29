@@ -8,7 +8,7 @@ public class Controller
 
     public static void run() throws IOException, ClassNotFoundException 
     {
-        /*
+        
         Aplicacao ap = new Aplicacao();
         //PlanoTreino novo_plano = new PlanoTreino();
         //Utilizador novo_utilizador = new Utilizador();
@@ -49,14 +49,18 @@ public class Controller
                     line = sc.nextLine();
                     String[] all = line.split(",");
                     String[] data_nascimento = all[5].split("-");
-                    Utilizador novo_u = new Utilizador(Integer.parseInt(all[0]), all[1], all[2], all[3], 
+                    Utilizador novoUtilizador = new Utilizador(Integer.parseInt(all[0]), all[1], all[2], all[3], 
                                           all[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                           Integer.parseInt(data_nascimento[2])),Double.parseDouble(all[6]), Double.parseDouble(all[7]), 
-                                          Integer.parseInt(all[8]), TipoAtleta.valueOf(all[9]));
+                                          Integer.parseInt(all[8]), TipoAtleta.valueOf(all[9]), new HashMap<>(), new HashMap<>());
                                           
                     try {
-                        ap.insereUtilizador(novo_u);
-                        view.printCriacaoUtilizador(novo_u.getId());
+                        ap.insereUtilizador(novoUtilizador);
+                        view.printCriacaoUtilizador(novoUtilizador.getId(), novoUtilizador.getPassword(),
+                                    novoUtilizador.getNome(),novoUtilizador.getEmail(),novoUtilizador.getGenero(),
+                                    novoUtilizador.getDataNascimento(),novoUtilizador.getAltura(),
+                                    novoUtilizador.getPeso(),novoUtilizador.getFreqCardiaca(),
+                                    novoUtilizador.getAtleta());
                     } catch (UtilizadorNaoExisteException e) {
                         view.msg(e.getMessage());
                     }
@@ -123,15 +127,21 @@ public class Controller
                 case 2:
 
                     view.msg("Estes sao todos os Planos existentes :D");
-                    view.printAtividades(ap.toStringPlanosTreino());
+                    view.printPlanosTreino(ap.toStringPlanosTreino());
 
                     break;
                 case 3:
                     view.msg("Codigo da Atividade?");
                     line = sc.nextLine();
+                    //metodo questionavel
+                    //char first = line.charAt(0);
                     try {
                         Atividade a = ap.getAtividade(Integer.valueOf(line));
-                        view.printAtividade(a.toString());
+    
+                        view.printAtividade(a.getCodigo(),a.getNome(),
+                        a.getDescricao(),a.getDuracao(),a.caracteristicasExtra(),
+                        a.getDataRealizada());
+                        
                         //falta adicionar cada coisa para dar print,
                         //as toSring extras de cada atividade nas atividades
                     } catch (AtividadeNaoExisteException e) {
@@ -145,7 +155,7 @@ public class Controller
                     try {
                         PlanoTreino pt = ap.getPlanoTreino(line);
                         view.printPlanoTreino(pt.getNome(), pt.getData(),
-                        pt.getIteracoes(), pt.toString2());
+                        pt.getIteracoes(), pt.toString());
                         //verificar outra vez o toString2 de pt
                     } catch (PlanoTreinoNaoExisteException e) {
                         view.msg(e.getMessage());
@@ -165,8 +175,10 @@ public class Controller
                     {
                         Atividade a = ap.getAtividade(Integer.valueOf(line));
                         ap.insereAtividadeNoHistoricoUtilizador(u.getId(),a, dia);
+                        view.printAtividadeRealizada(u.getNome(), dia, 
+                            a.getCodigo(), a.getNome());
                     } 
-                    catch (AtividadeNaoExisteException e) 
+                    catch (AtividadeNaoExisteException | UtilizadorNaoExisteException e) 
                     {
                         view.msg(e.getMessage());
                     }
@@ -180,8 +192,9 @@ public class Controller
                     {
                         PlanoTreino pt = ap.getPlanoTreino(line);
                         ap.inserePlanoTreinoNoUtilizador(u.getId(),pt);
+                        view.printPlanoTreinoEscolhido(u.getNome(), pt.getNome());
                     } 
-                    catch (PlanoTreinoNaoExisteException e) 
+                    catch (PlanoTreinoNaoExisteException | UtilizadorNaoExisteException e) 
                     {
                         view.msg(e.getMessage());
                     }
@@ -248,7 +261,10 @@ public class Controller
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
-                                    view.printCriacaoAtividade(atividade_nova.getCodigo());
+                                    view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
+                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
+                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+
                                 } catch (AtividadeNaoExisteException e) {
                                     view.msg(e.getMessage());
                                 }
@@ -264,7 +280,10 @@ public class Controller
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
-                                    view.printCriacaoAtividade(atividade_nova.getCodigo());
+                                    view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
+                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
+                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+
                                 } catch (AtividadeNaoExisteException e) {
                                     view.msg(e.getMessage());
                                 }
@@ -280,7 +299,10 @@ public class Controller
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
-                                    view.printCriacaoAtividade(atividade_nova.getCodigo());
+                                    view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
+                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
+                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+
                                 } catch (AtividadeNaoExisteException e) {
                                     view.msg(e.getMessage());
                                 }
@@ -296,7 +318,10 @@ public class Controller
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
-                                    view.printCriacaoAtividade(atividade_nova.getCodigo());
+                                    view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
+                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
+                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+
                                 } catch (AtividadeNaoExisteException e) {
                                     view.msg(e.getMessage());
                                 }
@@ -312,7 +337,10 @@ public class Controller
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
-                                    view.printCriacaoAtividade(atividade_nova.getCodigo());
+                                    view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
+                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
+                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+
                                 } catch (AtividadeNaoExisteException e) {
                                     view.msg(e.getMessage());
                                 }
@@ -328,7 +356,10 @@ public class Controller
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
-                                    view.printCriacaoAtividade(atividade_nova.getCodigo());
+                                    view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
+                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
+                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+
                                 } catch (AtividadeNaoExisteException e) {
                                     view.msg(e.getMessage());
                                 }
@@ -344,7 +375,10 @@ public class Controller
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
-                                    view.printCriacaoAtividade(atividade_nova.getCodigo());
+                                    view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
+                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
+                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+
                                 } catch (AtividadeNaoExisteException e) {
                                     view.msg(e.getMessage());
                                 }
@@ -360,7 +394,10 @@ public class Controller
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
-                                    view.printCriacaoAtividade(atividade_nova.getCodigo());
+                                    view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
+                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
+                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+
                                 } catch (AtividadeNaoExisteException e) {
                                     view.msg(e.getMessage());
                                 }
@@ -376,7 +413,10 @@ public class Controller
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
-                                    view.printCriacaoAtividade(atividade_nova.getCodigo());
+                                    view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
+                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
+                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+
                                 } catch (AtividadeNaoExisteException e) {
                                     view.msg(e.getMessage());
                                 }
@@ -394,7 +434,6 @@ public class Controller
                                           Integer.parseInt(all[2])), Integer.parseInt(all[2]));
                     try {
                             ap.inserePlanoTreino(planoTreino_novo);
-                            view.printCriacaoNomePlanoTreino(planoTreino_novo.getNome());
                         } catch (PlanoTreinoNaoExisteException e) {
                             view.msg(e.getMessage());
                         }
@@ -409,11 +448,13 @@ public class Controller
                         try {
                             Atividade a = ap.getAtividade(Integer.valueOf(all[i]));
                             ap.insereAtiviadeNoPlanoTreino(planoTreino_novo.getNome(),a);
-                        } catch (AtividadeNaoExisteException e) {
+                        } catch (AtividadeNaoExisteException | PlanoTreinoNaoExisteException e) {
                             view.msg(e.getMessage());
                         }
                     }
-                    view.printCriacaoPlanoTreino(planoTreino_novo.getNome());
+                    view.printPlanoTreinoCriado(planoTreino_novo.getNome(), 
+                    planoTreino_novo.getData(),planoTreino_novo.getIteracoes(), 
+                    planoTreino_novo.toString());
                     break;
                 case 3:
                     view.msg("Sair do modo Admin:D");
@@ -455,7 +496,7 @@ public class Controller
         } catch (LinhaIncorretaException e) {
             view.msg(e.getMessage());
         }
-        */
+        
     }
     
 }

@@ -52,6 +52,16 @@ public class Abdominais extends Atividade
         LocalDate.EPOCH);
     }
     
+    public String getTipoAtividade()
+    {
+        return("Abdominais");
+    }
+
+    public String caracteristicasExtra()
+    {
+        return "Repeticoes:" + getRepeticoes();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

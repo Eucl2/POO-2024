@@ -200,16 +200,34 @@ public class Aplicacao
         return r;
     }
     
+    public String toStringAtividades()
+    {
+        String r = "\n";
+        for (Atividade a : atividades.values()) {
+            r += a.getCodigo() + " " + a.getNome() + "\n";
+        }
+        return r;
+    }
+    
+    public String toStringPlanosTreino()
+    {
+        String r = "\n";
+        for (PlanoTreino pt : planos_treino.values()) {
+            r += pt.getNome() + "\n";
+        }
+        return r;
+    }
+    
     public void save() throws IOException {
 
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("LigaSave.obj"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("AplicacaoSave.obj"));
         oos.writeObject(this);
         oos.flush();
         oos.close();
     }
     
     public void load() throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("LigaSave.obj"));
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("AplicacaoSave.obj"));
         Aplicacao ap = (Aplicacao) ois.readObject();
         ois.close();
         this.utilizadores = ap.utilizadores;

@@ -67,6 +67,17 @@ public class LevantaPeso extends Atividade
         Double.parseDouble(campos[5]),LocalDate.EPOCH);
     }
     
+    public String getTipoAtividade()
+    {
+        return("LevantaPeso");
+    }
+
+    public String caracteristicasExtra()
+    {
+        return "Repeticoes:" + getRepeticoes() + "\n" +
+                "Peso:" + getPeso();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

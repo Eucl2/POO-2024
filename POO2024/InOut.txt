@@ -1,5 +1,0 @@
-Utilizador:1,Joana,23,joana.silva@gmail.com,,Rua do Comércio 45,172,Amador,54 
-Utilizador:2,Alberto,57,alberto.aguiar@gmail.com,Rua das Alfaces 11,145,Profissional,73
-Utilizador:3,Maria,32,maria1992@yahoo.com,Rua da Paz 27,154,Profissional,45
-Utilizador:4,Pedro,41,pedro08@hotmail.com,Avenida da Liberdade 34,141,Ocasional,112
-Utilizador:5,Ana,20,anappt@gmail.com,Travessa do Azeite 10,129,Ocasional,58

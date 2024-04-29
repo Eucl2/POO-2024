@@ -52,6 +52,16 @@ public class Flexoes extends Atividade
         LocalDate.EPOCH);
     }
     
+    public String getTipoAtividade()
+    {
+        return("Flexoes");
+    }
+
+    public String caracteristicasExtra()
+    {
+        return "Repeticoes:" + getRepeticoes();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

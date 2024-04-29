@@ -66,6 +66,17 @@ public class Remo extends Atividade
         campos[5], LocalDate.EPOCH);
     }
     
+    public String getTipoAtividade()
+    {
+        return("Remo");
+    }
+
+    public String caracteristicasExtra()
+    {
+        return "Distancia:" + getDistancia() + "\n" +
+                "Percurso:" + getPercurso();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -110,7 +110,7 @@ public class PlanoTreino implements Serializable
         "Data:" + data + "\n" + "Numero de Iteracoes:" + n_iteracoes + "\n";
         // String r = "\n";
         for (Atividade a : atividades.values()) {
-            r += a.toString();
+            r += a.toString2() ;
         }
         return r;
     }

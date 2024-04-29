@@ -92,6 +92,11 @@ public abstract class Atividade implements Serializable
     
     public abstract double calcularCalorias(Utilizador utilizador, int freq_cardiaca_atividade);
     
+    public abstract String getTipoAtividade();
+
+    public abstract String caracteristicasExtra();
+    
+    
     @Override
     public String toString() 
     {
@@ -102,6 +107,10 @@ public abstract class Atividade implements Serializable
         .append('\n').append("\nData Realizada: ").append(this.data_realizada).append('\n');
         
         return sb.toString();
+    }
+    
+    public String toString2() {
+        return codigo + " " + nome + "\n";
     }
     
     @Override

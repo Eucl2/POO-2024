@@ -52,6 +52,16 @@ public class Alongamentos extends Atividade
         LocalDate.EPOCH);
     }
     
+    public String getTipoAtividade()
+    {
+        return("Alongamentos");
+    }
+
+    public String caracteristicasExtra()
+    {
+        return "Repeticoes:" + getRepeticoes();
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,0 +1,21 @@
+Utilizador:1,teste1,Joana,joana.silva@gmail.com,F,2000-07-13,1.81,64.9,50,Amador
+Utilizador:2,teste2,Alberto,alberto.silva@gmail.com,M,2000-08-16,1.61,65.9,60,Amador
+Utilizador:3,teste3,Maria,maria.silva@gmail.com,F,2000-09-25,1.41,66.9,90,Profissional
+Utilizador:4,teste4,Pedro,pedro.silva@gmail.com,M,2000-06-22,1.71,70,80,Ocasional
+Utilizador:5,teste5,Ana,ana.silva@gmail.com,F,2000-05-12,1.50,69.6,70,Profissional
+Corrida:31,Corrida Matinal,Pequena corrida para iniciantes,2,10,5,6 voltas ao parque da cidade
+Remo:21,Paceio de Barco,Para iniciantes,2,15.3, tres voltas ao lago
+Patinagem:11,Paceio de Patins,Para iniciantes,2,20, tres voltas ao ringue
+Bicicleta:41,Bicicleta de Monte,Para iniciantes,2,20,5,7 voltas pelo monte
+Abdominais:51,Abs de verao,Para iniciantes,2,30
+LevantaPeso:71,Biceps,Para iniciantes,2,20,12
+Alongamentos:61,Yoga,Para iniciantes,2,40
+ExtensaoPernas:81,Leg Day,Para iniciantes,2,20,50
+Flexoes:91,Projeto Verao,Para iniciantes,3,60
+PlanoTreino:Bem Estar,2024-04-29,1
+Bicicleta:41,Bicicleta de Monte,Para iniciantes,2,20,5,7 voltas pelo monte
+Alongamentos:61,Yoga,Para iniciantes,2,40
+PlanoTreino:Verao Incoming,2024-05-29,2
+ExtensaoPernas:81,Leg Day,Para iniciantes,2,20,50
+Flexoes:91,Projeto Verao,Para iniciantes,3,60
+Abdominais:51,Abs de verao,Para iniciantes,2,30
