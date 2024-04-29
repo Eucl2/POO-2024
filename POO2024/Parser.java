@@ -172,7 +172,7 @@ public class Parser
                     break;
                  case "PlanoTreino":
                     PlanoTreino pt = PlanoTreino.parse(linhaPartida[1]);
-                    planostreino.put(pt.getNome(), pt);
+                    planostreino.put(pt.getNomePlano(), pt);
                     novoplano = pt;
                     break;
                 default:
@@ -210,7 +210,7 @@ public class Parser
     
     public Map<String , PlanoTreino> getPlanosTreino()
     {
-        return this.planostreino.values().stream().collect(Collectors.toMap(pt -> pt.getNome(), pt -> pt.clone()));
+        return this.planostreino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
     }
     
 }

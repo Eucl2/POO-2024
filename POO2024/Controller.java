@@ -11,7 +11,6 @@ public class Controller
         
         Aplicacao ap = new Aplicacao();
         //PlanoTreino novo_plano = new PlanoTreino();
-        //Utilizador novo_utilizador = new Utilizador();
         
         String[] s = { "Log In", "Sign In", "Estatisitica", "Administrador", "Salto Temporal",
             "Carregar Ficheiro Inicial", "Save", "Load", "Sair" };
@@ -20,6 +19,7 @@ public class Controller
         View view = new View();
         String line;
         String line2;
+        Utilizador novoU = null;
         int op= -1;
         while (op != 0)
         {
@@ -49,18 +49,19 @@ public class Controller
                     line = sc.nextLine();
                     String[] all = line.split(",");
                     String[] data_nascimento = all[5].split("-");
-                    Utilizador novoUtilizador = new Utilizador(Integer.parseInt(all[0]), all[1], all[2], all[3], 
+                    
+                    novoU = new Utilizador(Integer.parseInt(all[0]), all[1], all[2], all[3], 
                                           all[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                           Integer.parseInt(data_nascimento[2])),Double.parseDouble(all[6]), Double.parseDouble(all[7]), 
-                                          Integer.parseInt(all[8]), TipoAtleta.valueOf(all[9]), new HashMap<>(), new HashMap<>());
-                                          
+                                          Integer.parseInt(all[8]), TipoAtleta.valueOf(all[9]));
+                    
                     try {
-                        ap.insereUtilizador(novoUtilizador);
-                        view.printCriacaoUtilizador(novoUtilizador.getId(), novoUtilizador.getPassword(),
-                                    novoUtilizador.getNome(),novoUtilizador.getEmail(),novoUtilizador.getGenero(),
-                                    novoUtilizador.getDataNascimento(),novoUtilizador.getAltura(),
-                                    novoUtilizador.getPeso(),novoUtilizador.getFreqCardiaca(),
-                                    novoUtilizador.getAtleta());
+                        ap.insereUtilizador(novoU);
+                        view.printCriacaoUtilizador(novoU.getId(), novoU.getPassword(),
+                                    novoU.getNome(),novoU.getEmail(),novoU.getGenero(),
+                                    novoU.getDataNascimento(),novoU.getAltura(),
+                                    novoU.getPeso(),novoU.getFreqCardiaca(),
+                                    novoU.getAtleta());
                     } catch (UtilizadorNaoExisteException e) {
                         view.msg(e.getMessage());
                     }
@@ -106,7 +107,7 @@ public class Controller
     
     public static void menuUtilizador(Aplicacao ap, Utilizador u) {
         String[] s = { "Ver Atividades", "Ver Planos Treino", "Pesquisar Atividade", "Pesquisar Plano", "Registar Atividade Realizada",
-                "Escolher Plano de Treino", "Log out" };
+                "Escolher Plano de Treino", "Historico de Ativiades Realizadas", "Os Meus Planos Treino", " O Meu Prefil"};
         Menu menuCriar = new Menu(s);
         int op = -1;
         Scanner sc = new Scanner(System.in);
@@ -154,7 +155,7 @@ public class Controller
                     line = sc.nextLine();
                     try {
                         PlanoTreino pt = ap.getPlanoTreino(line);
-                        view.printPlanoTreino(pt.getNome(), pt.getData(),
+                        view.printPlanoTreino(pt.getNomePlano(), pt.getData(),
                         pt.getIteracoes(), pt.toString());
                         //verificar outra vez o toString2 de pt
                     } catch (PlanoTreinoNaoExisteException e) {
@@ -192,7 +193,7 @@ public class Controller
                     {
                         PlanoTreino pt = ap.getPlanoTreino(line);
                         ap.inserePlanoTreinoNoUtilizador(u.getId(),pt);
-                        view.printPlanoTreinoEscolhido(u.getNome(), pt.getNome());
+                        view.printPlanoTreinoEscolhido(u.getNome(), pt.getNomePlano());
                     } 
                     catch (PlanoTreinoNaoExisteException | UtilizadorNaoExisteException e) 
                     {
@@ -202,7 +203,27 @@ public class Controller
 
                     break;
                 case 7:
-                    view.msg("Volte Sempre :D");
+                    try
+                    {
+                        Utilizador up = ap.getUtilizador(u.getId(),u.getPassword());
+                        view.printHistoricoUtilizador(up.getId(), up.getNome(),
+                        up.getAtleta(), up.toStringHistorico());
+                    }
+                    catch (UtilizadorNaoExisteException e)
+                    {
+                        view.msg(e.getMessage());
+                    }
+                    break;
+                case 8:
+                    view.printPlanosTreinoUtilizador(u.getId(), u.getNome(),
+                        u.getAtleta(), u.toStringPlanosTreinoU());
+                    break;
+                case 9:
+                    view.printUtilizador(u.getId(), u.getPassword(), u.getNome(),
+                        u.getEmail(), u.getGenero(),u.getDataNascimento(),
+                        u.getAltura(), u.getPeso(), u.getFreqCardiaca(),
+                        u.getAtleta());
+                
                     break;
             }
         }
@@ -230,7 +251,7 @@ public class Controller
     }
     
     public static void menuAdministrador(Aplicacao ap) {
-        String[] s = { "Criar Atividade, Criar Plano, Sair"};
+        String[] s = { "Criar Atividade", "Criar Plano", "Sair"};
         Menu menuVer = new Menu(s);
         int op = -1;
         Scanner sc = new Scanner(System.in);
@@ -245,6 +266,7 @@ public class Controller
             System.out.println(op);
             switch (op) {
                 case 1:
+                
                     view.msg("Qual o tipo de atividade? :D");
                     view.msg("Patinagem, Remo, Corrida, Bicicleta, Abdominais, Alongamentos, LevantaPeso, ExtensaoPernas, Flexoes");
                     line = sc.nextLine();
@@ -424,16 +446,19 @@ public class Controller
                         
                     }
                     break;
+                    
                 case 2:
                     view.msg("Siga os passos para criar o Plano de Treino :D");
                     view.msg("Nome,Data de Execucao(ano-mes-dia),Iteracoes das Atividades");
                     line = sc.nextLine();
                     all = line.split(",");
                     String[] data_execucao = all[1].split("-");
-                    planoTreino_novo = new PlanoTreino(all[0], LocalDate.of(Integer.parseInt(all[0]), Integer.parseInt(all[1]), 
-                                          Integer.parseInt(all[2])), Integer.parseInt(all[2]));
+                    planoTreino_novo = new PlanoTreino(all[0], LocalDate.of(Integer.parseInt(data_execucao[0]), Integer.parseInt(data_execucao[1]), 
+                                          Integer.parseInt(data_execucao[2])), Integer.parseInt(all[2]));
                     try {
                             ap.inserePlanoTreino(planoTreino_novo);
+                            view.printPlanoTreinoCriado(planoTreino_novo.getNomePlano(), 
+                    planoTreino_novo.getData(),planoTreino_novo.getIteracoes());
                         } catch (PlanoTreinoNaoExisteException e) {
                             view.msg(e.getMessage());
                         }
@@ -447,15 +472,15 @@ public class Controller
                     {
                         try {
                             Atividade a = ap.getAtividade(Integer.valueOf(all[i]));
-                            ap.insereAtiviadeNoPlanoTreino(planoTreino_novo.getNome(),a);
+                            ap.insereAtiviadeNoPlanoTreino(planoTreino_novo.getNomePlano(),a);
+                            view.printAtividadeAdicionada(a.toString2());
                         } catch (AtividadeNaoExisteException | PlanoTreinoNaoExisteException e) {
                             view.msg(e.getMessage());
                         }
                     }
-                    view.printPlanoTreinoCriado(planoTreino_novo.getNome(), 
-                    planoTreino_novo.getData(),planoTreino_novo.getIteracoes(), 
-                    planoTreino_novo.toString());
+                    
                     break;
+                    
                 case 3:
                     view.msg("Sair do modo Admin:D");
                     break;

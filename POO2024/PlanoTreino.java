@@ -22,23 +22,23 @@ public class PlanoTreino implements Serializable
         this.n_iteracoes = 0;
     }
 
-    public PlanoTreino(String nome, LocalDate data, int iteracoes) 
+    public PlanoTreino(String n, LocalDate data_executar, int it) 
     {
-        this.nome = nome;
-        this.data = data;
+        this.nome = n;
+        this.data = data_executar;
         this.atividades = new HashMap<>();
-        this.n_iteracoes = iteracoes;
+        this.n_iteracoes = it;
     }
     
     public PlanoTreino(PlanoTreino pt) 
     {
-        this.nome = pt.getNome();
+        this.nome = pt.getNomePlano();
         this.data = pt.getData();
         this.atividades= pt.getAtividades();
         this.n_iteracoes = pt.getIteracoes();
     }
     
-    public String getNome()
+    public String getNomePlano()
     {
         return nome;
     }
@@ -106,9 +106,12 @@ public class PlanoTreino implements Serializable
     
     
     public String toString() {
+        /*
         String r = "Plano de treino:" + nome + "\n" +
         "Data:" + data + "\n" + "Numero de Iteracoes:" + n_iteracoes + "\n";
         // String r = "\n";
+        */
+        String r = "\n";
         for (Atividade a : atividades.values()) {
             r += a.toString2() ;
         }
@@ -127,7 +130,7 @@ public class PlanoTreino implements Serializable
         if (obj == null || obj.getClass() != this.getClass())
             return false;
         PlanoTreino pt = (PlanoTreino) obj;
-        return pt.getNome().equals(this.nome)
+        return pt.getNomePlano().equals(this.nome)
         && pt.getData().equals(this.data)
         && pt.getAtividades().equals(this.atividades)
         && pt.getIteracoes() == (this.n_iteracoes);

@@ -18,23 +18,23 @@ public abstract class Atividade implements Serializable
         data_realizada= LocalDate.EPOCH;
     }
 
-    public Atividade(int codigo, String nome, String descricao, double duracao, LocalDate data_realizada) 
+    public Atividade(int c, String n, String des, int dura, LocalDate data) 
     {
-        codigo = codigo;
-        nome = nome;
-        descricao = descricao;
-        duracao = duracao;
-        data_realizada= data_realizada;
+        codigo = c;
+        nome = n;
+        descricao = des;
+        duracao = dura;
+        data_realizada= data;
         
     }
     
     public Atividade(Atividade a) 
     {
-        codigo = getCodigo();
-        nome = getNome();
-        descricao = getDescricao();
-        duracao = getDuracao();
-        data_realizada= getDataRealizada();
+        codigo = a.getCodigo();
+        nome = a.getNome();
+        descricao = a.getDescricao();
+        duracao = a.getDuracao();
+        data_realizada= a.getDataRealizada();
         
     }
     
@@ -63,24 +63,24 @@ public abstract class Atividade implements Serializable
         return data_realizada;
     }
 
-    public void setCodigo(int codigo) 
+    public void setCodigo(int cod) 
     {
-        this.codigo = codigo;
+        this.codigo = cod;
     }
     
-    public void setNome(String nome) 
+    public void setNome(String n) 
     {
-        this.nome = nome;
+        this.nome = n;
     }
     
-    public void setDescricao(String descricao) 
+    public void setDescricao(String des) 
     {
-        this.descricao = descricao;
+        this.descricao = des;
     }
     
-    public void setDurcacao(int duracao) 
+    public void setDurcacao(int dura) 
     {
-        this.duracao= duracao;
+        this.duracao= dura;
     }
     
     public void setDataRealizada(LocalDate data)
@@ -100,13 +100,13 @@ public abstract class Atividade implements Serializable
     @Override
     public String toString() 
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\nAtividade: ").append(this.nome).append('\n').append("Codigo: ")
-        .append(this.codigo).append('\n').append("\nDescricao: ").append(this.descricao)
-        .append('\n').append("\nDuracao: ").append(this.duracao).append('\n')
-        .append('\n').append("\nData Realizada: ").append(this.data_realizada).append('\n');
-        
-        return sb.toString();
+        return "Atividade:" + "\n" +
+                "Codigo:" + codigo + "\n" +
+                "Nome:" + nome + "\n" +
+                "Descricao:" + descricao + "\n" +
+                "Duracao:" + duracao + "\n" +
+                caracteristicasExtra() + "\n" +
+                "Data de Realizacao:" + data_realizada + "\n";
     }
     
     public String toString2() {

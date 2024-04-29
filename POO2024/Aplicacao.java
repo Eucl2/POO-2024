@@ -21,21 +21,27 @@ public class Aplicacao
         this.atividades = new HashMap<>();
     }
     
-    public Aplicacao(Map<Integer, Utilizador> utilizadores, Map<Integer, Atividade> atividades,
-    Map<String,PlanoTreino> planos_treino)
+    public Aplicacao(Map<Integer, Utilizador> nutilizadores, Map<Integer, Atividade> natividades,
+    Map<String,PlanoTreino> nplanos_treino)
     {
-        this.utilizadores = utilizadores.values().stream().collect(Collectors.toMap(u -> u.getId(), u -> u.clone()));
-        this.atividades = atividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
-        this.planos_treino = planos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNome(), pt -> pt.clone()));
+        this.utilizadores = nutilizadores.values().stream().collect(Collectors.toMap(u -> u.getId(), u -> u.clone()));
+        this.atividades = natividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
+        this.planos_treino = nplanos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
     }
     
     public Utilizador getUtilizador(int id, String pass) throws UtilizadorNaoExisteException 
     {
         Utilizador utilizador = this.utilizadores.get(id);
-        if (utilizador == null || utilizador.getPassword() != pass)
-            throw new UtilizadorNaoExisteException("Utilizador nao existe ou password errada");
+        if (utilizador == null )
+            throw new UtilizadorNaoExisteException("Utilizador nao existe ");
+    
         else
-            return utilizador.clone();
+        {
+            if(utilizador.getPassword().equals(pass))
+                return utilizador.clone();
+            else
+                throw new UtilizadorNaoExisteException("A password esta errada" );
+        }
     }
     
     public Atividade getAtividade(int codigo) throws AtividadeNaoExisteException 
@@ -68,7 +74,7 @@ public class Aplicacao
     
     public Map<String , PlanoTreino> getPlanosTreino()
     {
-        return this.planos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNome(), pt -> pt.clone()));
+        return this.planos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
     }
     
     public void setUtilizadores(Map<Integer, Utilizador> nutilizadores) {
@@ -80,7 +86,7 @@ public class Aplicacao
     }
     
     public void setPlanosTreino(Map<String, PlanoTreino> nplanostreino) {
-        this.planos_treino = nplanostreino.values().stream().collect(Collectors.toMap(pt -> pt.getNome(), pt -> pt.clone()));
+        this.planos_treino = nplanostreino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
     }
     
     public void insereUtilizador(Utilizador utilizador) throws UtilizadorNaoExisteException 
@@ -103,10 +109,10 @@ public class Aplicacao
     
     public void inserePlanoTreino(PlanoTreino plano_treino) throws PlanoTreinoNaoExisteException 
     {
-        if (this.planos_treino.containsKey(plano_treino.getNome()))
+        if (this.planos_treino.containsKey(plano_treino.getNomePlano()))
             throw new PlanoTreinoNaoExisteException("Plano de Treino ja existe");
         else 
-            this.planos_treino.put(plano_treino.getNome(),plano_treino.clone());
+            this.planos_treino.put(plano_treino.getNomePlano(),plano_treino.clone());
     
     }
     
@@ -163,8 +169,8 @@ public class Aplicacao
     }
     
     public void removePlanoTreino(PlanoTreino plano_treino) throws PlanoTreinoNaoExisteException {
-        if (this.planos_treino.containsKey(plano_treino.getNome())) {
-            this.planos_treino.remove(plano_treino.getNome());
+        if (this.planos_treino.containsKey(plano_treino.getNomePlano())) {
+            this.planos_treino.remove(plano_treino.getNomePlano());
 
         } else
             throw new PlanoTreinoNaoExisteException("PlanoTreino nao existe"); // exemption
@@ -213,7 +219,7 @@ public class Aplicacao
     {
         String r = "\n";
         for (PlanoTreino pt : planos_treino.values()) {
-            r += pt.getNome() + "\n";
+            r += pt.getNomePlano() + "\n";
         }
         return r;
     }
