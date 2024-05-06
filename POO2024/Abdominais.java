@@ -14,9 +14,9 @@ public class Abdominais extends Atividade
     }
     
     public Abdominais(int codigo, String nome, String descricao, int duracao,
-    int repeticoes, LocalDate data_realizada) 
+    int repeticoes, LocalDate data_realizada, int freq_atv, double cal) 
     {
-        super(codigo, nome, descricao, duracao, data_realizada);
+        super(codigo, nome, descricao, duracao, data_realizada, freq_atv, cal);
         this.repeticoes = repeticoes;
 
     }
@@ -49,7 +49,7 @@ public class Abdominais extends Atividade
 
         return new Abdominais(Integer.parseInt(campos[0]),campos[1],
         campos[2],Integer.parseInt(campos[3]),Integer.parseInt(campos[4]),
-        LocalDate.EPOCH);
+        null, 0 , 0);
     }
     
     public String getTipoAtividade()
@@ -74,17 +74,23 @@ public class Abdominais extends Atividade
     @Override
     public String toString() 
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\nAbdominais: ").append(super.toString()).append('\n').append("Repeticoes: ")
-        .append(this.repeticoes).append('\n');
-        
-        return sb.toString();
+        return "---Abdominais---" + "\n" +
+                super.toString() + 
+                "Repeticoes:" + this.repeticoes + "\n";
     }
 
     
     @Override
-    public double calcularCalorias(Utilizador utilizador, int freq_cardiaca_atividade) {
-        double calorias = repeticoes*(utilizador.getPeso())*getDuracao();
+    public double calcularCalorias(Utilizador utilizador) {
+        int freq_ativ = super.getFreqCardiaAtividade();
+        double fator = utilizador.getFatorMultiplicativo();
+        int freq_med = utilizador.getFreqCardiaca();
+        int tempo = super.getDuracao();
+        int rep = getRepeticoes();
+        
+        
+        double calorias = ((0.035 * fator) * (freq_med + (0.12 * freq_ativ)) * tempo / 60.0) + ((0.75 * rep));
+        
         return calorias;
     }
 

@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class Parser 
 {
-    private Map<Integer, Utilizador> utilizadores;
+    private Map<String, Utilizador> utilizadores;
     private Map<Integer, Atividade> atividades;
     private Map<String, PlanoTreino> planostreino;
 
@@ -25,15 +25,45 @@ public class Parser
         this.planostreino = new HashMap<>();
         PlanoTreino novoplano = null;
         Atividade a = null;
+        Utilizador u = null;
         String[] linhaPartida;
         for (String linha : linhas) 
         {
             linhaPartida = linha.split(":", 2);
             switch (linhaPartida[0]) 
             {
-                case "Utilizador":
-                    Utilizador u = Utilizador.parse(linhaPartida[1]);
-                    utilizadores.put(u.getId(), u);
+                case "Amador":
+                    u = Amador.parse(linhaPartida[1]);
+                    if(this.utilizadores.containsKey(u.getNick()))
+                    {
+                        throw new LinhaIncorretaException();
+                    }
+                    else
+                    {
+                        utilizadores.put(u.getNick(), u);
+                    }
+                    break;
+                case "Profissional":
+                    u = Profissional.parse(linhaPartida[1]);
+                    if(this.utilizadores.containsKey(u.getNick()))
+                    {
+                        throw new LinhaIncorretaException();
+                    }
+                    else
+                    {
+                        utilizadores.put(u.getNick(), u);
+                    }
+                    break;
+                case "Ocasional":
+                    u = Ocasional.parse(linhaPartida[1]);
+                    if(this.utilizadores.containsKey(u.getNick()))
+                    {
+                        throw new LinhaIncorretaException();
+                    }
+                    else
+                    {
+                        utilizadores.put(u.getNick(), u);
+                    }
                     break;
                 case "Corrida":
                     a = Corrida.parse(linhaPartida[1]);
@@ -198,9 +228,9 @@ public class Parser
         return lines;
     }
     
-    public Map<Integer, Utilizador> getUtilizadores()
+    public Map<String, Utilizador> getUtilizadores()
     {
-        return this.utilizadores.values().stream().collect(Collectors.toMap(u -> u.getId(), u -> u.clone()));
+        return this.utilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
     }
     
     public Map<Integer, Atividade> getAtividades()

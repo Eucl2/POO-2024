@@ -4,9 +4,9 @@ import java.util.stream.Collectors;
 import java.util.*;
 import java.time.LocalDate;
 
-public class Utilizador implements Serializable 
+public abstract class  Utilizador implements Serializable 
 {
-    private int idUtilizador;
+    private String nickname;
     private String password;
     private String nomeUtilizador;
     private String emailUtilizador;
@@ -15,34 +15,34 @@ public class Utilizador implements Serializable
     private double alturaUtilizador;
     private double pesoUtilizador;
     private int frequencia_cardiaca_media;
-    private TipoAtleta tipo_atleta;
+    private double fator_multiplicativo;
     private double total_calorias;
-    private Map<Integer, Atividade> historico_atividades;
+    private List<Atividade> historico_atividades;
     private Map<String, PlanoTreino> planos_treino;
 
     public Utilizador() 
     {
-        idUtilizador = 0;
-        password = "";
-        nomeUtilizador = "";
-        emailUtilizador = "";
-        generoUtilizador = "";
-        data_nascimento = LocalDate.EPOCH;
-        alturaUtilizador = 0;
-        pesoUtilizador = 0;
-        frequencia_cardiaca_media = 0;
-        tipo_atleta = null;
-        historico_atividades = new HashMap<>();
-        planos_treino = new HashMap<>();
+        this.nickname = "";
+        this.password = "";
+        this.nomeUtilizador = "";
+        this.emailUtilizador = "";
+        this.generoUtilizador = "";
+        this.data_nascimento = LocalDate.EPOCH;
+        this.alturaUtilizador = 0;
+        this.pesoUtilizador = 0;
+        this.frequencia_cardiaca_media = 0;
+        this.fator_multiplicativo = 0;
+        this.total_calorias =0;
+        this.historico_atividades = new ArrayList<>();
+        this.planos_treino = new HashMap<>();
         
         
     }
 
-    public Utilizador(int id, String pass, String nome, String email, String genero,
-    LocalDate data, double altura, double peso, int freq_cardiaca,
-    TipoAtleta atleta) 
+    public Utilizador(String nick, String pass, String nome, String email, String genero,
+    LocalDate data, double altura, double peso, int freq_cardiaca, double calorias, ArrayList<Atividade> historico, HashMap<String,PlanoTreino> planos) 
     {
-        idUtilizador = id;
+        nickname = nick;
         password = pass;
         nomeUtilizador = nome;
         emailUtilizador = email;
@@ -51,16 +51,17 @@ public class Utilizador implements Serializable
         alturaUtilizador = altura;
         pesoUtilizador = peso;
         frequencia_cardiaca_media = freq_cardiaca;
-        tipo_atleta = atleta;
-        historico_atividades = new HashMap<>();
-        planos_treino = new HashMap<>();
+        fator_multiplicativo = this.calculaFator();
+        total_calorias = calorias;
+        this.historico_atividades = historico;
+        this.planos_treino = planos;
         
         
     }
 
     public Utilizador(Utilizador u) 
     {
-        idUtilizador = u.getId();
+        nickname = u.getNick();
         password = u.getPassword();
         nomeUtilizador = u.getNome();
         emailUtilizador = u.getEmail();
@@ -69,14 +70,18 @@ public class Utilizador implements Serializable
         alturaUtilizador = u.getAltura();
         pesoUtilizador = u.getPeso();
         frequencia_cardiaca_media = u.getFreqCardiaca();
-        tipo_atleta = u.getAtleta();
+        fator_multiplicativo = u.getFatorMultiplicativo();
+        total_calorias = u.getTotalCalorias();
         historico_atividades = u.getHistorico();
         planos_treino = u.getPlanosTreino();
     }
     
-    public int getId() 
+    //calcular fator
+    public abstract double calculaFator();
+    
+    public String getNick() 
     {
-        return idUtilizador;
+        return nickname;
     }
 
     public String getPassword() 
@@ -119,14 +124,19 @@ public class Utilizador implements Serializable
         return frequencia_cardiaca_media;
     }
     
-    public TipoAtleta getAtleta() 
+    public double getFatorMultiplicativo()
     {
-        return tipo_atleta;
+        return this.fator_multiplicativo;
     }
     
-    public Map<Integer, Atividade> getHistorico() 
+    public double getTotalCalorias() 
     {
-       return this.historico_atividades.values().stream().collect(Collectors.toMap(u -> u.getCodigo(), u -> u.clone()));
+        return total_calorias;
+    }
+    
+    public List<Atividade> getHistorico() 
+    {
+       return historico_atividades;
     }
     
     public Map<String, PlanoTreino> getPlanosTreino() 
@@ -135,9 +145,9 @@ public class Utilizador implements Serializable
 
     }
     
-    public void setId(int id) 
+    public void setNick(String nick) 
     {
-        this.idUtilizador = id;
+        this.nickname = nick;
     }
 
     public void setPassword(String pass) 
@@ -170,26 +180,36 @@ public class Utilizador implements Serializable
         this.alturaUtilizador = altura;
     }
     
-    public void getPeso(double peso) 
+    public void setPeso(double peso) 
     {
         this.pesoUtilizador = peso;
     }
     
-    public void getFreqCardiaca(int freq) 
+    public void setFreqCardiaca(int freq) 
     {
         this.frequencia_cardiaca_media = freq;
     }
     
-    public void setAtleta(TipoAtleta atleta) 
+    //rever
+    public void setFatorMultiplicativo(double fm)
     {
-        this.tipo_atleta = atleta;
+        this.fator_multiplicativo = fm;
     }
     
-    public void setHistorico(Map<Integer, Atividade> historico) 
+    public void setCaloriasGastas(double calorias)
     {
-        this.historico_atividades = historico.values().stream()
-                .collect(Collectors.toMap(u -> u.getCodigo(), u -> u.clone()));
-                //rever
+        this.total_calorias  = calorias;
+    }
+    
+    //rever, mas tem base no ficheiro do store
+    public void addCaloriasGastas(double calorias) 
+    {
+        this.total_calorias += calorias;
+    }
+    
+    public void setHistorico(List<Atividade> historico) 
+    {
+        this.historico_atividades = historico;
     }
     
     public void setPlanosTreino(Map<String, PlanoTreino> planos_treino) 
@@ -199,27 +219,28 @@ public class Utilizador implements Serializable
                 //rever
     }
     
-    public Utilizador clone()
-    {
-        return new Utilizador(this);
-    }
+    public abstract Utilizador clone();
+    
+    public abstract String getTipoUtilizador();
+
+    public abstract String caracteristicasUExtra();
     
     //eu nao sei se a parte de mudar a data é aceitavel
-    public void realizaAtividade(Atividade a, LocalDate d)
+    public abstract void realizaAtividade(Atividade a, Utilizador u, LocalDate d, int freq_atv);
+    /*
     {
-        this.historico_atividades.put(a.getCodigo(), a.clone());
-        /*
+        this.historico_atividades.add(a.clone());
+    
         if (this.historico_atividades.containsKey(a.getCodigo()))
         {
             this.historico_atividades.get(a.getCodigo()).setDataRealizada(d);
         }
-        */
+        
         //alterar a data
-        this.historico_atividades.get(a.getCodigo()).setDataRealizada(d);
-        
-        
-    }
-    
+        //this.historico_atividades.get(a.getCodigo()).setDataRealizada(d);
+    */   
+    public abstract void adicionaPlanoTreino(PlanoTreino pt) throws PlanoTreinoExisteException;    
+    /*
     public void adicionaPlanoTreino(PlanoTreino pt) throws PlanoTreinoExisteException {
         if (this.planos_treino.containsKey(pt.getNomePlano()))
             throw new PlanoTreinoExisteException("Plano de Treino ja adicionado");
@@ -227,8 +248,9 @@ public class Utilizador implements Serializable
             this.planos_treino.put(pt.getNomePlano(), pt.clone());
 
     }
-    /*
+    */
     // verificar se é necessaria
+    /*
     public void setPlanoTreino(PlanoTreino pt) throws PlanoTreinoExisteException {
         if (this.planos_treino.containsKey(pt.getNomePlano()))
             throw new PlanoTreinoExisteException("Plano de Treino ja adicionado");
@@ -248,10 +270,11 @@ public class Utilizador implements Serializable
         }
     }
     */
+    /*
     public static Utilizador parse(String linha) 
     {
       String[] campo = linha.split(",");
-      if (campo.length != 10) 
+      if (campo.length != 9) 
       {
         throw new IllegalArgumentException("Input inválido.");
       }
@@ -260,13 +283,13 @@ public class Utilizador implements Serializable
       return new Utilizador(Integer.parseInt(campo[0]), campo[1], campo[2], campo[3], 
       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-      Integer.parseInt(campo[8]), TipoAtleta.valueOf(campo[9]));
+      Integer.parseInt(campo[8]));
     }
-    
+    */
     @Override
     public String toString() 
     {
-        String r =  "Id:" + idUtilizador + "\n" +
+        String r =  "NickName:" + nickname + "\n" +
                     "Password:" + password + "\n" +
                     "Nome:" + nomeUtilizador + "\n" +
                     "Email:" + emailUtilizador + "\n" +
@@ -275,11 +298,13 @@ public class Utilizador implements Serializable
                     "Altura:" + alturaUtilizador + "\n" +
                     "Peso:" + pesoUtilizador + "\n" +
                     "Frequencia Cardiaca Media:" + frequencia_cardiaca_media+ "\n" +
-                    "Tipo de Atleta:" + tipo_atleta + "\n" +
+                    "Fator Multiplicativo: " + fator_multiplicativo + "\n" +
+                    caracteristicasUExtra() + "\n" +
+                    "Total de Calorias: "+ total_calorias + "\n" ;
                     
-                    
+        /*          
                     "Historico:" + "\n" ;
-        for(Atividade a : historico_atividades.values())
+        for(Atividade a : historico_atividades)
         {
             r += a.toString();
         }
@@ -288,7 +313,7 @@ public class Utilizador implements Serializable
         {
             r += pt.toString();
         }
-               
+        */    
         return r;
     }
     
@@ -300,9 +325,9 @@ public class Utilizador implements Serializable
         "Historico de Atividades:" + "\n";
         */
         String r = "\n";
-        for(Atividade a : historico_atividades.values())
+        for(Atividade a : historico_atividades)
         {
-            r += a.toString2() + "\n";
+            r += a.toString() + "\n";
         }
         return r;
     }
@@ -322,19 +347,21 @@ public class Utilizador implements Serializable
         return r;
     }
     
-    
+    @Override
     public boolean equals(Object obj) {
         if (obj == this)
             return true;
         if (obj == null || obj.getClass() != this.getClass())
             return false;
         Utilizador u = (Utilizador) obj;
-        return u.getId() == (this.idUtilizador) && u.getPassword().equals(this.password) 
+        return u.getNick() == (this.nickname) && u.getPassword().equals(this.password) 
             && u.getNome().equals(this.nomeUtilizador) && u.getEmail().equals(this.emailUtilizador)
             && u.getGenero().equals(this.generoUtilizador) && u.getDataNascimento().equals(this.data_nascimento)
             && u.getAltura() == (this.alturaUtilizador) && u.getPeso() == (this.pesoUtilizador)
             && u.getFreqCardiaca() == (this.frequencia_cardiaca_media)
-            && u.getAtleta().equals(this.tipo_atleta) && u.getHistorico().equals(this.historico_atividades)
+            && u.getFatorMultiplicativo() == (this.fator_multiplicativo)
+            && u.getTotalCalorias() == (this.total_calorias) 
+            && u.getHistorico().equals(this.historico_atividades)
             && u.getPlanosTreino().equals(this.planos_treino);
 
     }

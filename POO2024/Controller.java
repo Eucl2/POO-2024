@@ -9,7 +9,7 @@ public class Controller
     public static void run() throws IOException, ClassNotFoundException 
     {
         
-        Aplicacao ap = new Aplicacao();
+        FitnessApp ap = new FitnessApp();
         //PlanoTreino novo_plano = new PlanoTreino();
         
         String[] s = { "Log In", "Sign In", "Estatisitica", "Administrador", "Salto Temporal",
@@ -19,6 +19,8 @@ public class Controller
         View view = new View();
         String line;
         String line2;
+        String[] campo;
+        String[] data_nascimento;
         Utilizador novoU = null;
         int op= -1;
         while (op != 0)
@@ -29,13 +31,13 @@ public class Controller
            
            switch (op) {
                 case 1:
-                    view.msg("Insira o seu Id e Password :D");
-                    view.msg("Id do Utilizadro: ");
+                    view.msg("Insira o seu Nickname e Password :D");
+                    view.msg("Nickname: ");
                     line = sc.nextLine();
                     view.msg("Password: ");
                     line2 = sc.nextLine();
                     try {
-                        Utilizador u = ap.getUtilizador(Integer.valueOf(line), line2);
+                        Utilizador u = ap.getUtilizador(line, line2);
                         menuUtilizador(ap,u);
                     } catch (UtilizadorNaoExisteException e) {
                         view.msg(e.getMessage());
@@ -44,26 +46,87 @@ public class Controller
                     //menuCriar(l, criacao);
                     break;
                 case 2:
-                    view.msg("Siga os passos para criar a sua conta :D");
-                    view.msg("Id,password,nome,email,genero,data nacimento(ano-mes-dia),altura,peso,frequencia cardica media,tipo de atleta");
+                    view.msg("O novo Utilizador considera-se..");
+                    view.msg("Amador, Ocasional, Profissional");
                     line = sc.nextLine();
-                    String[] all = line.split(",");
-                    String[] data_nascimento = all[5].split("-");
-                    
-                    novoU = new Utilizador(Integer.parseInt(all[0]), all[1], all[2], all[3], 
-                                          all[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
-                                          Integer.parseInt(data_nascimento[2])),Double.parseDouble(all[6]), Double.parseDouble(all[7]), 
-                                          Integer.parseInt(all[8]), TipoAtleta.valueOf(all[9]));
-                    
-                    try {
-                        ap.insereUtilizador(novoU);
-                        view.printCriacaoUtilizador(novoU.getId(), novoU.getPassword(),
-                                    novoU.getNome(),novoU.getEmail(),novoU.getGenero(),
-                                    novoU.getDataNascimento(),novoU.getAltura(),
-                                    novoU.getPeso(),novoU.getFreqCardiaca(),
-                                    novoU.getAtleta());
-                    } catch (UtilizadorNaoExisteException e) {
-                        view.msg(e.getMessage());
+                    switch (line.toLowerCase())
+                    {
+                        case "amador":
+                            view.msg("Siga os passos para criar a sua conta :D");
+                            view.msg("nickname,password,nome,email,genero,data nacimento(ano-mes-dia),altura,peso,frequencia cardica media,nivel de experiencia(Avancado,Intermedio,Iniciante),modalidade favorita");
+                            line2 = sc.nextLine();
+                            campo = line2.split(",");
+                            data_nascimento = campo[5].split("-");
+                            
+                            novoU = new Amador(campo[0], campo[1], campo[2], campo[3], 
+                                      campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
+                                      Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
+                                      Integer.parseInt(campo[8]), campo[9], campo[10], 0, new ArrayList<>() , new HashMap<>());
+                            
+                            try {
+                                ap.insereUtilizador(novoU);
+                                view.printCriacaoUtilizador(novoU.getNick(), novoU.getPassword(),
+                                            novoU.getNome(),novoU.getEmail(),novoU.getGenero(),
+                                            novoU.getDataNascimento(),novoU.getAltura(),
+                                            novoU.getPeso(),novoU.getFreqCardiaca(),
+                                            novoU.getFatorMultiplicativo(),novoU.caracteristicasUExtra(),
+                                            novoU.getTotalCalorias());
+                            } catch (UtilizadorNaoExisteException e) {
+                                view.msg(e.getMessage());
+                            }
+                            break;
+                            
+                        case "profissional":
+                            view.msg("Siga os passos para criar a sua conta :D");
+                            view.msg("nickname,password,nome,email,genero,data nacimento(ano-mes-dia),altura,peso,frequencia cardica media,especialidade,anos de experiencia");
+                            line2 = sc.nextLine();
+                            campo = line2.split(",");
+                            data_nascimento = campo[5].split("-");
+                            
+                            novoU = new Profissional(campo[0], campo[1], campo[2], campo[3], 
+                                      campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
+                                      Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
+                                      Integer.parseInt(campo[8]), Double.parseDouble(campo[9]), campo[10], 0, new ArrayList<>() , new HashMap<>());
+                            
+                            try {
+                                ap.insereUtilizador(novoU);
+                                view.printCriacaoUtilizador(novoU.getNick(), novoU.getPassword(),
+                                            novoU.getNome(),novoU.getEmail(),novoU.getGenero(),
+                                            novoU.getDataNascimento(),novoU.getAltura(),
+                                            novoU.getPeso(),novoU.getFreqCardiaca(),
+                                            novoU.getFatorMultiplicativo(),novoU.caracteristicasUExtra(),
+                                            novoU.getTotalCalorias());
+                            } catch (UtilizadorNaoExisteException e) {
+                                view.msg(e.getMessage());
+                            }
+                            break;
+                        
+                        case "ocasional":
+                            view.msg("Siga os passos para criar a sua conta :D");
+                            view.msg("nickname,password,nome,email,genero,data nacimento(ano-mes-dia),altura,peso,frequencia cardica media,frequencia de pratica (nº de vezes por mes),motivacao");
+                            line2 = sc.nextLine();
+                            campo = line2.split(",");
+                            data_nascimento = campo[5].split("-");
+                            
+                            novoU = new Ocasional(campo[0], campo[1], campo[2], campo[3], 
+                                          campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
+                                          Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
+                                          Integer.parseInt(campo[8]), Integer.parseInt(campo[9]), campo[10], 0, new ArrayList<>() , new HashMap<>());
+                            
+                            try {
+                                ap.insereUtilizador(novoU);
+                                view.printCriacaoUtilizador(novoU.getNick(), novoU.getPassword(),
+                                            novoU.getNome(),novoU.getEmail(),novoU.getGenero(),
+                                            novoU.getDataNascimento(),novoU.getAltura(),
+                                            novoU.getPeso(),novoU.getFreqCardiaca(),
+                                            novoU.getFatorMultiplicativo(),novoU.caracteristicasUExtra(),
+                                            novoU.getTotalCalorias());
+                            } catch (UtilizadorNaoExisteException e) {
+                                view.msg(e.getMessage());
+                            }
+                            break;
+                        
+                        
                     }
                     break;
                 case 3:
@@ -90,7 +153,7 @@ public class Controller
         }
     }
     
-    public static void save(Aplicacao ap) throws IOException {
+    public static void save(FitnessApp ap) throws IOException {
 
         View view = new View();
         ap.save();
@@ -98,14 +161,14 @@ public class Controller
 
     }
 
-    public static void load(Aplicacao ap) throws IOException, ClassNotFoundException {
+    public static void load(FitnessApp ap) throws IOException, ClassNotFoundException {
         View view = new View();
         ap.load();
         view.msg("-------------Loaded------------");
 
     }
     
-    public static void menuUtilizador(Aplicacao ap, Utilizador u) {
+    public static void menuUtilizador(FitnessApp ap, Utilizador u) {
         String[] s = { "Ver Atividades", "Ver Planos Treino", "Pesquisar Atividade", "Pesquisar Plano", "Registar Atividade Realizada",
                 "Escolher Plano de Treino", "Historico de Ativiades Realizadas", "Os Meus Planos Treino", " O Meu Prefil"};
         Menu menuCriar = new Menu(s);
@@ -114,6 +177,8 @@ public class Controller
         View view = new View();
         String line;
         String line2;
+        String line3;
+        Utilizador up = null;
 
         while (op != 0) {
             menuCriar.executa();
@@ -141,6 +206,7 @@ public class Controller
     
                         view.printAtividade(a.getCodigo(),a.getNome(),
                         a.getDescricao(),a.getDuracao(),a.caracteristicasExtra(),
+                        a.getFreqCardiaAtividade(), a.getCaloriasGastasAtividade(),
                         a.getDataRealizada());
                         
                         //falta adicionar cada coisa para dar print,
@@ -172,10 +238,12 @@ public class Controller
                     LocalDate dia = LocalDate.of(Integer.parseInt(data[0]),
                                     Integer.parseInt(data[1]), 
                                     Integer.parseInt(data[2]));
+                    view.msg("Que frequencia Cardiaca teve durante a Atividade? :D");
+                    line3 = sc.nextLine();
                     try 
                     {
                         Atividade a = ap.getAtividade(Integer.valueOf(line));
-                        ap.insereAtividadeNoHistoricoUtilizador(u.getId(),a, dia);
+                        ap.insereAtividadeNoHistoricoUtilizador(u,a,Integer.valueOf(line3),dia);
                         view.printAtividadeRealizada(u.getNome(), dia, 
                             a.getCodigo(), a.getNome());
                     } 
@@ -191,9 +259,9 @@ public class Controller
                     line = sc.nextLine();
                     try 
                     {
-                        PlanoTreino pt = ap.getPlanoTreino(line);
-                        ap.inserePlanoTreinoNoUtilizador(u.getId(),pt);
-                        view.printPlanoTreinoEscolhido(u.getNome(), pt.getNomePlano());
+                        PlanoTreino pt2 = ap.getPlanoTreino(line);
+                        ap.inserePlanoTreinoNoUtilizador(u.getNick(),pt2);
+                        view.printPlanoTreinoEscolhido(u.getNome(), pt2.getNomePlano());
                     } 
                     catch (PlanoTreinoExisteException | PlanoTreinoNaoExisteException e) 
                     {
@@ -205,9 +273,9 @@ public class Controller
                 case 7:
                     try
                     {
-                        Utilizador up = ap.getUtilizador(u.getId(),u.getPassword());
-                        view.printHistoricoUtilizador(up.getId(), up.getNome(),
-                        up.getAtleta(), up.toStringHistorico());
+                        up = ap.getUtilizador(u.getNick(),u.getPassword());
+                        view.printHistoricoUtilizador(up.getNick(), up.getNome(),
+                        up.getTipoUtilizador(), up.toStringHistorico());
                     }
                     catch (UtilizadorNaoExisteException e)
                     {
@@ -215,21 +283,38 @@ public class Controller
                     }
                     break;
                 case 8:
-                    view.printPlanosTreinoUtilizador(u.getId(), u.getNome(),
-                        u.getAtleta(), u.toStringPlanosTreinoU());
+                    try
+                    {
+                        up = ap.getUtilizador(u.getNick(),u.getPassword());
+                        view.printPlanosTreinoUtilizador(up.getNick(), up.getNome(),
+                        up.getTipoUtilizador(), up.toStringPlanosTreinoU());
+                    }
+                    catch (UtilizadorNaoExisteException e)
+                    {
+                        view.msg(e.getMessage());
+                    }
                     break;
                 case 9:
-                    view.printUtilizador(u.getId(), u.getPassword(), u.getNome(),
-                        u.getEmail(), u.getGenero(),u.getDataNascimento(),
-                        u.getAltura(), u.getPeso(), u.getFreqCardiaca(),
-                        u.getAtleta());
+                    try
+                    {
+                        up = ap.getUtilizador(u.getNick(),u.getPassword());
+                        view.printUtilizador(up.getNick(), up.getPassword(), up.getNome(),
+                        up.getEmail(), up.getGenero(),up.getDataNascimento(),
+                        up.getAltura(), up.getPeso(), up.getFreqCardiaca(),
+                        up.getFatorMultiplicativo(),up.caracteristicasUExtra(),
+                        up.getTotalCalorias());
+                    }
+                    catch (UtilizadorNaoExisteException e)
+                    {
+                        view.msg(e.getMessage());
+                    }
                 
                     break;
             }
         }
     }
     
-    public static void menuEstatistica(Aplicacao ap) {
+    public static void menuEstatistica(FitnessApp ap) {
         String[] s = { "Estatisticas"};
         Menu menuVer = new Menu(s);
         int op = -1;
@@ -250,7 +335,7 @@ public class Controller
 
     }
     
-    public static void menuAdministrador(Aplicacao ap) {
+    public static void menuAdministrador(FitnessApp ap) {
         String[] s = { "Criar Atividade", "Criar Plano", "Sair"};
         Menu menuVer = new Menu(s);
         int op = -1;
@@ -279,7 +364,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Patinagem(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        all[5], LocalDate.EPOCH);
+                                                        all[5], null, 0, 0);
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -298,7 +383,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Remo(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        all[5], LocalDate.EPOCH);
+                                                        all[5], null, 0, 0);
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -317,7 +402,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Corrida(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        Double.parseDouble(all[5]),all[6], LocalDate.EPOCH);
+                                                        Double.parseDouble(all[5]),all[6], null, 0, 0);
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -336,7 +421,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Bicicleta(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        Double.parseDouble(all[5]),all[6], LocalDate.EPOCH);
+                                                        Double.parseDouble(all[5]),all[6], null, 0, 0);
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -355,7 +440,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Abdominais(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        LocalDate.EPOCH);
+                                                        null, 0, 0);
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -374,7 +459,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Alongamentos(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        LocalDate.EPOCH);
+                                                        null, 0, 0);
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -393,7 +478,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Flexoes(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        LocalDate.EPOCH);
+                                                        null, 0, 0);
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -412,7 +497,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new LevantaPeso(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        Double.parseDouble(all[5]),LocalDate.EPOCH);
+                                                        Double.parseDouble(all[5]),null, 0, 0);
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -431,7 +516,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new ExtensaoPernas(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        Double.parseDouble(all[5]),LocalDate.EPOCH);
+                                                        Double.parseDouble(all[5]),null, 0, 0);
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -490,7 +575,7 @@ public class Controller
 
     }
     
-    public static void SaltoTemporal(Aplicacao ap) {
+    public static void SaltoTemporal(FitnessApp ap) {
         String[] s = { "Salto Para dia"};
         Menu menuVer = new Menu(s);
         int op = -1;
@@ -510,7 +595,7 @@ public class Controller
         }
     }
     
-    public static void menuFicheiro(Aplicacao ap) {
+    public static void menuFicheiro(FitnessApp ap) {
         Parser p = new Parser();
         View view = new View();
         try {

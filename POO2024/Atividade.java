@@ -8,6 +8,8 @@ public abstract class Atividade implements Serializable
     private String descricao;
     private int duracao;
     private LocalDate data_realizada;
+    private int freq_cardiaca_atividade;
+    private double calorias_gastas_atividade;
 
     public Atividade() 
     {
@@ -15,16 +17,21 @@ public abstract class Atividade implements Serializable
         nome= "";
         descricao= "";
         duracao= 0;
-        data_realizada= LocalDate.EPOCH;
+        data_realizada= null;
+        freq_cardiaca_atividade = 0;
+        calorias_gastas_atividade = 0;
     }
 
-    public Atividade(int c, String n, String des, int dura, LocalDate data) 
+    public Atividade(int c, String n, String des, int dura, LocalDate data, 
+            int freq_a, double cal) 
     {
         codigo = c;
         nome = n;
         descricao = des;
         duracao = dura;
         data_realizada= data;
+        freq_cardiaca_atividade = freq_a;
+        calorias_gastas_atividade = cal;
         
     }
     
@@ -35,6 +42,8 @@ public abstract class Atividade implements Serializable
         descricao = a.getDescricao();
         duracao = a.getDuracao();
         data_realizada= a.getDataRealizada();
+        freq_cardiaca_atividade = a.getFreqCardiaAtividade();
+        calorias_gastas_atividade = a.getCaloriasGastasAtividade();
         
     }
     
@@ -62,6 +71,16 @@ public abstract class Atividade implements Serializable
     {
         return data_realizada;
     }
+    
+    public int getFreqCardiaAtividade()
+    {
+        return freq_cardiaca_atividade;
+    }
+    
+    public double getCaloriasGastasAtividade()
+    {
+        return calorias_gastas_atividade;
+    }
 
     public void setCodigo(int cod) 
     {
@@ -88,9 +107,19 @@ public abstract class Atividade implements Serializable
         this.data_realizada = data;
     }
     
+    public void setFreqCardiaAtiviade(int freq)
+    {
+        this.freq_cardiaca_atividade = freq;
+    }
+    
+    public void setCaloriasGastasAtividade(double cal)
+    {
+        this.calorias_gastas_atividade = cal;
+    }
+    
     public abstract Atividade clone();
     
-    public abstract double calcularCalorias(Utilizador utilizador, int freq_cardiaca_atividade);
+    public abstract double calcularCalorias(Utilizador utilizador);
     
     public abstract String getTipoAtividade();
 
@@ -100,12 +129,12 @@ public abstract class Atividade implements Serializable
     @Override
     public String toString() 
     {
-        return "Atividade:" + "\n" +
-                "Codigo:" + codigo + "\n" +
+        return  "Codigo:" + codigo + "\n" +
                 "Nome:" + nome + "\n" +
                 "Descricao:" + descricao + "\n" +
                 "Duracao:" + duracao + "\n" +
-                caracteristicasExtra() + "\n" +
+                "Freq. Cardiaca durante Atividade:" + freq_cardiaca_atividade + "\n" +
+                "Calorias Gastas:" + calorias_gastas_atividade + "\n" +
                 "Data de Realizacao:" + data_realizada + "\n";
     }
     
@@ -122,6 +151,8 @@ public abstract class Atividade implements Serializable
                 && this.codigo == atividade.getCodigo()
                 && this.descricao.equals(atividade.getDescricao())
                 && this.nome.equals(atividade.getNome())
-                && this.data_realizada.equals(atividade.getDataRealizada());
+                && this.data_realizada.equals(atividade.getDataRealizada())
+                && this.freq_cardiaca_atividade == atividade.getFreqCardiaAtividade()
+                && this.calorias_gastas_atividade == atividade.getCaloriasGastasAtividade();
     }
 }

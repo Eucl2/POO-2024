@@ -17,9 +17,9 @@ public class LevantaPeso extends Atividade
     }
     
     public LevantaPeso(int codigo, String nome, String descricao, int duracao,
-    int repeticoes, double peso, LocalDate data_realizada) 
+    int repeticoes, double peso, LocalDate data_realizada, int freq_atv, double cal) 
     {
-        super(codigo, nome, descricao, duracao, data_realizada);
+        super(codigo, nome, descricao, duracao, data_realizada, freq_atv, cal);
         this.repeticoes = repeticoes;
         this.peso = peso;
 
@@ -64,7 +64,7 @@ public class LevantaPeso extends Atividade
 
         return new LevantaPeso(Integer.parseInt(campos[0]),campos[1],
         campos[2],Integer.parseInt(campos[3]),Integer.parseInt(campos[4]),
-        Double.parseDouble(campos[5]),LocalDate.EPOCH);
+        Double.parseDouble(campos[5]),null, 0, 0);
     }
     
     public String getTipoAtividade()
@@ -91,18 +91,25 @@ public class LevantaPeso extends Atividade
     @Override
     public String toString() 
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\nLevantaPeso: ").append(super.toString()).append('\n').append("Repeticoes: ")
-        .append(this.repeticoes).append('\n').append("\nPeso: ").append(this.peso)
-        .append('\n');
-        
-        return sb.toString();
+        return "---Levantamento Peso---" + "\n" +
+                super.toString() + 
+                "Repeticoes:" + this.repeticoes + "\n" +
+                "Peso:" + this.peso + "\n" ;
     }
 
     
     @Override
-    public double calcularCalorias(Utilizador utilizador, int freq_cardiaca_atividade) {
-        double calorias = repeticoes*(utilizador.getPeso())*getDuracao();
+    public double calcularCalorias(Utilizador utilizador) {
+        int freq_ativ = super.getFreqCardiaAtividade();
+        double fator = utilizador.getFatorMultiplicativo();
+        int freq_med = utilizador.getFreqCardiaca();
+        int tempo = super.getDuracao();
+        int rep = getRepeticoes();
+        double pes = getPeso();
+        
+        
+        double calorias = ((0.035 * fator) * (freq_med + (0.12 * freq_ativ)) * tempo / 60.0) + ((0.75 * rep)+ (0.25 * pes));
+        
         return calorias;
     }
 

@@ -5,11 +5,11 @@ public class View {
         System.out.println("=>" + msg);
     }
 
-    public void printCriacaoUtilizador(int id, String password, String nome, String email, String genero,
+    public void printCriacaoUtilizador(String nick, String password, String nome, String email, String genero,
                 LocalDate data_nascimento, double altura, double peso, int frequencia_cardiaca_media,
-                TipoAtleta atleta) {
+                double fator_mult,String extraU, double calorias) {
         System.out.println("-------------Utilizador Criado--------------- ");
-        System.out.println("Id: " + id);
+        System.out.println("Nickname: " + nick);
         System.out.println("Password: " + password);
         System.out.println("Nome: " + nome);
         System.out.println("Email: " + email);
@@ -18,16 +18,19 @@ public class View {
         System.out.println("Altura: " + altura);
         System.out.println("Peso: " + peso);
         System.out.println("Frequencia Cardiaca Media: " + frequencia_cardiaca_media);
-        System.out.println("Tipo de Atleta: " + atleta);
+        System.out.println("Fator Multiplicativo: " + fator_mult);
+        System.out.println(extraU);
+        System.out.println("Total de Calorias Gastas: " + calorias);
+        
         
 
     }
     
-    public void printUtilizador(int id, String password, String nome, String email, String genero,
+    public void printUtilizador(String nick, String password, String nome, String email, String genero,
                 LocalDate data_nascimento, double altura, double peso, int frequencia_cardiaca_media,
-                TipoAtleta atleta) {
+                double fator_mult,String extraU, double calorias) {
         System.out.println("-------------Utilizador--------------- ");
-        System.out.println("Id: " + id);
+        System.out.println("Nickname: " + nick);
         System.out.println("Password: " + password);
         System.out.println("Nome: " + nome);
         System.out.println("Email: " + email);
@@ -36,25 +39,29 @@ public class View {
         System.out.println("Altura: " + altura);
         System.out.println("Peso: " + peso);
         System.out.println("Frequencia Cardiaca Media: " + frequencia_cardiaca_media);
-        System.out.println("Tipo de Atleta: " + atleta);
+        System.out.println("Fator Multiplicativo: " + fator_mult);
+        System.out.println(extraU);
+        System.out.println("Total de Calorias Gastas: " + calorias);
+        
         
 
     }
     
-    public void printHistoricoUtilizador(int id, String nome,
-                TipoAtleta atleta, String historico) {
+    public void printHistoricoUtilizador(String nick, String nome,
+                String atleta, String historico) {
         System.out.println("-------------Utilizador--------------- ");
-        System.out.println("Id: " + id);
+        System.out.println("NickName: " + nick);
         System.out.println("Nome: " + nome);
         System.out.println("Tipo de Atleta: " + atleta);
-        System.out.println("Historico de Atividades: " + historico);
+        System.out.println("-------------Atividades Realizadas--------------- ");
+        System.out.println(historico);
         
     }
     
-    public void printPlanosTreinoUtilizador(int id, String nome,
-                TipoAtleta atleta, String planos_treino) {
+    public void printPlanosTreinoUtilizador(String nick, String nome,
+                String atleta, String planos_treino) {
         System.out.println("-------------Utilizador--------------- ");
-        System.out.println("Id: " + id);
+        System.out.println("NickName: " + nick);
         System.out.println("Nome: " + nome);
         System.out.println("Tipo de Atleta: " + atleta);
         System.out.println("Planos de Treino Escolhidos: " + planos_treino);
@@ -67,7 +74,7 @@ public class View {
     }
 
     public void printAtividade(int codigo, String nome, String descricao,
-                int duracao, String extra, LocalDate data_realizada) {
+                int duracao, String extra, int freq_at, double cal, LocalDate data_realizada) {
         System.out.println("-----------Atividade----------- ");
         System.out.println("Codigo: " + codigo);
         System.out.println("Nome: " + nome);
@@ -75,6 +82,8 @@ public class View {
         System.out.println("Duracao: " + duracao);
         System.out.println(extra);
         //retirar daqui , apenas para debug
+        System.out.println("Frequencia Cardiaca Ativiade: " + freq_at);
+        System.out.println("Calorias Gastas: " + cal);
         System.out.println("Data a Realizar: " + data_realizada);
     }
     
@@ -127,7 +136,7 @@ public class View {
     public void printAtividadeRealizada(String utilizador, LocalDate data, 
                 int id_atividade, String atividade) {
         System.out.println("-----------Registo de Atividade----------- ");
-        System.out.println(utilizador +" " + "realizou atividade" + " " + id_atividade + atividade + " " + "no dia " + " " + data);
+        System.out.println(utilizador +" " + "realizou atividade" + " " + id_atividade + "-" + atividade + " " + "no dia " + " " + data);
 
     }
     

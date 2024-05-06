@@ -18,9 +18,10 @@ public class Bicicleta extends Atividade
     }
     
     public Bicicleta(int codigo, String nome, String descricao, int duracao,
-    double distancia, double altimetria, String percurso, LocalDate data_realizada) 
+    double distancia, double altimetria, String percurso, LocalDate data_realizada,
+    int freq_atv, double cal) 
     {
-        super(codigo, nome, descricao, duracao, data_realizada);
+        super(codigo, nome, descricao, duracao, data_realizada, freq_atv, cal);
         this.distancia = distancia;
         this.altimetria = altimetria;
         this.percurso = percurso;
@@ -77,7 +78,7 @@ public class Bicicleta extends Atividade
 
         return new Bicicleta(Integer.parseInt(campos[0]),campos[1],
         campos[2],Integer.parseInt(campos[3]),Double.parseDouble(campos[4]),
-        Double.parseDouble(campos[5]), campos[6], LocalDate.EPOCH);
+        Double.parseDouble(campos[5]), campos[6], null, 0, 0);
     }
     
     public String getTipoAtividade()
@@ -106,18 +107,26 @@ public class Bicicleta extends Atividade
     @Override
     public String toString() 
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\nBicicleta: ").append(super.toString()).append('\n').append("Distancia: ")
-        .append(this.distancia).append('\n').append("\nAltimetria: ").append(this.altimetria)
-        .append('\n').append("\nPercurso: ").append(this.percurso).append('\n');
-        
-        return sb.toString();
+        return "---Bicicleta---" + "\n" +
+                super.toString() + 
+                "Distancia:" + this.distancia + "\n" +
+                "Altimetria:" + this.altimetria + "\n" +
+                "Percurso:" + this.percurso + "\n";
     }
 
     
     @Override
-    public double calcularCalorias(Utilizador utilizador, int freq_cardiaca_atividade) {
-        double calorias = distancia*(utilizador.getPeso())*getDuracao();
+    public double calcularCalorias(Utilizador utilizador) {
+        int freq_ativ = super.getFreqCardiaAtividade();
+        double fator = utilizador.getFatorMultiplicativo();
+        int freq_med = utilizador.getFreqCardiaca();
+        int tempo = super.getDuracao();
+        double dist = getDistancia();
+        double alt  = getAltimetria();
+        
+        
+        double calorias = ((0.035 * fator) * (freq_med + (0.12 * freq_ativ)) * tempo / 60.0) + ((0.75 * dist) + (0.25 * alt));
+        
         return calorias;
     }
 

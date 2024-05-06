@@ -16,9 +16,10 @@ public class Remo extends Atividade
     }
     
     public Remo(int codigo, String nome, String descricao, int duracao,
-    double distancia, String percurso, LocalDate data_realizada) 
+    double distancia, String percurso, LocalDate data_realizada,
+    int freq_atv, double cal) 
     {
-        super(codigo, nome, descricao, duracao , data_realizada);
+        super(codigo, nome, descricao, duracao , data_realizada,  freq_atv, cal);
         this.distancia = distancia;
         this.percurso = percurso;
 
@@ -63,7 +64,7 @@ public class Remo extends Atividade
 
         return new Remo(Integer.parseInt(campos[0]),campos[1],
         campos[2],Integer.parseInt(campos[3]),Double.parseDouble(campos[4]),
-        campos[5], LocalDate.EPOCH);
+        campos[5], null, 0, 0);
     }
     
     public String getTipoAtividade()
@@ -90,18 +91,24 @@ public class Remo extends Atividade
     @Override
     public String toString() 
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\nRemo: ").append(super.toString()).append('\n').append("Distancia: ")
-        .append(this.distancia).append('\n')
-        .append("\nPercurso: ").append(this.percurso).append('\n');
-        
-        return sb.toString();
+        return "---Remo---" + "\n" +
+                super.toString() + 
+                "Distancia:" + this.distancia + "\n" +
+                "Percurso:" + this.percurso + "\n";
     }
 
     
     @Override
-    public double calcularCalorias(Utilizador utilizador, int freq_cardiaca_atividade) {
-        double calorias = distancia*(utilizador.getPeso())*getDuracao();
+    public double calcularCalorias(Utilizador utilizador) {
+        int freq_ativ = super.getFreqCardiaAtividade();
+        double fator = utilizador.getFatorMultiplicativo();
+        int freq_med = utilizador.getFreqCardiaca();
+        int tempo = super.getDuracao();
+        double dist = getDistancia();
+        
+        
+        double calorias = ((0.035 * fator) * (freq_med + (0.12 * freq_ativ)) * tempo / 60.0) + (0.75 * dist);
+        
         return calorias;
     }
 

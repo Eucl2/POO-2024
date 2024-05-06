@@ -8,30 +8,30 @@ import java.time.LocalDate;
 /**
 Classe que tem acesso a todos os elementos das classes 
  */
-public class Aplicacao implements Serializable
+public class FitnessApp implements Serializable
 {
-    private Map<Integer, Utilizador> utilizadores;
+    private Map<String, Utilizador> utilizadores;
     private Map<Integer, Atividade> atividades;
     private Map<String,PlanoTreino> planos_treino;
     
-    public Aplicacao()
+    public FitnessApp()
     {
         this.planos_treino = new HashMap<>();
         this.utilizadores = new HashMap<>();
         this.atividades = new HashMap<>();
     }
     
-    public Aplicacao(Map<Integer, Utilizador> nutilizadores, Map<Integer, Atividade> natividades,
+    public FitnessApp(Map<String, Utilizador> nutilizadores, Map<Integer, Atividade> natividades,
     Map<String,PlanoTreino> nplanos_treino)
     {
-        this.utilizadores = nutilizadores.values().stream().collect(Collectors.toMap(u -> u.getId(), u -> u.clone()));
+        this.utilizadores = nutilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
         this.atividades = natividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
         this.planos_treino = nplanos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
     }
     
-    public Utilizador getUtilizador(int id, String pass) throws UtilizadorNaoExisteException 
+    public Utilizador getUtilizador(String ni, String pass) throws UtilizadorNaoExisteException 
     {
-        Utilizador utilizador = this.utilizadores.get(id);
+        Utilizador utilizador = this.utilizadores.get(ni);
         if (utilizador == null )
             throw new UtilizadorNaoExisteException("Utilizador nao existe ");
     
@@ -62,9 +62,9 @@ public class Aplicacao implements Serializable
             return plano_treino.clone();
     }
     
-    public Map<Integer, Utilizador> getUtilizadores()
+    public Map<String, Utilizador> getUtilizadores()
     {
-        return this.utilizadores.values().stream().collect(Collectors.toMap(u -> u.getId(), u -> u.clone()));
+        return this.utilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
     }
     
     public Map<Integer, Atividade> getAtividades()
@@ -77,8 +77,8 @@ public class Aplicacao implements Serializable
         return this.planos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
     }
     
-    public void setUtilizadores(Map<Integer, Utilizador> nutilizadores) {
-        this.utilizadores = nutilizadores.values().stream().collect(Collectors.toMap(u -> u.getId(), u -> u.clone()));
+    public void setUtilizadores(Map<String, Utilizador> nutilizadores) {
+        this.utilizadores = nutilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
     }
     
     public void setAtividades(Map<Integer, Atividade> natividades) {
@@ -91,10 +91,10 @@ public class Aplicacao implements Serializable
     
     public void insereUtilizador(Utilizador utilizador) throws UtilizadorNaoExisteException 
     {
-        if (this.utilizadores.containsKey(utilizador.getId()))
+        if (this.utilizadores.containsKey(utilizador.getNick()))
             throw new UtilizadorNaoExisteException("Utilizador ja existe");
         else 
-            this.utilizadores.put(utilizador.getId(),utilizador.clone());
+            this.utilizadores.put(utilizador.getNick(),utilizador.clone());
     
     }
     
@@ -116,11 +116,12 @@ public class Aplicacao implements Serializable
     
     }
     
-    public void inserePlanoTreinoNoUtilizador(int idUtilizador, PlanoTreino pt)
+    //rever porque pode sim existe planos repetidos 
+    public void inserePlanoTreinoNoUtilizador(String nickUtilizador, PlanoTreino pt)
             throws PlanoTreinoExisteException {
 
         if (this.planos_treino.containsKey(pt.getNomePlano())) {
-            this.utilizadores.get(idUtilizador).adicionaPlanoTreino(pt);
+            this.utilizadores.get(nickUtilizador).adicionaPlanoTreino(pt);
 
         } else
             throw new PlanoTreinoExisteException("Plano Treino ja adicionado");
@@ -128,11 +129,11 @@ public class Aplicacao implements Serializable
     }
     
     //registar atividade realizada
-    public void insereAtividadeNoHistoricoUtilizador(int idUtilizador, Atividade a, LocalDate d)
+    public void insereAtividadeNoHistoricoUtilizador(Utilizador u, Atividade a, int freq_atv, LocalDate d)
             throws UtilizadorNaoExisteException, AtividadeNaoExisteException {
 
-        if (this.utilizadores.containsKey(idUtilizador)) {
-            this.utilizadores.get(idUtilizador).realizaAtividade(a,d);
+        if (this.utilizadores.containsKey(u.getNick())) {
+            this.utilizadores.get(u.getNick()).realizaAtividade(a,u,d,freq_atv);
 
         } else
             throw new UtilizadorNaoExisteException("Utilizador nao existe");
@@ -227,15 +228,15 @@ public class Aplicacao implements Serializable
     
     public void save() throws IOException {
 
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("AplicacaoSave.obj"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("FitnessApp.obj"));
         oos.writeObject(this);
         oos.flush();
         oos.close();
     }
     
     public void load() throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("AplicacaoSave.obj"));
-        Aplicacao ap = (Aplicacao) ois.readObject();
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("FitnessApp.obj"));
+        FitnessApp ap = (FitnessApp) ois.readObject();
         ois.close();
         this.utilizadores = ap.utilizadores;
         this.atividades = ap.atividades;
