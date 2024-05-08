@@ -17,7 +17,7 @@ public class PlanoTreino implements Serializable
     public PlanoTreino() 
     {
         this.nome = "";
-        this.data = LocalDate.EPOCH;
+        this.data = null;
         this.atividades = new HashMap<>();
         this.n_iteracoes = 0;
     }
@@ -40,22 +40,24 @@ public class PlanoTreino implements Serializable
     
     public String getNomePlano()
     {
-        return nome;
+        return this.nome;
     }
     
     public LocalDate getData()
     {
-        return data;
+        return this.data;
     }
     
     public Map<Integer, Atividade> getAtividades()
     {
-        return this.atividades.values().stream().collect(Collectors.toMap(pt -> pt.getCodigo(), pt -> pt.clone()));
+        return this.atividades.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),
+                    e->e.getValue().clone()));
+        //return this.atividades.values().stream().collect(Collectors.toMap(pt -> pt.getCodigo(), pt -> pt.clone()));
     }
     
     public int getIteracoes()
     {
-        return n_iteracoes;
+        return this.n_iteracoes;
     }
     
     public void setNome(String nome)
@@ -70,8 +72,10 @@ public class PlanoTreino implements Serializable
     
     public void setAtividades(Map<Integer, Atividade> nAtividades)
     {
-        this.atividades = nAtividades.values().stream()
-                .collect(Collectors.toMap(pt -> pt.getCodigo(), pt -> pt.clone()));
+        this.atividades = nAtividades.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),
+                            e->e.getValue().clone()));
+        //this.atividades = nAtividades.values().stream()
+                //.collect(Collectors.toMap(pt -> pt.getCodigo(), pt -> pt.clone()));
     }
     
     public void setIteracoes(int iteracoes)
@@ -82,9 +86,10 @@ public class PlanoTreino implements Serializable
     public void insereAtividade(Atividade a)
     {
         this.atividades.put(a.getCodigo(),a.clone());
-        //a.insereHistoricoDePlanos(this.getNomeAtividade());
+        
     }
     
+    //pode vir a ser necessario futuramente 
     /*
     public void setAtividade(Atividade a) throws AtividadeNaoExisteException
     {
@@ -120,6 +125,10 @@ public class PlanoTreino implements Serializable
         return r;
     }
     
+    public String toString2() {
+        return nome + " " + "\n";
+    }
+    
     public PlanoTreino clone()
     {
         return new PlanoTreino(this);
@@ -145,25 +154,4 @@ public class PlanoTreino implements Serializable
         return new PlanoTreino(campos[0], LocalDate.of(Integer.parseInt(data_execucao[0]), Integer.parseInt(data_execucao[1]), 
       Integer.parseInt(data_execucao[2])), Integer.parseInt(campos[2]));
     }
-    /*
-     * Verificar se é necessario
-    public void save() throws IOException {
-
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("PlanoTreinoSave.obj"));
-        oos.writeObject(this);
-        oos.flush();
-        oos.close();
-    }
-    
-    public void load() throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("PlanoTreinoSave.obj"));
-        PlanoTreino pt = (PlanoTreino) ois.readObject();
-        ois.close();
-        this.nome = pt.nome;
-        this.data = pt.data;
-        this.atividades = pt.atividades;
-        this.n_iteracoes = pt.n_iteracoes;
-
-    }
-    */
 }

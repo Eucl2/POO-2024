@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=AtividadeExisteException
+comment0.text=\r\n\ Exception\ triggered\ when\ activity\ doesn't\ exist\r\n
+comment1.params=
+comment1.target=AtividadeExisteException()
+comment2.params=s
+comment2.target=AtividadeExisteException(java.lang.String)
+numComments=3

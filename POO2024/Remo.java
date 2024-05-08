@@ -34,12 +34,12 @@ public class Remo extends Atividade
 
     public double getDistancia() 
     {
-        return distancia;
+        return this.distancia;
     }
     
     public String getPercurso() 
     {
-        return percurso;
+        return this.percurso;
     }
 
     public void setDistancia(double distancia) 
@@ -100,10 +100,10 @@ public class Remo extends Atividade
     
     @Override
     public double calcularCalorias(Utilizador utilizador) {
-        int freq_ativ = super.getFreqCardiaAtividade();
+        int freq_ativ = getFreqCardiaAtividade();
         double fator = utilizador.getFatorMultiplicativo();
         int freq_med = utilizador.getFreqCardiaca();
-        int tempo = super.getDuracao();
+        int tempo = getDuracao();
         double dist = getDistancia();
         
         

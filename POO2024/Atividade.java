@@ -13,73 +13,73 @@ public abstract class Atividade implements Serializable
 
     public Atividade() 
     {
-        codigo = 0;
-        nome= "";
-        descricao= "";
-        duracao= 0;
-        data_realizada= null;
-        freq_cardiaca_atividade = 0;
-        calorias_gastas_atividade = 0;
+        this.codigo = 0;
+        this.nome= "";
+        this.descricao= "";
+        this.duracao= 0;
+        this.data_realizada= null;
+        this.freq_cardiaca_atividade = 0;
+        this.calorias_gastas_atividade = 0;
     }
 
     public Atividade(int c, String n, String des, int dura, LocalDate data, 
             int freq_a, double cal) 
     {
-        codigo = c;
-        nome = n;
-        descricao = des;
-        duracao = dura;
-        data_realizada= data;
-        freq_cardiaca_atividade = freq_a;
-        calorias_gastas_atividade = cal;
+        this.codigo = c;
+        this.nome = n;
+        this.descricao = des;
+        this.duracao = dura;
+        this.data_realizada= data;
+        this.freq_cardiaca_atividade = freq_a;
+        this.calorias_gastas_atividade = cal;
         
     }
     
     public Atividade(Atividade a) 
     {
-        codigo = a.getCodigo();
-        nome = a.getNome();
-        descricao = a.getDescricao();
-        duracao = a.getDuracao();
-        data_realizada= a.getDataRealizada();
-        freq_cardiaca_atividade = a.getFreqCardiaAtividade();
-        calorias_gastas_atividade = a.getCaloriasGastasAtividade();
+        this.codigo = a.getCodigo();
+        this.nome = a.getNome();
+        this.descricao = a.getDescricao();
+        this.duracao = a.getDuracao();
+        this.data_realizada= a.getDataRealizada();
+        this.freq_cardiaca_atividade = a.getFreqCardiaAtividade();
+        this.calorias_gastas_atividade = a.getCaloriasGastasAtividade();
         
     }
     
     public int getCodigo() 
     {
-        return codigo;
+        return this.codigo;
     }
 
     public String getNome() 
     {
-        return nome;
+        return this.nome;
     }
     
     public String getDescricao() 
     {
-        return descricao;
+        return this.descricao;
     }
     
     public int getDuracao() 
     {
-        return duracao;
+        return this.duracao;
     }
     
     public LocalDate getDataRealizada()
     {
-        return data_realizada;
+        return this.data_realizada;
     }
     
     public int getFreqCardiaAtividade()
     {
-        return freq_cardiaca_atividade;
+        return this.freq_cardiaca_atividade;
     }
     
     public double getCaloriasGastasAtividade()
     {
-        return calorias_gastas_atividade;
+        return this.calorias_gastas_atividade;
     }
 
     public void setCodigo(int cod) 

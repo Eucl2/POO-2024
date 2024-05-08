@@ -34,12 +34,12 @@ public class ExtensaoPernas extends Atividade
 
     public int getRepeticoes() 
     {
-        return repeticoes;
+        return this.repeticoes;
     }
     
     public double getPeso() 
     {
-        return peso;
+        return this.peso;
     }
 
     public void setRepeticoes(int repeticoes) 
@@ -100,10 +100,10 @@ public class ExtensaoPernas extends Atividade
     
     @Override
     public double calcularCalorias(Utilizador utilizador) {
-        int freq_ativ = super.getFreqCardiaAtividade();
+        int freq_ativ = getFreqCardiaAtividade();
         double fator = utilizador.getFatorMultiplicativo();
         int freq_med = utilizador.getFreqCardiaca();
-        int tempo = super.getDuracao();
+        int tempo = getDuracao();
         int rep = getRepeticoes();
         double pes = getPeso();
         

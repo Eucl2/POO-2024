@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=UtilizadorExisteException
+comment0.text=\r\n\ Exception\ triggered\ when\ PlanoTreino\ doesn't\ exist\r\n
+comment1.params=
+comment1.target=UtilizadorExisteException()
+comment2.params=s
+comment2.target=UtilizadorExisteException(java.lang.String)
+numComments=3

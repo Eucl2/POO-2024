@@ -61,7 +61,7 @@ public class Controller
                             novoU = new Amador(campo[0], campo[1], campo[2], campo[3], 
                                       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-                                      Integer.parseInt(campo[8]), campo[9], campo[10], 0, new ArrayList<>() , new HashMap<>());
+                                      Integer.parseInt(campo[8]), campo[9], campo[10], 0, new ArrayList<>() , new ArrayList<>());
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -78,7 +78,7 @@ public class Controller
                             
                         case "profissional":
                             view.msg("Siga os passos para criar a sua conta :D");
-                            view.msg("nickname,password,nome,email,genero,data nacimento(ano-mes-dia),altura,peso,frequencia cardica media,especialidade,anos de experiencia");
+                            view.msg("nickname,password,nome,email,genero,data nacimento(ano-mes-dia),altura,peso,frequencia cardica media,anos de experiencia,especialidade");
                             line2 = sc.nextLine();
                             campo = line2.split(",");
                             data_nascimento = campo[5].split("-");
@@ -86,7 +86,7 @@ public class Controller
                             novoU = new Profissional(campo[0], campo[1], campo[2], campo[3], 
                                       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-                                      Integer.parseInt(campo[8]), Double.parseDouble(campo[9]), campo[10], 0, new ArrayList<>() , new HashMap<>());
+                                      Integer.parseInt(campo[8]), Double.parseDouble(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>());
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -111,7 +111,7 @@ public class Controller
                             novoU = new Ocasional(campo[0], campo[1], campo[2], campo[3], 
                                           campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                           Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-                                          Integer.parseInt(campo[8]), Integer.parseInt(campo[9]), campo[10], 0, new ArrayList<>() , new HashMap<>());
+                                          Integer.parseInt(campo[8]), Integer.parseInt(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>());
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -285,9 +285,12 @@ public class Controller
                 case 8:
                     try
                     {
-                        up = ap.getUtilizador(u.getNick(),u.getPassword());
-                        view.printPlanosTreinoUtilizador(up.getNick(), up.getNome(),
-                        up.getTipoUtilizador(), up.toStringPlanosTreinoU());
+                        Utilizador uN = ap.getUtilizador(u.getNick(),u.getPassword());
+                        view.msg("planos" + uN.toStringPlanosTreinoU());
+                        /*
+                        view.printPlanosTreinoUtilizador(uN.getNick(), uN.getNome(),
+                        uN.getTipoUtilizador(), uN.toStringPlanosTreinoU());
+                        */
                     }
                     catch (UtilizadorNaoExisteException e)
                     {

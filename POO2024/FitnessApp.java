@@ -13,6 +13,7 @@ public class FitnessApp implements Serializable
     private Map<String, Utilizador> utilizadores;
     private Map<Integer, Atividade> atividades;
     private Map<String,PlanoTreino> planos_treino;
+    private LocalDate tempo;
     
     public FitnessApp()
     {
@@ -24,6 +25,7 @@ public class FitnessApp implements Serializable
     public FitnessApp(Map<String, Utilizador> nutilizadores, Map<Integer, Atividade> natividades,
     Map<String,PlanoTreino> nplanos_treino)
     {
+        //!
         this.utilizadores = nutilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
         this.atividades = natividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
         this.planos_treino = nplanos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
@@ -31,6 +33,7 @@ public class FitnessApp implements Serializable
     
     public Utilizador getUtilizador(String ni, String pass) throws UtilizadorNaoExisteException 
     {
+        //!
         Utilizador utilizador = this.utilizadores.get(ni);
         if (utilizador == null )
             throw new UtilizadorNaoExisteException("Utilizador nao existe ");
@@ -61,30 +64,30 @@ public class FitnessApp implements Serializable
         else
             return plano_treino.clone();
     }
-    
+    //!
     public Map<String, Utilizador> getUtilizadores()
     {
         return this.utilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
     }
-    
+    //!
     public Map<Integer, Atividade> getAtividades()
     {
         return this.atividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
     }
-    
+    //!
     public Map<String , PlanoTreino> getPlanosTreino()
     {
         return this.planos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
     }
-    
+    //!
     public void setUtilizadores(Map<String, Utilizador> nutilizadores) {
         this.utilizadores = nutilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
     }
-    
+    //!
     public void setAtividades(Map<Integer, Atividade> natividades) {
         this.atividades = natividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
     }
-    
+    //!
     public void setPlanosTreino(Map<String, PlanoTreino> nplanostreino) {
         this.planos_treino = nplanostreino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
     }
@@ -121,7 +124,7 @@ public class FitnessApp implements Serializable
             throws PlanoTreinoExisteException {
 
         if (this.planos_treino.containsKey(pt.getNomePlano())) {
-            this.utilizadores.get(nickUtilizador).adicionaPlanoTreino(pt);
+            this.utilizadores.get(nickUtilizador).addPlanoU(pt);
 
         } else
             throw new PlanoTreinoExisteException("Plano Treino ja adicionado");
@@ -150,6 +153,8 @@ public class FitnessApp implements Serializable
             throw new PlanoTreinoNaoExisteException("Plano de Treino nao existe");
         ;// exemption
     }
+    
+    public void viajarNoTempo(){}
     /*
      * Ainda nao tem utilidade por enquanto
     public void removePlanoTreinoDoUtilizador(int idUtilizador, PlanoTreino pt)

@@ -59,12 +59,12 @@ public class View {
     }
     
     public void printPlanosTreinoUtilizador(String nick, String nome,
-                String atleta, String planos_treino) {
+                String atleta, String planos) {
         System.out.println("-------------Utilizador--------------- ");
         System.out.println("NickName: " + nick);
         System.out.println("Nome: " + nome);
         System.out.println("Tipo de Atleta: " + atleta);
-        System.out.println("Planos de Treino Escolhidos: " + planos_treino);
+        System.out.println("Planos de Treino Escolhidos: " + planos);
         
     }
     
