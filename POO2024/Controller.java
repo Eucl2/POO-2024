@@ -591,6 +591,14 @@ public class Controller
             System.out.println(op);
             switch (op) {
                 case 1:
+                    view.msg("Para que dia quer viajar:D (ano-mes-dia) ");
+                    line = sc.nextLine();
+                    String[] data = line.split("-");
+                    LocalDate dia = LocalDate.of(Integer.parseInt(data[0]),
+                                    Integer.parseInt(data[1]), 
+                                    Integer.parseInt(data[2]));
+                    ap.viajarNoTempo(dia);
+                    view.msg("Viagem Completa para o dia" + line);
                     break;
                 
             }

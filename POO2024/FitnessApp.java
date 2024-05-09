@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 /**
 Classe que tem acesso a todos os elementos das classes 
@@ -13,13 +14,15 @@ public class FitnessApp implements Serializable
     private Map<String, Utilizador> utilizadores;
     private Map<Integer, Atividade> atividades;
     private Map<String,PlanoTreino> planos_treino;
-    private LocalDate tempo;
+    private LocalDate dia_atual;
+    
     
     public FitnessApp()
     {
         this.planos_treino = new HashMap<>();
         this.utilizadores = new HashMap<>();
         this.atividades = new HashMap<>();
+        this.dia_atual = LocalDate.now();
     }
     
     public FitnessApp(Map<String, Utilizador> nutilizadores, Map<Integer, Atividade> natividades,
@@ -29,6 +32,7 @@ public class FitnessApp implements Serializable
         this.utilizadores = nutilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
         this.atividades = natividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
         this.planos_treino = nplanos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
+        this.dia_atual = LocalDate.now();
     }
     
     public Utilizador getUtilizador(String ni, String pass) throws UtilizadorNaoExisteException 
@@ -154,7 +158,47 @@ public class FitnessApp implements Serializable
         ;// exemption
     }
     
-    public void viajarNoTempo(){}
+    public LocalDate getDiaAtual()
+    {
+        return this.dia_atual;
+    }
+    
+    public void setDiaAtual(LocalDate data)
+    {
+        this.dia_atual = data;
+    }
+    
+    public void viajarNoTempo(LocalDate data_final)
+    {
+        /*
+        long n_dias =  ChronoUnit.DAYS.between(LocalDate.now(),
+                data_final);
+        */
+       
+                
+        for (Utilizador u : utilizadores.values())
+        {
+            for( PlanoTreino pt : u.getPlanosTreino())
+            {
+                int contador = 0;
+                while( contador < pt.getIteracoes())
+                {
+                    for (Atividade a : pt.getAtividades().values())
+                    {
+                        //verificar se posso usar o CompareTo
+                        if ( (pt.getData()).compareTo(dia_atual) >= 0 && 
+                        (pt.getData()).compareTo(data_final) <= 0)
+                        {
+                            this.utilizadores.get(u.getNick()).realizaAtividade(a,u,pt.getData(),90);
+                        }
+                    }
+                    contador++;
+                } 
+            }
+        }
+        //alterar o dia atual
+        setDiaAtual(data_final);
+    }
     /*
      * Ainda nao tem utilidade por enquanto
     public void removePlanoTreinoDoUtilizador(int idUtilizador, PlanoTreino pt)
