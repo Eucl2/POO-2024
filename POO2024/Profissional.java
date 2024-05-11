@@ -97,8 +97,7 @@ public class Profissional extends Utilizador
     public double calculaFator() 
     {
         double ufator = 0;
-        long idade =  ChronoUnit.YEARS.between(LocalDate.now(),
-                getDataNascimento());
+        double idade =  (double) ChronoUnit.YEARS.between(getDataNascimento(),LocalDate.now());
         if ( idade <= 50)
         {
             ufator =  ((double) idade +  getPeso() +  getAltura() +  this.getAnosExp()) * 1.6;

@@ -13,7 +13,7 @@ LevantaPeso:71,Biceps,Para iniciantes,2,20,12,false
 Alongamentos:61,Yoga,Para iniciantes,2,40,false
 ExtensaoPernas:81,Leg Day,Para iniciantes,2,20,50,true
 Flexoes:91,Projeto Verao,Para iniciantes,3,60,true
-PlanoTreino:Bem Estar,2024-05-29,2
+PlanoTreino:Bem Estar,2024-05-29,5
 Bicicleta:41,Bicicleta de Monte,Para iniciantes,2,20,5,7 voltas pelo monte,false
 Alongamentos:61,Yoga,Para iniciantes,2,40,false
 PlanoTreino:Verao Incoming,2024-05-29,2

@@ -19,7 +19,7 @@ public class Parser
 
     public void parse() throws LinhaIncorretaException 
     {
-        List<String> linhas = lerFicheiro("saveme.txt");
+        List<String> linhas = lerFicheiro("output.txt");
         this.utilizadores = new HashMap<>();
         this.atividades = new HashMap<>();
         this.planostreino = new HashMap<>();

@@ -95,8 +95,7 @@ public class Amador extends Utilizador
     public double calculaFator() 
     {
         double ufator = 0;
-        long idade =  ChronoUnit.YEARS.between(LocalDate.now(),
-                getDataNascimento());
+        double idade =  (double) ChronoUnit.YEARS.between(getDataNascimento(),LocalDate.now());
         String tipo = this.getNivel();
         
         if ("Avancado".equals(tipo))

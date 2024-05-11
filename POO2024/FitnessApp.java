@@ -29,25 +29,33 @@ public class FitnessApp implements Serializable
     Map<String,PlanoTreino> nplanos_treino)
     {
         //!
+        /*
         this.utilizadores = nutilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
         this.atividades = natividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
         this.planos_treino = nplanos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
+        */
+        this.utilizadores = nutilizadores.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(),e -> e.getValue().clone()));
+        this.atividades = natividades.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(),e -> e.getValue().clone()));
+        this.planos_treino = nplanos_treino.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(),e -> e.getValue().clone()));
         this.dia_atual = LocalDate.now();
     }
     
-    public Utilizador getUtilizador(String ni, String pass) throws UtilizadorNaoExisteException 
+    public FitnessApp(FitnessApp ap)
+    {
+        this(ap.getUtilizadores(), ap.getAtividades(), ap.getPlanosTreino());
+    }
+    
+    public Utilizador getUtilizador(String ni) throws UtilizadorNaoExisteException 
     {
         //!
         Utilizador utilizador = this.utilizadores.get(ni);
         if (utilizador == null )
+        {
             throw new UtilizadorNaoExisteException("Utilizador nao existe ");
-    
+        }
         else
         {
-            if(utilizador.getPassword().equals(pass))
-                return utilizador.clone();
-            else
-                throw new UtilizadorNaoExisteException("A password esta errada" );
+            return utilizador.clone();
         }
     }
     
@@ -168,16 +176,23 @@ public class FitnessApp implements Serializable
         this.dia_atual = data;
     }
     
+    //metodo para "viajar no tempo"
     public void viajarNoTempo(LocalDate data_final)
     {
         /*
         long n_dias =  ChronoUnit.DAYS.between(LocalDate.now(),
                 data_final);
         */
-       
-                
+       Random rand = new Random(); 
+        
+        // a frequencia cardiaca media diz respeito a uma media de repouso + ao longo do dia + durante exercicio 
+        // a frequencia cardiaca da atividade diz respeito a um valor dentro de um range de frequencia media e frequencia maxima( 220 - idade)
+        //!        
         for (Utilizador u : utilizadores.values())
         {
+            int idade =  (int) ChronoUnit.YEARS.between(u.getDataNascimento(),LocalDate.now());
+            
+            int freq_media = u.getFreqCardiaca();
             for( PlanoTreino pt : u.getPlanosTreino())
             {
                 int contador = 0;
@@ -185,20 +200,273 @@ public class FitnessApp implements Serializable
                 {
                     for (Atividade a : pt.getAtividades().values())
                     {
+                        //valor random para freq_atividade
+                        int freq_atividade = rand.nextInt((220-idade) - freq_media + 1) + freq_media;
                         //verificar se posso usar o CompareTo
                         if ( (pt.getData()).compareTo(dia_atual) >= 0 && 
                         (pt.getData()).compareTo(data_final) <= 0)
                         {
-                            this.utilizadores.get(u.getNick()).realizaAtividade(a,u,pt.getData(),90);
+                            //insereAtividadeNoHistoricoUtilizador(u,a,90,pt.getData());
+                            this.utilizadores.get(u.getNick()).realizaAtividade(a,u,pt.getData(),freq_atividade);
                         }
                     }
                     contador++;
                 } 
             }
         }
-        //alterar o dia atual
-        setDiaAtual(data_final);
+        
+        // Adiciona 1 dia a data_final antes de definir dia_atual
+        LocalDate novoDiaAtual = data_final.plusDays(1);
+        setDiaAtual(novoDiaAtual);
+
     }
+    
+    // Estatisticas 
+    
+    //1 - qual é o utilizador que mais calorias dispendeu desde sempre 
+    public Utilizador maisCaloriasDespendidasSempre()
+    {
+        Utilizador vencedor = null;
+        for( Utilizador u : utilizadores.values())
+        {
+            if ( vencedor == null || vencedor.getTotalCalorias() <= u.getTotalCalorias())
+            {
+                vencedor = u.clone();
+            }
+        }
+        
+        return vencedor;
+    }
+    //1 - qual é o utilizador que mais calorias dispendeu num periodo de tempo
+    public Utilizador maisCaloriasDespendidasPeriodo(LocalDate inicio, LocalDate fim)
+    {
+        Utilizador vencedor = null;
+        double maximo = 0;
+        double sumatorio;
+        
+        for( Utilizador u : utilizadores.values())
+        {
+            sumatorio = 0;
+            for ( Atividade a : u.getHistorico())
+            {
+                if ( (a.getDataRealizada()).compareTo(inicio) >= 0 && (a.getDataRealizada()).compareTo(fim) <= 0)
+                {
+                    sumatorio += a.getCaloriasGastasAtividade();
+                }
+            }
+            if ( sumatorio >= maximo)
+            {
+                maximo = sumatorio;
+                vencedor = u.clone();
+            }
+        }
+        
+        return vencedor;
+    }
+    
+    //2 - qual o utilizador que mais actividades realizou desde sempre 
+    public Utilizador maisAtividadesSempre()
+    {
+        Utilizador vencedor = null;
+        double max = 0;
+        for( Utilizador u : utilizadores.values())
+        {
+            if ( u.getHistorico().size() >= max)
+            {
+                max = u.getHistorico().size();
+                vencedor = u.clone();
+            }
+        }
+        
+        return vencedor;
+    }
+    //2 - qual o utilizador que mais actividades realizou num periodo de tempo
+    public Utilizador maisAtividadesPeriodo(LocalDate inicio, LocalDate fim)
+    {
+        Utilizador vencedor = null;
+        double maximo = 0;
+        double sumatorio;
+        
+        for( Utilizador u : utilizadores.values())
+        {
+            sumatorio = 0;
+            for ( Atividade a : u.getHistorico())
+            {
+                if ( (a.getDataRealizada()).compareTo(inicio) >= 0 && (a.getDataRealizada()).compareTo(fim) <= 0)
+                {
+                    sumatorio += 1;
+                }
+            }
+            if ( sumatorio >= maximo)
+            {
+                maximo = sumatorio;
+                vencedor = u.clone();
+            }
+        }
+        
+        return vencedor;
+    }
+    
+    //3 - qual o tipo de actividade mais realizada
+    public String maisRealizada()
+    {
+        Map<String,Integer> contadorAtividades = new HashMap<>();
+        
+        for (Utilizador u : utilizadores.values()) {
+            for (Atividade a : u.getHistorico()) {
+                String tipoAtividade = a.getTipoAtividade();
+
+                if (contadorAtividades.containsKey(tipoAtividade)) {
+                    contadorAtividades.put(tipoAtividade, contadorAtividades.get(tipoAtividade) + 1);
+                } else {
+                    contadorAtividades.put(tipoAtividade, 1);
+                }
+            }
+        }
+
+        // Encontra o tipo de atividade com o maior contador
+        String atividadeMaisRealizada = "";
+        int maxContagem = 0;
+        
+        //!
+        for (Map.Entry<String, Integer> entry : contadorAtividades.entrySet()) {
+            String tipoAtividade = entry.getKey();
+            int contagem = entry.getValue();
+
+            // Verifica se esta atividade tem a contagem mais alta até agora
+            if (contagem > maxContagem) {
+                maxContagem = contagem;
+                atividadeMaisRealizada = tipoAtividade;
+            }
+        }
+
+        // Retorna o tipo de atividade mais realizada
+        return atividadeMaisRealizada;
+    }
+    
+    //4 - quantos kms é que um utilizdor realizou desde sempre
+    public double quantoKmsUtilizadorSempre(Utilizador u)
+    {
+        //!
+        double maxkms = 0;
+        for ( Atividade a : u.getHistorico())
+        {
+            if (a instanceof Corrida)
+            {
+                Corrida c  = (Corrida) a;
+                maxkms += c.getDistancia();
+            }
+            if (a instanceof Patinagem)
+            {
+                Patinagem p = (Patinagem) a;
+                maxkms += p.getDistancia();
+            }
+            if ( a instanceof Remo)
+            {
+                Remo r = (Remo) a;
+                maxkms += r.getDistancia();
+            }
+            if( a instanceof Bicicleta)
+            {
+                Bicicleta b = (Bicicleta) a;
+                maxkms += b.getDistancia();
+            }
+        }
+        
+        return maxkms;
+    }
+    
+    //4 - quantos kms é que um utilizdor realizou num período 
+    public double quantoKmsUtilizadorPeriodo(Utilizador u, LocalDate inicio, LocalDate fim )
+    {
+        //!
+        double maxkms = 0;
+        for ( Atividade a : u.getHistorico())
+        {
+            if ( (a.getDataRealizada()).compareTo(inicio) >= 0 && (a.getDataRealizada()).compareTo(fim) <= 0)
+            {
+                if (a instanceof Corrida)
+                {
+                    Corrida c  = (Corrida) a;
+                    maxkms += c.getDistancia();
+                }
+                if (a instanceof Patinagem)
+                {
+                    Patinagem p = (Patinagem) a;
+                    maxkms += p.getDistancia();
+                }
+                if ( a instanceof Remo)
+                {
+                    Remo r = (Remo) a;
+                    maxkms += r.getDistancia();
+                }
+                if( a instanceof Bicicleta)
+                {
+                    Bicicleta b = (Bicicleta) a;
+                    maxkms += b.getDistancia();
+                }
+            }
+        }
+        
+        return maxkms;
+    }
+    
+    //5- quantos metros de altimetria é que um utilizar totalizou desde sempre
+    public double quantoAltUtilizadorSempre(Utilizador u)
+    {
+        //!
+        double maxalt = 0;
+        for ( Atividade a : u.getHistorico())
+        {
+            if (a instanceof Corrida)
+            {
+                Corrida c  = (Corrida) a;
+                maxalt += c.getAltimetria();
+            }
+            if( a instanceof Bicicleta)
+            {
+                Bicicleta b = (Bicicleta) a;
+                maxalt += b.getAltimetria();
+            }
+        }
+        
+        return maxalt;
+    }
+    
+    //5- quantos metros de altimetria é que um utilizar totalizou num período 
+    public double quantoAltUtilizadorPeriodo(Utilizador u, LocalDate inicio, LocalDate fim)
+    {
+        //!
+        double maxalt = 0;
+        for ( Atividade a : u.getHistorico())
+        {
+            if ( (a.getDataRealizada()).compareTo(inicio) >= 0 && (a.getDataRealizada()).compareTo(fim) <= 0)
+            {
+                if (a instanceof Corrida)
+                {
+                    Corrida c  = (Corrida) a;
+                    maxalt += c.getAltimetria();
+                }
+                if( a instanceof Bicicleta)
+                {
+                    Bicicleta b = (Bicicleta) a;
+                    maxalt += b.getAltimetria();
+                }
+            }
+        }
+        
+        return maxalt;
+    }
+    
+    // 6 - qual o plano de treino mais exigente em função do dispêndio de calorias proposto
+    public PlanoTreino qualMaisExigente()
+    {
+        PlanoTreino teste = null;
+        return teste;
+    }
+    
+    // 7 - listar as actividades de um utilizador
+    // ja existe na parte de cada utilizador apenas repetir nesta estatistica
     /*
      * Ainda nao tem utilidade por enquanto
     public void removePlanoTreinoDoUtilizador(int idUtilizador, PlanoTreino pt)
@@ -275,6 +543,7 @@ public class FitnessApp implements Serializable
         return r;
     }
     
+    //!
     public void save() throws IOException {
 
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("FitnessApp.obj"));
@@ -283,6 +552,7 @@ public class FitnessApp implements Serializable
         oos.close();
     }
     
+    //!
     public void load() throws IOException, ClassNotFoundException {
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("FitnessApp.obj"));
         FitnessApp ap = (FitnessApp) ois.readObject();

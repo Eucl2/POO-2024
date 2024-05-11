@@ -37,8 +37,15 @@ public class Controller
                     view.msg("Password: ");
                     line2 = sc.nextLine();
                     try {
-                        Utilizador u = ap.getUtilizador(line, line2);
-                        menuUtilizador(ap,u);
+                        Utilizador u = ap.getUtilizador(line);
+                        if(u.getPassword().equals(line2))
+                        {
+                           menuUtilizador(ap,line); 
+                        }
+                        else
+                        {
+                            view.msg("Password errada :(");
+                        }
                     } catch (UtilizadorNaoExisteException e) {
                         view.msg(e.getMessage());
                     }
@@ -152,25 +159,28 @@ public class Controller
             }
         }
     }
-    
-    public static void save(FitnessApp ap) throws IOException {
+    //!
+    public static void save(FitnessApp ap) throws IOException 
+    {
 
         View view = new View();
         ap.save();
         view.msg("-------------Saved------------");
 
     }
-
-    public static void load(FitnessApp ap) throws IOException, ClassNotFoundException {
+    //!
+    public static void load(FitnessApp ap) throws IOException, ClassNotFoundException 
+    {
         View view = new View();
         ap.load();
         view.msg("-------------Loaded------------");
 
     }
     
-    public static void menuUtilizador(FitnessApp ap, Utilizador u) {
-        String[] s = { "Ver Atividades", "Ver Planos Treino", "Pesquisar Atividade", "Pesquisar Plano", "Registar Atividade Realizada",
-                "Escolher Plano de Treino", "Historico de Ativiades Realizadas", "Os Meus Planos Treino", " O Meu Prefil"};
+    public static void menuUtilizador(FitnessApp ap, String nick) {
+        String[] s = {"Ver Atividades", "Ver Planos Treino", "Pesquisar Atividade", "Pesquisar Plano", "Registar Atividade Realizada",
+                "Escolher Plano de Treino", "Criar Plano Treino (Automatico)", "Criar Plano(Personalizado)", "Historico de Ativiades Realizadas", 
+                "Os Meus Planos Treino", "O Meu Perfil"};
         Menu menuCriar = new Menu(s);
         int op = -1;
         Scanner sc = new Scanner(System.in);
@@ -178,7 +188,6 @@ public class Controller
         String line;
         String line2;
         String line3;
-        Utilizador up = null;
 
         while (op != 0) {
             menuCriar.executa();
@@ -243,8 +252,9 @@ public class Controller
                     try 
                     {
                         Atividade a = ap.getAtividade(Integer.valueOf(line));
-                        ap.insereAtividadeNoHistoricoUtilizador(u,a,Integer.valueOf(line3),dia);
-                        view.printAtividadeRealizada(u.getNome(), dia, 
+                        Utilizador uAtual = ap.getUtilizador(nick);
+                        ap.insereAtividadeNoHistoricoUtilizador(uAtual,a,Integer.valueOf(line3),dia);
+                        view.printAtividadeRealizada(uAtual.getNome(), dia, 
                             a.getCodigo(), a.getNome());
                     } 
                     catch (AtividadeNaoExisteException | UtilizadorNaoExisteException e) 
@@ -260,10 +270,11 @@ public class Controller
                     try 
                     {
                         PlanoTreino pt2 = ap.getPlanoTreino(line);
-                        ap.inserePlanoTreinoNoUtilizador(u.getNick(),pt2);
-                        view.printPlanoTreinoEscolhido(u.getNome(), pt2.getNomePlano());
+                        Utilizador uAtual = ap.getUtilizador(nick);
+                        ap.inserePlanoTreinoNoUtilizador(uAtual.getNick(),pt2);
+                        view.printPlanoTreinoEscolhido(uAtual.getNome(), pt2.getNomePlano());
                     } 
-                    catch (PlanoTreinoExisteException | PlanoTreinoNaoExisteException e) 
+                    catch (PlanoTreinoExisteException | PlanoTreinoNaoExisteException | UtilizadorNaoExisteException e )
                     {
                         view.msg(e.getMessage());
                     }
@@ -271,41 +282,49 @@ public class Controller
 
                     break;
                 case 7:
-                    try
-                    {
-                        up = ap.getUtilizador(u.getNick(),u.getPassword());
-                        view.printHistoricoUtilizador(up.getNick(), up.getNome(),
-                        up.getTipoUtilizador(), up.toStringHistorico());
-                    }
-                    catch (UtilizadorNaoExisteException e)
-                    {
-                        view.msg(e.getMessage());
-                    }
+                    view.msg("Para que tipo de Atividade gostava de ter um plano de treino ? :D");
+                    view.msg("Patinagem, Remo, Corrida, Bicicleta, Abdominais, Alongamentos, LevantaPeso, ExtensaoPernas, Flexoes");
+                    line = sc.nextLine();
+                    
                     break;
                 case 8:
-                    try
-                    {
-                        Utilizador uN = ap.getUtilizador(u.getNick(),u.getPassword());
-                        view.msg("planos" + uN.toStringPlanosTreinoU());
-                        /*
-                        view.printPlanosTreinoUtilizador(uN.getNick(), uN.getNome(),
-                        uN.getTipoUtilizador(), uN.toStringPlanosTreinoU());
-                        */
-                    }
-                    catch (UtilizadorNaoExisteException e)
-                    {
-                        view.msg(e.getMessage());
-                    }
                     break;
                 case 9:
                     try
                     {
-                        up = ap.getUtilizador(u.getNick(),u.getPassword());
-                        view.printUtilizador(up.getNick(), up.getPassword(), up.getNome(),
-                        up.getEmail(), up.getGenero(),up.getDataNascimento(),
-                        up.getAltura(), up.getPeso(), up.getFreqCardiaca(),
-                        up.getFatorMultiplicativo(),up.caracteristicasUExtra(),
-                        up.getTotalCalorias());
+                        Utilizador uAtual = ap.getUtilizador(nick);
+                        view.printHistoricoUtilizador(uAtual.getNick(), uAtual.getNome(),
+                        uAtual.getTipoUtilizador(), uAtual.toStringHistorico());
+                    }
+                    catch (UtilizadorNaoExisteException e)
+                    {
+                        view.msg(e.getMessage());
+                    }
+                    break;
+                case 10:
+                    try
+                    {
+                        Utilizador uAtual = ap.getUtilizador(nick);
+                        //view.msg("planos" + uAtual.toStringPlanosTreinoU());
+                        view.printPlanosTreinoUtilizador(uAtual.getNick(), uAtual.getNome(),
+                        uAtual.getTipoUtilizador(), uAtual.toStringPlanosTreinoU());
+    
+                    }
+                    catch (UtilizadorNaoExisteException e)
+                    {
+                        view.msg(e.getMessage());
+                    }
+                    break;
+                case 11:
+                    try
+                    {
+                        Utilizador uAtual = ap.getUtilizador(nick);
+
+                        view.printUtilizador(uAtual.getNick(), uAtual.getPassword(), uAtual.getNome(),
+                        uAtual.getEmail(), uAtual.getGenero(),uAtual.getDataNascimento(),
+                        uAtual.getAltura(), uAtual.getPeso(), uAtual.getFreqCardiaca(),
+                        uAtual.getFatorMultiplicativo(),uAtual.caracteristicasUExtra(),
+                        uAtual.getTotalCalorias());
                     }
                     catch (UtilizadorNaoExisteException e)
                     {
@@ -316,7 +335,7 @@ public class Controller
             }
         }
     }
-    
+
     public static void menuEstatistica(FitnessApp ap) {
         String[] s = { "Estatisticas"};
         Menu menuVer = new Menu(s);
@@ -367,7 +386,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Patinagem(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        all[5], null, 0, 0);
+                                                        all[5], null, 0, 0, Boolean.parseBoolean(all[5]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -386,7 +405,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Remo(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        all[5], null, 0, 0);
+                                                        all[5], null, 0, 0, Boolean.parseBoolean(all[6]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -405,7 +424,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Corrida(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        Double.parseDouble(all[5]),all[6], null, 0, 0);
+                                                        Double.parseDouble(all[5]),all[6], null, 0, 0, Boolean.parseBoolean(all[7]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -424,7 +443,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Bicicleta(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        Double.parseDouble(all[5]),all[6], null, 0, 0);
+                                                        Double.parseDouble(all[5]),all[6], null, 0, 0, Boolean.parseBoolean(all[7]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -443,7 +462,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Abdominais(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        null, 0, 0);
+                                                        null, 0, 0, Boolean.parseBoolean(all[5]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -462,7 +481,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Alongamentos(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        null, 0, 0);
+                                                        null, 0, 0, Boolean.parseBoolean(all[5]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -481,7 +500,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new Flexoes(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        null, 0, 0);
+                                                        null, 0, 0, Boolean.parseBoolean(all[5]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -500,7 +519,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new LevantaPeso(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        Double.parseDouble(all[5]),null, 0, 0);
+                                                        Double.parseDouble(all[5]),null, 0, 0, Boolean.parseBoolean(all[6]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -519,7 +538,7 @@ public class Controller
                             all = line.split(",");
                             atividade_nova = new ExtensaoPernas(Integer.parseInt(all[0]),all[1],
                                                         all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        Double.parseDouble(all[5]),null, 0, 0);
+                                                        Double.parseDouble(all[5]),null, 0, 0, Boolean.parseBoolean(all[6]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -568,10 +587,6 @@ public class Controller
                     }
                     
                     break;
-                    
-                case 3:
-                    view.msg("Sair do modo Admin:D");
-                    break;
             }
 
         }
@@ -606,6 +621,7 @@ public class Controller
         }
     }
     
+    //!
     public static void menuFicheiro(FitnessApp ap) {
         Parser p = new Parser();
         View view = new View();

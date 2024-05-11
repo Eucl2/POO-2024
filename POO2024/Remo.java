@@ -17,9 +17,9 @@ public class Remo extends Atividade
     
     public Remo(int codigo, String nome, String descricao, int duracao,
     double distancia, String percurso, LocalDate data_realizada,
-    int freq_atv, double cal) 
+    int freq_atv, double cal, boolean hard) 
     {
-        super(codigo, nome, descricao, duracao , data_realizada,  freq_atv, cal);
+        super(codigo, nome, descricao, duracao , data_realizada,  freq_atv, cal, hard);
         this.distancia = distancia;
         this.percurso = percurso;
 
@@ -64,7 +64,7 @@ public class Remo extends Atividade
 
         return new Remo(Integer.parseInt(campos[0]),campos[1],
         campos[2],Integer.parseInt(campos[3]),Double.parseDouble(campos[4]),
-        campos[5], null, 0, 0);
+        campos[5], null, 0, 0, Boolean.parseBoolean(campos[6]));
     }
     
     public String getTipoAtividade()

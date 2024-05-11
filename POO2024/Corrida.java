@@ -19,9 +19,9 @@ public class Corrida extends Atividade
     
     public Corrida(int codigo, String nome, String descricao, int duracao,
     double distancia, double altimetria, String percurso, LocalDate data_realizada,
-    int freq_atv, double cal) 
+    int freq_atv, double cal, boolean hard) 
     {
-        super(codigo, nome, descricao, duracao, data_realizada, freq_atv, cal);
+        super(codigo, nome, descricao, duracao, data_realizada, freq_atv, cal, hard);
         this.distancia = distancia;
         this.altimetria = altimetria;
         this.percurso = percurso;
@@ -78,7 +78,7 @@ public class Corrida extends Atividade
 
         return new Corrida(Integer.parseInt(campos[0]),campos[1],
         campos[2],Integer.parseInt(campos[3]),Double.parseDouble(campos[4]),
-        Double.parseDouble(campos[5]), campos[6], null, 0, 0);
+        Double.parseDouble(campos[5]), campos[6], null, 0, 0, Boolean.parseBoolean(campos[7]));
     }
     
     public String getTipoAtividade()

@@ -14,9 +14,9 @@ public class Abdominais extends Atividade
     }
     
     public Abdominais(int codigo, String nome, String descricao, int duracao,
-    int repeticoes, LocalDate data_realizada, int freq_atv, double cal) 
+    int repeticoes, LocalDate data_realizada, int freq_atv, double cal, boolean hard) 
     {
-        super(codigo, nome, descricao, duracao, data_realizada, freq_atv, cal);
+        super(codigo, nome, descricao, duracao, data_realizada, freq_atv, cal, hard);
         this.repeticoes = repeticoes;
 
     }
@@ -49,7 +49,7 @@ public class Abdominais extends Atividade
 
         return new Abdominais(Integer.parseInt(campos[0]),campos[1],
         campos[2],Integer.parseInt(campos[3]),Integer.parseInt(campos[4]),
-        null, 0 , 0);
+        null, 0 , 0, Boolean.parseBoolean(campos[5]));
     }
     
     public String getTipoAtividade()

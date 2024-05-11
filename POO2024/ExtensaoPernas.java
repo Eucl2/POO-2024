@@ -17,9 +17,10 @@ public class ExtensaoPernas extends Atividade
     }
     
     public ExtensaoPernas(int codigo, String nome, String descricao, int duracao,
-    int repeticoes, double peso, LocalDate data_realizada, int freq_atv, double cal) 
+    int repeticoes, double peso, LocalDate data_realizada, int freq_atv, double cal, 
+    boolean hard) 
     {
-        super(codigo, nome, descricao, duracao, data_realizada, freq_atv, cal);
+        super(codigo, nome, descricao, duracao, data_realizada, freq_atv, cal, hard);
         this.repeticoes = repeticoes;
         this.peso = peso;
 
@@ -64,7 +65,7 @@ public class ExtensaoPernas extends Atividade
 
         return new ExtensaoPernas(Integer.parseInt(campos[0]),campos[1],
         campos[2],Integer.parseInt(campos[3]),Integer.parseInt(campos[4]),
-        Double.parseDouble(campos[5]),null, 0, 0);
+        Double.parseDouble(campos[5]),null, 0, 0, Boolean.parseBoolean(campos[6]));
     }
     
     public String getTipoAtividade()
