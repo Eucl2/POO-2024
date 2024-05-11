@@ -188,6 +188,8 @@ public class Controller
         String line;
         String line2;
         String line3;
+        PlanoTreino plano_gerado = null;
+        String[] all;
 
         while (op != 0) {
             menuCriar.executa();
@@ -285,7 +287,172 @@ public class Controller
                     view.msg("Para que tipo de Atividade gostava de ter um plano de treino ? :D");
                     view.msg("Patinagem, Remo, Corrida, Bicicleta, Abdominais, Alongamentos, LevantaPeso, ExtensaoPernas, Flexoes");
                     line = sc.nextLine();
-                    
+                    switch (line.toLowerCase())
+                    {
+                        case "patinagem":
+                            plano_gerado = new PlanoTreino("Patinagem - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            line = "11";
+                            all = line.split(",");
+                            try 
+                            {
+                                ap.inserePlanoTreino(plano_gerado);
+                                for (int i=0; i<all.length; i++)
+                                {
+                                    Atividade a = ap.getAtividade(Integer.valueOf(all[i]));
+                                    ap.insereAtiviadeNoPlanoTreino("Patinagem - Modulo 1",a);  
+                                }
+                            } 
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            {
+                                view.msg(e.getMessage());
+                            }
+                            
+                        case "remo":
+                            plano_gerado = new PlanoTreino("Remo - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            line = "11";
+                            all = line.split(",");
+                            try 
+                            {
+                                ap.inserePlanoTreino(plano_gerado);
+                                for (int i=0; i<all.length; i++)
+                                {
+                                    Atividade a = ap.getAtividade(Integer.valueOf(all[i]));
+                                    ap.insereAtiviadeNoPlanoTreino("Remo - Modulo 1",a);  
+                                }
+                            } 
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            {
+                                view.msg(e.getMessage());
+                            }
+                            break;
+                        case "corrida":
+                            plano_gerado = new PlanoTreino("Corrida - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            line = "11";
+                            all = line.split(",");
+                            try 
+                            {
+                                ap.inserePlanoTreino(plano_gerado);
+                                for (int i=0; i<all.length; i++)
+                                {
+                                    Atividade a = ap.getAtividade(Integer.valueOf(all[i]));
+                                    ap.insereAtiviadeNoPlanoTreino("Corrida - Modulo 1",a);  
+                                }
+                            } 
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            {
+                                view.msg(e.getMessage());
+                            }
+                            break;
+                        case "bicicleta":
+                            plano_gerado = new PlanoTreino("Bicicleta - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            line = "11";
+                            all = line.split(",");
+                            try 
+                            {
+                                ap.inserePlanoTreino(plano_gerado);
+                                for (int i=0; i<all.length; i++)
+                                {
+                                    Atividade a = ap.getAtividade(Integer.valueOf(all[i]));
+                                    ap.insereAtiviadeNoPlanoTreino("Bicicleta - Modulo 1",a);  
+                                }
+                            } 
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            {
+                                view.msg(e.getMessage());
+                            }
+                            break;
+                        case "abdominais":
+                            plano_gerado = new PlanoTreino("Abdominais - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            line = "11";
+                            all = line.split(",");
+                            try 
+                            {
+                                ap.inserePlanoTreino(plano_gerado);
+                                for (int i=0; i<all.length; i++)
+                                {
+                                    Atividade a = ap.getAtividade(Integer.valueOf(all[i]));
+                                    ap.insereAtiviadeNoPlanoTreino("Abdominais - Modulo 1",a);  
+                                }
+                            } 
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            {
+                                view.msg(e.getMessage());
+                            }
+                            break;
+                        case "alongamentos":
+                            plano_gerado = new PlanoTreino("Alongamentos - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            line = "11";
+                            all = line.split(",");
+                            try 
+                            {
+                                ap.inserePlanoTreino(plano_gerado);
+                                for (int i=0; i<all.length; i++)
+                                {
+                                    Atividade a = ap.getAtividade(Integer.valueOf(all[i]));
+                                    ap.insereAtiviadeNoPlanoTreino("Alongamentos - Modulo 1",a);  
+                                }
+                            } 
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            {
+                                view.msg(e.getMessage());
+                            }
+                            break;
+                        case "flexoes":
+                            plano_gerado = new PlanoTreino("Flexoes - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            line = "11";
+                            all = line.split(",");
+                            try 
+                            {
+                                ap.inserePlanoTreino(plano_gerado);
+                                for (int i=0; i<all.length; i++)
+                                {
+                                    Atividade a = ap.getAtividade(Integer.valueOf(all[i]));
+                                    ap.insereAtiviadeNoPlanoTreino("Flexoes - Modulo 1",a);  
+                                }
+                            } 
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            {
+                                view.msg(e.getMessage());
+                            }
+                            break;
+                        case "levantapeso":
+                            plano_gerado = new PlanoTreino("Levantamento de Peso - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            line = "11";
+                            all = line.split(",");
+                            try 
+                            {
+                                ap.inserePlanoTreino(plano_gerado);
+                                for (int i=0; i<all.length; i++)
+                                {
+                                    Atividade a = ap.getAtividade(Integer.valueOf(all[i]));
+                                    ap.insereAtiviadeNoPlanoTreino("Levantamento de Peso - Modulo 1",a);  
+                                }
+                            } 
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            {
+                                view.msg(e.getMessage());
+                            }
+                            break;
+                        case "extensaopernas":
+                            plano_gerado = new PlanoTreino("Extensao Pernas - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            line = "11";
+                            all = line.split(",");
+                            try 
+                            {
+                                ap.inserePlanoTreino(plano_gerado);
+                                for (int i=0; i<all.length; i++)
+                                {
+                                    Atividade a = ap.getAtividade(Integer.valueOf(all[i]));
+                                    ap.insereAtiviadeNoPlanoTreino("Extensao Pernas - Modulo 1",a);  
+                                }
+                            } 
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            {
+                                view.msg(e.getMessage());
+                            }
+                            break;
+                        
+                    }
                     break;
                 case 8:
                     break;

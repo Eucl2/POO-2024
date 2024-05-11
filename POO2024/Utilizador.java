@@ -19,6 +19,15 @@ public abstract class  Utilizador implements Serializable
     private double total_calorias;
     private List<Atividade> historico_atividades;
     private List<PlanoTreino> planos_treino;
+    private Atividade mCorrida;
+    private Atividade mRemo;
+    private Atividade mBicicleta;
+    private Atividade mPatinagem;
+    private Atividade mAbdominal;
+    private Atividade mAlongamento;
+    private Atividade mLevantaPeso;
+    private Atividade mExtensaoPernas;
+    private Atividade mFlexoes;
 
     public Utilizador() 
     {
