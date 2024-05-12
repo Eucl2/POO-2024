@@ -99,6 +99,7 @@ public class Ocasional extends Utilizador
     {
         double ufator = 0;
         double idade =  (double) ChronoUnit.YEARS.between(getDataNascimento(),LocalDate.now());
+        
         ufator = (double) (idade + (double)  getPeso() + (double) getAltura() + this.getFreqPratica()) * 0.1;
         
         

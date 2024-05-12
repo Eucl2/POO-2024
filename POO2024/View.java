@@ -94,32 +94,28 @@ public class View {
     }
 
     public void printAtividade(int codigo, String nome, String descricao,
-                int duracao, String extra, int freq_at, double cal,
-                boolean hard, LocalDate data_realizada) {
+                 String extra,
+                boolean hard) {
         System.out.println("-----------Atividade----------- ");
         System.out.println("Codigo: " + codigo);
         System.out.println("Nome: " + nome);
         System.out.println("Descricao: " + descricao);
-        System.out.println("Duracao: " + duracao);
         System.out.println(extra);
         System.out.println("Atividade Hard: " + hard);
         //retirar daqui , apenas para debug
-        System.out.println("Frequencia Cardiaca Ativiade: " + freq_at);
-        System.out.println("Calorias Gastas: " + cal);
-        System.out.println("Data a Realizar: " + data_realizada);
+        //System.out.println("Frequencia Cardiaca Ativiade: " + freq_at);
+        //System.out.println("Calorias Gastas: " + cal);
+        //System.out.println("Data a Realizar: " + data_realizada);
     }
     
     public void printAtividadeCriada(int codigo, String nome, String descricao,
-                int duracao, String extra, boolean hard, LocalDate data_realizada) {
+                 String extra, boolean hard) {
         System.out.println("-----------Atividade Adicionada----------- ");
         System.out.println("Codigo: " + codigo);
         System.out.println("Nome: " + nome);
         System.out.println("Descricao: " + descricao);
-        System.out.println("Duracao: " + duracao);
         System.out.println(extra);
         System.out.println("Atividade Hard: " + hard);
-        //retirar daqui , apenas para debug
-        System.out.println("Data a Realizar: " + data_realizada);
     }
     
     public void printAtividades(String atividades) {

@@ -2,10 +2,10 @@
 comment0.target=View
 comment1.params=msg
 comment1.target=void\ msg(java.lang.String)
-comment10.params=codigo\ nome\ descricao\ duracao\ extra\ freq_at\ cal\ hard\ data_realizada
-comment10.target=void\ printAtividade(int,\ java.lang.String,\ java.lang.String,\ int,\ java.lang.String,\ int,\ double,\ boolean,\ java.time.LocalDate)
-comment11.params=codigo\ nome\ descricao\ duracao\ extra\ hard\ data_realizada
-comment11.target=void\ printAtividadeCriada(int,\ java.lang.String,\ java.lang.String,\ int,\ java.lang.String,\ boolean,\ java.time.LocalDate)
+comment10.params=codigo\ nome\ descricao\ extra\ hard
+comment10.target=void\ printAtividade(int,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ boolean)
+comment11.params=codigo\ nome\ descricao\ extra\ hard
+comment11.target=void\ printAtividadeCriada(int,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ boolean)
 comment12.params=atividades
 comment12.target=void\ printAtividades(java.lang.String)
 comment13.params=atividade

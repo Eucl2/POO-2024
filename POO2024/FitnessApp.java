@@ -505,27 +505,6 @@ public class FitnessApp implements Serializable
         }
         return r;
     }
-    //! uma outra fomra seria simplesmente mostrar todas as atividades com o ishard na frente como tem em Cima e depois na altura de escolher nao seria possivel usar as Hard
-    public String toStringAtividadesSelecionadas(String tipo, int f)
-    {
-        String r = "\n";
-        for (Atividade a : atividades.values()) {
-            if(f == 0)
-            {
-                if(a.getTipoAtividade().equals(tipo) && a.getIsHard() == false)
-                {
-                    r += a.getCodigo() + " " + a.getNome() + "\n";
-                }
-            }else
-            {
-                if(a.getTipoAtividade().equals(tipo))
-                {
-                    r += a.getCodigo() + " " + a.getNome() + "\n";
-                }
-            }
-        }
-        return r;
-    }
     
     public String toStringPlanosTreino()
     {

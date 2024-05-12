@@ -220,9 +220,8 @@ public class Controller
                         Atividade a = ap.getAtividade(Integer.valueOf(line));
     
                         view.printAtividade(a.getCodigo(),a.getNome(),
-                        a.getDescricao(),a.getDuracao(),a.caracteristicasExtra(),
-                        a.getFreqCardiaAtividade(), a.getCaloriasGastasAtividade(),
-                        a.getIsHard(), a.getDataRealizada());
+                        a.getDescricao(),a.caracteristicasExtra(),
+                        a.getIsHard());
                         
                         //falta adicionar cada coisa para dar print,
                         //as toSring extras de cada atividade nas atividades
@@ -564,7 +563,7 @@ public class Controller
                             flag = 1;
                             for(int i = 0; i< tipo_ativ.length && i < 3 ; i++)
                             {
-                                view.printAtividades(ap.toStringAtividadesSelecionadas(tipo_ativ[i], flag));
+                                view.printAtividades(ap.toStringAtividades());
                             }
                             view.msg("Escolha as atividades de acordo com o maximo: (CodigoAtividade1,CodigoAtividade2.. ");
                             line3 = sc.nextLine();
@@ -692,7 +691,7 @@ public class Controller
                             flag = 1;
                             for(int i = 0; i< tipo_ativ.length && i < 3 ; i++)
                             {
-                                view.printAtividades(ap.toStringAtividadesSelecionadas(tipo_ativ[i], flag));
+                                view.printAtividades(ap.toStringAtividades());
                             }
                             view.msg("Escolha as atividades de acordo com o maximo: (CodigoAtividade1,CodigoAtividade2.. ");
                             line3 = sc.nextLine();
@@ -958,8 +957,8 @@ public class Controller
                             try {
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
-                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
+                                    atividade_nova.getDescricao(),
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard());
 
                                 } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
@@ -977,8 +976,8 @@ public class Controller
                             try {
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
-                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
+                                    atividade_nova.getDescricao(),
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard());
 
                                 } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
@@ -996,8 +995,8 @@ public class Controller
                             try {
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
-                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
+                                    atividade_nova.getDescricao(),
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard());
 
                                 } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
@@ -1015,8 +1014,8 @@ public class Controller
                             try {
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
-                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
+                                    atividade_nova.getDescricao(),
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard());
 
                                 } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
@@ -1034,8 +1033,8 @@ public class Controller
                             try {
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
-                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
+                                    atividade_nova.getDescricao(),
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard());
 
                                 } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
@@ -1053,8 +1052,8 @@ public class Controller
                             try {
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
-                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
+                                    atividade_nova.getDescricao(),
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard());
 
                                 } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
@@ -1072,8 +1071,8 @@ public class Controller
                             try {
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
-                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
+                                    atividade_nova.getDescricao(),
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard());
 
                                 } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
@@ -1091,8 +1090,8 @@ public class Controller
                             try {
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
-                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
+                                    atividade_nova.getDescricao(),
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard());
 
                                 } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
@@ -1110,8 +1109,8 @@ public class Controller
                             try {
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
-                                    atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
+                                    atividade_nova.getDescricao(),
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard());
 
                                 } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
