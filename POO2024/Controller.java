@@ -312,7 +312,7 @@ public class Controller
                             {
                                 view.msg(e.getMessage());
                             }
-                            
+                            break;
                         case "remo":
                             plano_gerado = new PlanoTreino("Remo - Modulo 1", LocalDate.of(2024,06,07),2,0,""); // plano gerado automaticamente
                             line = "11";
@@ -468,17 +468,26 @@ public class Controller
                     line = sc.nextLine();
                     String[] dias_semana;
                     String[] datas_semana;
+                    String[] ndata;
                     String line4;
+                    String[] tipo_ativ;
+                    String[] at;
+                    String nome;
+                    int flag = 0;
+                    int incrementa = 1;
+                    LocalDate data_p;
+                    LocalDate data_semana = null;
+                    List<Atividade> att = new ArrayList<>();
                     List<LocalDate> datas_plano = new ArrayList<>();; // lista com os dias em que o plano vai se realizar inicialmente
                     switch (line.toLowerCase())
                     {
                         case "y":
                             view.msg(" Em que semana pretende começar? (data do primeiro dia da semana)");
                             line2 = sc.nextLine();
-                            String[] ndata = line2.split("-");
-                            LocalDate data_p = LocalDate.of(Integer.parseInt(ndata[0]), Integer.parseInt(ndata[1]), 
+                            ndata = line2.split("-");
+                            data_p = LocalDate.of(Integer.parseInt(ndata[0]), Integer.parseInt(ndata[1]), 
                                                   Integer.parseInt(ndata[2]));
-                            LocalDate data_semana = null;
+                            data_semana = null;
                             view.msg("Qual a recorrencia semanal das atividades ?");
                             line3 = sc.nextLine();
                             view.msg("Quais os dias da semana? ( Ter em atencao que apenas pode ter ate 3 dias)");
@@ -551,22 +560,22 @@ public class Controller
                             view.msg("Que tipo de Atividades (pode escolher até 3)?");
                             view.msg("Patinagem, Remo, Corrida, Bicicleta, Abdominais, Alongamentos, LevantaPeso, ExtensaoPernas, Flexoes");
                             line3 = sc.nextLine();
-                            String[] tipo_ativ = line3.split(",");
-                            int flag = 1;
+                            tipo_ativ = line3.split(",");
+                            flag = 1;
                             for(int i = 0; i< tipo_ativ.length && i < 3 ; i++)
                             {
                                 view.printAtividades(ap.toStringAtividadesSelecionadas(tipo_ativ[i], flag));
                             }
                             view.msg("Escolha as atividades de acordo com o maximo: (CodigoAtividade1,CodigoAtividade2.. ");
                             line3 = sc.nextLine();
-                            String[] at = line3.split(",");
+                            at = line3.split(",");
                             while( at.length < 1 || at.length > 3)
                             {
                                 view.msg("Escolha de novo as atividades de acordo com o maximo: (CodigoAtividade1,CodigoAtividade2.. ");
                                 line3 = sc.nextLine();
                                 at = line3.split(",");
                             }
-                            List<Atividade> att = new ArrayList<>();
+                            //List<Atividade> att = new ArrayList<>();
                             flag = 0;
                             for (int i=0; i<at.length; i++)
                             {
@@ -593,10 +602,9 @@ public class Controller
                             view.msg("Nome,Iteracoes das Atividades,Calorias Previstas");
                             line= sc.nextLine();
                             all = line.split(",");
-                            int incrementa = 1;
                             for( LocalDate d : datas_plano)
                             {
-                                String nome = all[0] + Integer.toString(incrementa);
+                                nome = all[0] + Integer.toString(incrementa);
                                 incrementa += 1;
                                 //agora os planos de treino tem calorias previstas e os dias a executar em string
                                 plano_gerado = new PlanoTreino(nome,d,Integer.parseInt(all[1]),Double.parseDouble(all[2]),line2);
@@ -619,75 +627,60 @@ public class Controller
                         case "n":
                             view.msg(" Em que semana pretende começar? (data do primeiro dia da semana)");
                             line2 = sc.nextLine();
-                            String[] ndata2 = line2.split("-");
-                            LocalDate data_p2 = LocalDate.of(Integer.parseInt(ndata2[0]), Integer.parseInt(ndata2[1]), 
-                                                  Integer.parseInt(ndata2[2]));
-                            LocalDate data_semana2 = null;
+                            ndata = line2.split("-");
+                            data_p = LocalDate.of(Integer.parseInt(ndata[0]), Integer.parseInt(ndata[1]), 
+                                                  Integer.parseInt(ndata[2]));
+                            data_semana = null;
+            
                             view.msg("Qual a recorrencia semanal das atividades ?");
                             line3 = sc.nextLine();
-                            view.msg("Quais os dias da semana? ( Ter em atencao que apenas pode ter ate 3 dias)");
-                            view.msg("1-Segunda, 2-Terca, 3-Quarta, 4-Quinta, 5-Sexta, 6-Sabado, 7-Domingo");
-                            line2 = sc.nextLine();
-                            String[] dias_semana2 = line2.split(",");
-                            if( line3.equals("2"))
+                            if( line3.equals("7"))
                             {
-                                while( Integer.parseInt(dias_semana2[1]) - Integer.parseInt(dias_semana2[0]) <= 1)
-                                {
-                                    view.msg("Escolha de novo os dias ");
-                                    view.msg("1-Segunda, 2-Terca, 3-Quarta, 4-Quinta, 5-Sexta, 6-Sabado, 7-Domingo");
-                                    line2 = sc.nextLine();
-                                    dias_semana2 = line2.split(",");
-                                }
+                                line2 = "1,2,3,4,5,6,7";
+                                dias_semana = line2.split(",");
                             }
                             else
                             {
-                                if( line3.equals("3"))
-                                {
-                                    while( Integer.parseInt(dias_semana2[1]) - Integer.parseInt(dias_semana2[0]) <= 1 && 
-                                    Integer.parseInt(dias_semana2[2]) - Integer.parseInt(dias_semana2[1]) <= 1 )
-                                    {
-                                        view.msg("Escolha de novo os dias ");
-                                        view.msg("1-Segunda, 2-Terca, 3-Quarta, 4-Quinta, 5-Sexta, 6-Sabado, 7-Domingo");
-                                        line2 = sc.nextLine();
-                                        dias_semana2 = line2.split(",");
-                                    }
-                                }
+                                view.msg("Quais os dias da semana? ( Ter em atencao que apenas pode ter ate 3 dias)");
+                                view.msg("1-Segunda, 2-Terca, 3-Quarta, 4-Quinta, 5-Sexta, 6-Sabado, 7-Domingo 8-Todos");
+                                line2 = sc.nextLine();
+                                dias_semana = line2.split(",");
                             }
                             
                             //1º - Saber quantos dias e quais as datas a inicializar o plano de treino
-                            if( Integer.parseInt(line3) > 0 && Integer.parseInt(line3) <= 3)
+                            if( Integer.parseInt(line3) > 0 && Integer.parseInt(line3) <= 7)
                             { 
                                 
                                 for( int i=0 ; i < Integer.parseInt(line3) ; i++)
                                 {
-                                    switch (dias_semana2[i].toLowerCase())
+                                    switch (dias_semana[i].toLowerCase())
                                     {
                                         case "1":
-                                                datas_plano.add(data_p2);
+                                                datas_plano.add(data_p);
                                             break;
                                         case "2":
-                                            data_semana2 = data_p2.plusDays(1);
-                                            datas_plano.add(data_semana2);
+                                            data_semana = data_p.plusDays(1);
+                                            datas_plano.add(data_semana);
                                             break;
                                         case "3":
-                                            data_semana = data_p2.plusDays(2);
-                                            datas_plano.add(data_semana2);
+                                            data_semana = data_p.plusDays(2);
+                                            datas_plano.add(data_semana);
                                             break;
                                         case "4":
-                                            data_semana = data_p2.plusDays(3);
-                                            datas_plano.add(data_semana2);
+                                            data_semana = data_p.plusDays(3);
+                                            datas_plano.add(data_semana);
                                             break;
                                         case "5":
-                                            data_semana = data_p2.plusDays(4);
-                                            datas_plano.add(data_semana2);
+                                            data_semana = data_p.plusDays(4);
+                                            datas_plano.add(data_semana);
                                             break;
                                         case "6":
-                                            data_semana = data_p2.plusDays(5);
-                                            datas_plano.add(data_semana2);
+                                            data_semana = data_p.plusDays(5);
+                                            datas_plano.add(data_semana);
                                             break;
                                         case "7":
-                                            data_semana = data_p2.plusDays(6);
-                                            datas_plano.add(data_semana2);
+                                            data_semana = data_p.plusDays(6);
+                                            datas_plano.add(data_semana);
                                             break;
                                     }
                                 }
@@ -695,28 +688,32 @@ public class Controller
                             view.msg("Que tipo de Atividades (pode escolher até 3)?");
                             view.msg("Patinagem, Remo, Corrida, Bicicleta, Abdominais, Alongamentos, LevantaPeso, ExtensaoPernas, Flexoes");
                             line3 = sc.nextLine();
-                            String[] tipo_ativ2 = line3.split(",");
-                            int flag2 = 0;
-                            for(int i = 0; i< tipo_ativ2.length && i < 3 ; i++)
+                            tipo_ativ = line3.split(",");
+                            flag = 1;
+                            for(int i = 0; i< tipo_ativ.length && i < 3 ; i++)
                             {
-                                view.printAtividades(ap.toStringAtividadesSelecionadas(tipo_ativ2[i], flag2));
+                                view.printAtividades(ap.toStringAtividadesSelecionadas(tipo_ativ[i], flag));
                             }
                             view.msg("Escolha as atividades de acordo com o maximo: (CodigoAtividade1,CodigoAtividade2.. ");
                             line3 = sc.nextLine();
-                            String[] at2 = line3.split(",");
-                            while( at2.length < 1 || at2.length > 3)
+                            at = line3.split(",");
+                            while( at.length < 1 || at.length > 3)
                             {
                                 view.msg("Escolha de novo as atividades de acordo com o maximo: (CodigoAtividade1,CodigoAtividade2.. ");
                                 line3 = sc.nextLine();
-                                at2 = line3.split(",");
+                                at = line3.split(",");
                             }
-                            List<Atividade> att2 = new ArrayList<>();
-                            for (int i=0; i<at2.length; i++)
+                            //List<Atividade> att2 = new ArrayList<>();
+                            flag = 0;
+                            for (int i=0; i<at.length; i++)
                             {
                                 try {
-                                    Atividade a = ap.getAtividade(Integer.valueOf(at2[i]));
-                                    att2.add(a);
-                                    
+                                    Atividade a = ap.getAtividade(Integer.valueOf(at[i]));
+                                    if (a.getIsHard() == true)
+                                        view.msg("Nao pode ter  Hard , Atividade excluida");
+                                    else
+                                       att.add(a); 
+                                
                                 } catch (AtividadeNaoExisteException e) {
                                     view.msg(e.getMessage());
                                 }
@@ -725,11 +722,10 @@ public class Controller
                             view.msg("Nome,Iteracoes das Atividades,Calorias Previstas");
                             line= sc.nextLine();
                             all = line.split(",");
-                            int incrementa2 = 1;
                             for( LocalDate d : datas_plano)
                             {
-                                String nome = all[0] + Integer.toString(incrementa2);
-                                incrementa2 += 1;
+                                nome = all[0] + Integer.toString(incrementa);
+                                incrementa += 1;
                                 //agora os planos de treino tem calorias previstas e os dias a executar em string
                                 plano_gerado = new PlanoTreino(nome,d,Integer.parseInt(all[1]),Double.parseDouble(all[2]),line2);
                                 try {
@@ -737,7 +733,7 @@ public class Controller
                                 } catch (PlanoTreinoExisteException e) {
                                     view.msg(e.getMessage());
                                 }
-                                for (Atividade a : att2)
+                                for (Atividade a : att)
                                 {
                                     try {
                                         ap.insereAtiviadeNoPlanoTreino(plano_gerado.getNomePlano(),a);
@@ -811,8 +807,8 @@ public class Controller
         Utilizador u = null;
         PlanoTreino p = null;
         String[] data;
-        LocalDate inicio = null;
-        LocalDate fim = null;
+        LocalDate inicio ;
+        LocalDate fim ;
         while (op != 0) {
             menuVer.executa();
             op = menuVer.getOpcao();
@@ -820,7 +816,7 @@ public class Controller
             switch (op) {
                 case 1:
                     u = ap.maisCaloriasDespendidasSempre();
-                    view.printUtilizadorEstatisticaCal(u.getNick());
+                    view.printUtilizadorEstatisticaCal(u.getNome());
                     break;
                 case 2:
                     view.msg("Qual é a data de inicio ? (ano-mes-dia)");
@@ -837,7 +833,7 @@ public class Controller
                     break;
                 case 3:
                     u = ap.maisAtividadesSempre();
-                    view.printUtilizadorEstatisticaCal(u.getNick());
+                    view.printUtilizadorEstatisticaCal(u.getNome());
                     break;
                 case 4:
                     view.msg("Qual é a data de inicio ? (ano-mes-dia)");

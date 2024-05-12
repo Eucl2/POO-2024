@@ -260,7 +260,7 @@ public class FitnessApp implements Serializable
                     sumatorio += a.getCaloriasGastasAtividade();
                 }
             }
-            if ( sumatorio >= maximo)
+            if ( sumatorio > maximo)
             {
                 maximo = sumatorio;
                 vencedor = u.clone();
@@ -303,7 +303,7 @@ public class FitnessApp implements Serializable
                     sumatorio += 1;
                 }
             }
-            if ( sumatorio >= maximo)
+            if ( sumatorio > maximo)
             {
                 maximo = sumatorio;
                 vencedor = u.clone();

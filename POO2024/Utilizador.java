@@ -374,6 +374,7 @@ public abstract class  Utilizador implements Serializable
         a.setDurcacao(dura);
         
         //set de alguma atividade que seja recorde do utilizador
+        /*
         if (a instanceof Corrida)
         {
             Corrida c  = (Corrida) a;
@@ -500,6 +501,7 @@ public abstract class  Utilizador implements Serializable
                     u.setMelhorFlexoes(a);
             }
         }
+        */
         
         //adiciona ao contador de calorias do utilizador as calorias da atividade
         this.addCaloriasGastas(a.getCaloriasGastasAtividade());

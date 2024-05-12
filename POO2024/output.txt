@@ -18,7 +18,7 @@ Alongamentos:71,Alongamento de flexores,Para preparar para um treino de pernas i
 ExtensaoPernas:81,Leg Day,Para iniciantes,20,50,false
 ExtensaoPernas:810,Extensao Pernas,Para corredores,20,85,false
 Flexoes:91,Treino de Flexoes,Para iniciantes,60,true
-PlanoTreino:Bem Estar,2024-05-29,5
+PlanoTreino:Bem Estar,2024-06-03,5
 Bicicleta:410,Treino de estrada,Treino para praticantes de ciclismo de estrada,20,5,percurso circular pelas estradas do distrito,false
 Alongamentos:71,Alongamento de flexores,Para preparar para um treino de pernas intenso,20,false
 PlanoTreino:Verao Incoming,2024-05-29,2
