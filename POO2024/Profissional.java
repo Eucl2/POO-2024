@@ -110,23 +110,6 @@ public class Profissional extends Utilizador
         return ufator;
     }
     
-    public void realizaAtividade(Atividade a, Utilizador u, LocalDate d, int freq_atv, int dura)
-    {   
-        //adiciona data e frequencia atividade à atividade
-        a.setDataRealizada(d);
-        a.setFreqCardiaAtiviade(freq_atv);
-        a.setCaloriasGastasAtividade(a.calcularCalorias(u));
-        a.setDurcacao(dura);
-        
-        //adiciona ao contador de calorias do utilizador as calorias da atividade
-        this.addCaloriasGastas(a.getCaloriasGastasAtividade());
-        
-        //adiciona ao historico
-        this.addHistoricoU(a);
-    
-        
-    }
-    
     @Override
     public String toString() 
     {

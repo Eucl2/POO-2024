@@ -233,7 +233,22 @@ public abstract class  Utilizador implements Serializable
         this.historico_atividades.add(ar.clone());
     }
     
-    public abstract void realizaAtividade(Atividade a, Utilizador u, LocalDate d, int freq_atv, int dura);
+    public void realizaAtividade(Atividade a, Utilizador u, LocalDate d, int freq_atv, int dura)
+    {   
+        //adiciona data e frequencia atividade à atividade
+        a.setDataRealizada(d);
+        a.setFreqCardiaAtiviade(freq_atv);
+        a.setDurcacao(dura);
+        a.setCaloriasGastasAtividade(a.calcularCalorias(u));
+        
+        //adiciona ao contador de calorias do utilizador as calorias da atividade
+        this.addCaloriasGastas(a.getCaloriasGastasAtividade());
+        
+        //adiciona ao historico
+        this.addHistoricoU(a);
+    
+        
+    }
     
     public abstract Utilizador clone();
     
