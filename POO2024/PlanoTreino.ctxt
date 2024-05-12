@@ -18,7 +18,6 @@ comment16.params=a
 comment16.target=void\ insereAtividade(Atividade)
 comment17.params=
 comment17.target=java.lang.String\ toString()
-comment17.text=\r\n\ Sem\ utilidade\ ainda\ \r\n\ \ \ \ public\ void\ removeAtividade(Atividade\ a)\ throws\ AtividadeNaoExisteException\r\n\ \ \ \ {\r\n\ \ \ \ \ \ \ \ int\ n\ \=\ a.getCodigo();\r\n\ \ \ \ \ \ \ \ if\ (\!this.atividades.containsKey(n))\r\n\ \ \ \ \ \ \ \ \ \ \ \ throw\ new\ AtividadeNaoExisteException("Atividade\ nao\ existe");\r\n\ \ \ \ \ \ \ \ else{\r\n\ \ \ \ \ \ \ \ \ \ \ \ this.atividades.remove(n);\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ }\r\n
 comment18.params=
 comment18.target=java.lang.String\ toString2()
 comment19.params=

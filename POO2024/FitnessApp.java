@@ -28,12 +28,6 @@ public class FitnessApp implements Serializable
     public FitnessApp(Map<String, Utilizador> nutilizadores, Map<Integer, Atividade> natividades,
     Map<String,PlanoTreino> nplanos_treino)
     {
-        //!
-        /*
-        this.utilizadores = nutilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
-        this.atividades = natividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
-        this.planos_treino = nplanos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
-        */
         this.utilizadores = nutilizadores.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(),e -> e.getValue().clone()));
         this.atividades = natividades.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(),e -> e.getValue().clone()));
         this.planos_treino = nplanos_treino.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(),e -> e.getValue().clone()));
@@ -47,7 +41,6 @@ public class FitnessApp implements Serializable
     
     public Utilizador getUtilizador(String ni) throws UtilizadorNaoExisteException 
     {
-        //!
         Utilizador utilizador = this.utilizadores.get(ni);
         if (utilizador == null )
         {
@@ -76,30 +69,30 @@ public class FitnessApp implements Serializable
         else
             return plano_treino.clone();
     }
-    //!
+    
     public Map<String, Utilizador> getUtilizadores()
     {
         return this.utilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
     }
-    //!
+    
     public Map<Integer, Atividade> getAtividades()
     {
         return this.atividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
     }
-    //!
+    
     public Map<String , PlanoTreino> getPlanosTreino()
     {
         return this.planos_treino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
     }
-    //!
+    
     public void setUtilizadores(Map<String, Utilizador> nutilizadores) {
         this.utilizadores = nutilizadores.values().stream().collect(Collectors.toMap(u -> u.getNick(), u -> u.clone()));
     }
-    //!
+    
     public void setAtividades(Map<Integer, Atividade> natividades) {
         this.atividades = natividades.values().stream().collect(Collectors.toMap(a -> a.getCodigo(), a -> a.clone()));
     }
-    //!
+    
     public void setPlanosTreino(Map<String, PlanoTreino> nplanostreino) {
         this.planos_treino = nplanostreino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
     }
@@ -131,7 +124,6 @@ public class FitnessApp implements Serializable
     
     }
     
-    //rever porque pode sim existe planos repetidos 
     public void inserePlanoTreinoNoUtilizador(String nickUtilizador, PlanoTreino pt)
             throws PlanoTreinoExisteException {
 
@@ -179,10 +171,6 @@ public class FitnessApp implements Serializable
     //metodo para "viajar no tempo"
     public void viajarNoTempo(LocalDate data_final)
     {
-        /*
-        long n_dias =  ChronoUnit.DAYS.between(LocalDate.now(),
-                data_final);
-        */
        Random rand = new Random(); 
         
         // a frequencia cardiaca media diz respeito a uma media de repouso + ao longo do dia + durante exercicio 

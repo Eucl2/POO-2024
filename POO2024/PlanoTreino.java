@@ -60,7 +60,6 @@ public class PlanoTreino implements Serializable
     {
         return this.atividades.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),
                     e->e.getValue().clone()));
-        //return this.atividades.values().stream().collect(Collectors.toMap(pt -> pt.getCodigo(), pt -> pt.clone()));
     }
     
     public int getIteracoes()
@@ -92,8 +91,6 @@ public class PlanoTreino implements Serializable
     {
         this.atividades = nAtividades.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),
                             e->e.getValue().clone()));
-        //this.atividades = nAtividades.values().stream()
-                //.collect(Collectors.toMap(pt -> pt.getCodigo(), pt -> pt.clone()));
     }
     
     public void setIteracoes(int iteracoes)
@@ -117,35 +114,7 @@ public class PlanoTreino implements Serializable
         
     }
     
-    //pode vir a ser necessario futuramente 
-    /*
-    public void setAtividade(Atividade a) throws AtividadeNaoExisteException
-    {
-        if(this.atividades.containsKey(a.getCodigo()))
-            throw new AtividadeNaoExisteException("Nao existe atividade com esse codigo");
-        else
-            this.atividades.put(a.getCodigo(), a.clone());
-    }
-    */
-    /*
-     * Sem utilidade ainda 
-    public void removeAtividade(Atividade a) throws AtividadeNaoExisteException
-    {
-        int n = a.getCodigo();
-        if (!this.atividades.containsKey(n))
-            throw new AtividadeNaoExisteException("Atividade nao existe");
-        else{
-            this.atividades.remove(n);
-        }
-    }
-    */
-    
     public String toString() {
-        /*
-        String r = "Plano de treino:" + nome + "\n" +
-        "Data:" + data + "\n" + "Numero de Iteracoes:" + n_iteracoes + "\n";
-        // String r = "\n";
-        */
         String r = "\n";
         for (Atividade a : atividades.values()) {
             r += a.toString2() ;

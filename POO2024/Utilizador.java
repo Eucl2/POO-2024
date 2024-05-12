@@ -19,15 +19,6 @@ public abstract class  Utilizador implements Serializable
     private double total_calorias;
     private List<Atividade> historico_atividades;
     private List<PlanoTreino> planos_treino;
-    private Atividade mCorrida;
-    private Atividade mRemo;
-    private Atividade mBicicleta;
-    private Atividade mPatinagem;
-    private Atividade mAbdominal;
-    private Atividade mAlongamento;
-    private Atividade mLevantaPeso;
-    private Atividade mExtensaoPernas;
-    private Atividade mFlexoes;
 
     public Utilizador() 
     {
@@ -44,21 +35,10 @@ public abstract class  Utilizador implements Serializable
         this.total_calorias =0;
         this.historico_atividades = new ArrayList<>();
         this.planos_treino = new ArrayList<>();
-        this.mCorrida = null;
-        this.mRemo = null;
-        this.mBicicleta = null;
-        this.mPatinagem = null;
-        this.mAbdominal = null;
-        this.mAlongamento = null;
-        this.mLevantaPeso = null;
-        this.mExtensaoPernas = null;
-        this.mFlexoes = null;
     }
 
     public Utilizador(String nick, String pass, String nome, String email, String genero,
-    LocalDate data, double altura, double peso, int freq_cardiaca, double calorias, List<Atividade> historico, List<PlanoTreino> planos,
-    Atividade mc, Atividade mr, Atividade mb, Atividade mp, Atividade mab , Atividade mal, Atividade mlp,
-    Atividade mep, Atividade mf) 
+    LocalDate data, double altura, double peso, int freq_cardiaca, double calorias, List<Atividade> historico, List<PlanoTreino> planos) 
     {
         this.nickname = nick;
         this.password = pass;
@@ -73,15 +53,6 @@ public abstract class  Utilizador implements Serializable
         this.total_calorias = calorias;
         this.historico_atividades = historico;
         this.planos_treino = planos;
-        this.mCorrida = mc;
-        this.mRemo = mr;
-         this.mBicicleta = mb;
-        this.mPatinagem = mp;
-        this.mAbdominal = mab;
-        this.mAlongamento = mal;
-        this.mLevantaPeso = mlp;
-        this.mExtensaoPernas = mep;
-        this.mFlexoes = mf;
         
     }
 
@@ -100,15 +71,6 @@ public abstract class  Utilizador implements Serializable
         this.total_calorias = u.getTotalCalorias();
         this.historico_atividades = u.getHistorico();
         this.planos_treino = u.getPlanosTreino();
-        this.mCorrida = u.getMelhorCorrida();
-        this.mRemo = u.getMelhorRemo();
-        this.mBicicleta = u.getMelhorBicicleta();
-        this.mPatinagem = u.getMelhorPatinagem();
-        this.mAbdominal = u.getMelhorAbdominal();
-        this.mAlongamento = u.getMelhorAlongamento();
-        this.mLevantaPeso = u.getMelhorLevantaPeso();
-        this.mExtensaoPernas = u.getMelhorExtensaoPernas();
-        this.mFlexoes = u.getMelhorFlexoes();
 
     }
     
@@ -170,57 +132,11 @@ public abstract class  Utilizador implements Serializable
         return this.total_calorias;
     }
     
-    //melhores atividades de um utilizador
-    public Atividade getMelhorCorrida()
-    {
-        return this.mCorrida;
-    }
-    
-    public Atividade getMelhorRemo()
-    {
-        return this.mRemo;
-    }
-    
-    public Atividade getMelhorBicicleta()
-    {
-        return this.mBicicleta;
-    }
-    
-    public Atividade getMelhorPatinagem()
-    {
-        return this.mPatinagem;
-    }
-    
-    public Atividade getMelhorAbdominal()
-    {
-        return this.mAbdominal;
-    }
-    
-    public Atividade getMelhorAlongamento()
-    {
-        return this.mAlongamento;
-    }
-    
-    public Atividade getMelhorLevantaPeso()
-    {
-        return this.mLevantaPeso;
-    }
-    
-    public Atividade getMelhorExtensaoPernas()
-    {
-        return this.mExtensaoPernas;
-    }
-    
-    public Atividade getMelhorFlexoes()
-    {
-        return this.mFlexoes;
-    }
     
     public List<Atividade> getHistorico() 
     {
         return this.historico_atividades.stream().map(Atividade::clone)
                                      .collect(Collectors.toList());
-       //return historico_atividades;
     }
     
     public List<PlanoTreino> getPlanosTreino() 
@@ -279,7 +195,6 @@ public abstract class  Utilizador implements Serializable
         this.frequencia_cardiaca_media = freq;
     }
     
-    //rever
     public void setFatorMultiplicativo(double fm)
     {
         this.fator_multiplicativo = fm;
@@ -290,7 +205,6 @@ public abstract class  Utilizador implements Serializable
         this.total_calorias  = calorias;
     }
     
-    //rever, mas tem base no ficheiro do store
     public void addCaloriasGastas(double calorias) 
     {
         this.total_calorias += calorias;
@@ -309,52 +223,6 @@ public abstract class  Utilizador implements Serializable
                 
     }
     
-    //set das melhores atividades
-    public void setMelhorCorrida(Atividade m)
-    {
-        this.mCorrida = m;
-    }
-    
-    public void setMelhorRemo(Atividade m)
-    {
-        this.mRemo = m;
-    }
-    
-    public void setMelhorBicicleta(Atividade m)
-    {
-        this.mBicicleta = m;
-    }
-    
-    public void setMelhorPatinagem(Atividade m)
-    {
-        this.mPatinagem = m;
-    }
-    
-    public void setMelhorAbdominal(Atividade m)
-    {
-        this.mAbdominal = m;
-    }
-    
-    public void setMelhorAlongamento(Atividade m)
-    {
-        this.mAlongamento = m;
-    }
-    
-    public void setMelhorLevantaPeso(Atividade m)
-    {
-        this.mLevantaPeso = m;
-    }
-    
-    public void setMelhorExtensaoPernas(Atividade m)
-    {
-        this.mExtensaoPernas = m;
-    }
-    
-    public void setMelhorFlexoes(Atividade m)
-    {
-        this.mFlexoes = m;
-    }
-    
     public void addPlanoU(PlanoTreino pt)
     {
         this.planos_treino.add(pt.clone());
@@ -365,152 +233,7 @@ public abstract class  Utilizador implements Serializable
         this.historico_atividades.add(ar.clone());
     }
     
-    public void realizaAtividade(Atividade a, Utilizador u, LocalDate d, int freq_atv, int dura)
-    {   
-        //adiciona data e frequencia atividade à atividade
-        a.setDataRealizada(d);
-        a.setFreqCardiaAtiviade(freq_atv);
-        a.setCaloriasGastasAtividade(a.calcularCalorias(u));
-        a.setDurcacao(dura);
-        
-        //set de alguma atividade que seja recorde do utilizador
-        /*
-        if (a instanceof Corrida)
-        {
-            Corrida c  = (Corrida) a;
-            if ( u.getMelhorCorrida() == null)
-            {
-                u.setMelhorCorrida(a);
-            }
-            else
-            {
-                Corrida uc = (Corrida) u.getMelhorCorrida();
-                if(uc.getDistancia() < c.getDistancia())
-                    u.setMelhorCorrida(c);
-            }
-        }
-        else if (a instanceof Patinagem)
-        {
-            Patinagem p = (Patinagem) a;
-            if ( u.getMelhorPatinagem() == null)
-            {
-                u.setMelhorPatinagem(a);
-            }
-            else
-            {
-                Patinagem up = (Patinagem) u.getMelhorPatinagem();
-                if(up.getDistancia() < p.getDistancia())
-                    u.setMelhorPatinagem(p);
-            }
-        }
-        else if ( a instanceof Remo)
-        {
-            Remo r = (Remo) a;
-            if ( u.getMelhorRemo() == null)
-            {
-                u.setMelhorRemo(a);
-            }
-            else
-            {
-                Remo ur = (Remo) u.getMelhorRemo();
-                if(ur.getDistancia() < r.getDistancia())
-                    u.setMelhorCorrida(a);
-            }
-        }
-        else if( a instanceof Bicicleta)
-        {
-            Bicicleta b = (Bicicleta) a;
-            if ( u.getMelhorBicicleta() == null)
-            {
-                u.setMelhorBicicleta(a);
-            }
-            else
-            {
-                Bicicleta ub = (Bicicleta) u.getMelhorBicicleta();
-                if(ub.getDistancia() < b.getDistancia())
-                    u.setMelhorCorrida(a);
-            }
-        }
-        else if( a instanceof Abdominais )
-        {
-            Abdominais ab = (Abdominais) a;
-            if ( u.getMelhorAbdominal() == null)
-            {
-                u.setMelhorAbdominal(ab);
-            }
-            else
-            {
-                Abdominais uab = (Abdominais) u.getMelhorAbdominal();
-                if(uab.getRepeticoes() < ab.getRepeticoes())
-                    u.setMelhorAbdominal(ab);
-            }
-        }
-        else if( a instanceof Alongamentos)
-        {
-            Alongamentos al = (Alongamentos) a;
-            if ( u.getMelhorAlongamento() == null)
-            {
-                u.setMelhorAlongamento(a);
-            }
-            else
-            {
-                Alongamentos ual = (Alongamentos) u.getMelhorAlongamento();
-                if(ual.getRepeticoes() < al.getRepeticoes())
-                     u.setMelhorAlongamento(a);
-            }
-        }
-        else if( a instanceof LevantaPeso)
-        {
-            LevantaPeso lp = (LevantaPeso) a;
-            if ( u.getMelhorLevantaPeso() == null)
-            {
-                u.setMelhorLevantaPeso(a);
-            }
-            else
-            {
-                LevantaPeso ulp = (LevantaPeso) u.getMelhorLevantaPeso();
-                if(ulp.getPeso() < lp.getPeso())
-                    u.setMelhorLevantaPeso(a);
-            }
-        }
-        else if( a instanceof ExtensaoPernas)
-        {
-            ExtensaoPernas ep = (ExtensaoPernas) a;
-            if ( u.getMelhorExtensaoPernas() == null)
-            {
-                u.setMelhorExtensaoPernas(a);
-            }
-            else
-            {
-                ExtensaoPernas uep = (ExtensaoPernas) u.getMelhorExtensaoPernas();
-                if(uep.getPeso() < ep.getPeso())
-                    u.setMelhorExtensaoPernas(a);
-            }
-        }
-        else if( a instanceof Flexoes)
-        {
-            Flexoes f = (Flexoes) a;
-            if ( u.getMelhorFlexoes() == null)
-            {
-                u.setMelhorFlexoes(a);
-            }
-            else
-            {
-                Flexoes uf = (Flexoes) u.getMelhorFlexoes();
-                if(uf.getRepeticoes() < f.getRepeticoes())
-                    u.setMelhorFlexoes(a);
-            }
-        }
-        */
-        
-        //adiciona ao contador de calorias do utilizador as calorias da atividade
-        this.addCaloriasGastas(a.getCaloriasGastasAtividade());
-        
-        //adiciona ao historico
-        this.addHistoricoU(a);
-    
-        
-    }
+    public abstract void realizaAtividade(Atividade a, Utilizador u, LocalDate d, int freq_atv, int dura);
     
     public abstract Utilizador clone();
     
@@ -538,11 +261,6 @@ public abstract class  Utilizador implements Serializable
     
     public String toStringHistorico()
     {
-        /*
-        String r = "Id:" + idUtilizador + "\n" +
-        "Nome:" + nomeUtilizador + "\n" + "Tipo de Atleta:" + tipo_atleta + "\n" +
-        "Historico de Atividades:" + "\n";
-        */
         String r = "\n";
         for(Atividade a : historico_atividades)
         {
@@ -553,11 +271,6 @@ public abstract class  Utilizador implements Serializable
     
     public String toStringPlanosTreinoU()
     {
-        /*
-        String r = "Id:" + idUtilizador + "\n" +
-        "Nome:" + nomeUtilizador + "\n" + "Tipo de Atleta:" + tipo_atleta + "\n" +
-        "Planos de Treino:" + "\n";
-        */
         String r = "\n";
         for(PlanoTreino pt : planos_treino)
         {

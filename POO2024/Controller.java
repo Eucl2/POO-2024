@@ -41,7 +41,7 @@ public class Controller
                         Utilizador u = ap.getUtilizador(line);
                         if(u.getPassword().equals(line2))
                         {
-                           menuUtilizador(ap,line); 
+                           menuUtilizador(ap,u.getNick()); 
                         }
                         else
                         {
@@ -69,8 +69,7 @@ public class Controller
                             novoU = new Amador(campo[0], campo[1], campo[2], campo[3], 
                                       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-                                      Integer.parseInt(campo[8]), campo[9], campo[10], 0, new ArrayList<>() , new ArrayList<>(),
-                                      null, null, null, null, null, null, null, null, null);
+                                      Integer.parseInt(campo[8]), campo[9], campo[10], 0, new ArrayList<>() , new ArrayList<>());
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -95,8 +94,7 @@ public class Controller
                             novoU = new Profissional(campo[0], campo[1], campo[2], campo[3], 
                                       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-                                      Integer.parseInt(campo[8]), Double.parseDouble(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>(),
-                                      null, null, null, null, null, null, null, null, null);
+                                      Integer.parseInt(campo[8]), Double.parseDouble(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>());
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -121,8 +119,7 @@ public class Controller
                             novoU = new Ocasional(campo[0], campo[1], campo[2], campo[3], 
                                           campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                           Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-                                          Integer.parseInt(campo[8]), Integer.parseInt(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>(),
-                                          null, null, null, null, null, null, null, null, null);
+                                          Integer.parseInt(campo[8]), Integer.parseInt(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>());
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -194,6 +191,7 @@ public class Controller
         String line3;
         PlanoTreino plano_gerado = null;
         String[] all;
+        Utilizador uAtual = null;
 
         while (op != 0) {
             menuCriar.executa();
@@ -259,7 +257,7 @@ public class Controller
                     try 
                     {
                         Atividade a = ap.getAtividade(Integer.valueOf(line));
-                        Utilizador uAtual = ap.getUtilizador(nick);
+                        uAtual = ap.getUtilizador(nick);
                         ap.insereAtividadeNoHistoricoUtilizador(uAtual,a,Integer.valueOf(line3),dia,Integer.valueOf(line2));
                         view.printAtividadeRealizada(uAtual.getNome(), dia, 
                             a.getCodigo(), a.getNome());
@@ -277,7 +275,7 @@ public class Controller
                     try 
                     {
                         PlanoTreino pt = ap.getPlanoTreino(line);
-                        Utilizador uAtual = ap.getUtilizador(nick);
+                        uAtual = ap.getUtilizador(nick);
                         ap.inserePlanoTreinoNoUtilizador(uAtual.getNick(),pt);
                         view.printPlanoTreinoEscolhido(uAtual.getNome(), pt.getNomePlano());
                     } 
@@ -748,7 +746,7 @@ public class Controller
                 case 9:
                     try
                     {
-                        Utilizador uAtual = ap.getUtilizador(nick);
+                        uAtual = ap.getUtilizador(nick);
                         view.printHistoricoUtilizador(uAtual.getNick(), uAtual.getNome(),
                         uAtual.getTipoUtilizador(), uAtual.toStringHistorico());
                     }
@@ -760,7 +758,7 @@ public class Controller
                 case 10:
                     try
                     {
-                        Utilizador uAtual = ap.getUtilizador(nick);
+                        uAtual = ap.getUtilizador(nick);
                         //view.msg("planos" + uAtual.toStringPlanosTreinoU());
                         view.printPlanosTreinoUtilizador(uAtual.getNick(), uAtual.getNome(),
                         uAtual.getTipoUtilizador(), uAtual.toStringPlanosTreinoU());
@@ -774,7 +772,7 @@ public class Controller
                 case 11:
                     try
                     {
-                        Utilizador uAtual = ap.getUtilizador(nick);
+                        uAtual = ap.getUtilizador(nick);
 
                         view.printUtilizador(uAtual.getNick(), uAtual.getPassword(), uAtual.getNome(),
                         uAtual.getEmail(), uAtual.getGenero(),uAtual.getDataNascimento(),
@@ -924,7 +922,7 @@ public class Controller
     }
     
     public static void menuAdministrador(FitnessApp ap) {
-        String[] s = { "Criar Atividade", "Criar Plano", "Sair"};
+        String[] s = { "Criar Atividade", "Criar Plano"};
         Menu menuVer = new Menu(s);
         int op = -1;
         Scanner sc = new Scanner(System.in);
@@ -947,7 +945,7 @@ public class Controller
                     {
                         case "patinagem":
                             view.msg("Sigo os seguintes passos para criar :D");
-                            view.msg("Codigo,Nome,Descricao,Duracao,Distancia,Percurso");
+                            view.msg("Codigo,Nome,Descricao,Distancia,Percurso,Hard");
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Patinagem(Integer.parseInt(all[0]),all[1],
@@ -966,7 +964,7 @@ public class Controller
                             break;
                         case "remo":
                             view.msg("Sigo os seguintes passos para criar :D");
-                            view.msg("Codigo,Nome,Descricao,Duracao,Distancia,Percurso");
+                            view.msg("Codigo,Nome,Descricao,Distancia,Percurso,Hard");
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Remo(Integer.parseInt(all[0]),all[1],
@@ -985,7 +983,7 @@ public class Controller
                             break;
                         case "corrida":
                             view.msg("Sigo os seguintes passos para criar :D");
-                            view.msg("Codigo,Nome,Descricao,Duracao,Distancia,Altimetria,Percurso");
+                            view.msg("Codigo,Nome,Descricao,Distancia,Altimetria,Percurso,Hard");
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Corrida(Integer.parseInt(all[0]),all[1],
@@ -1004,7 +1002,7 @@ public class Controller
                             break;
                         case "bicicleta":
                             view.msg("Sigo os seguintes passos para criar :D");
-                            view.msg("Codigo,Nome,Descricao,Duracao,Distancia,Altimetria,Percurso");
+                            view.msg("Codigo,Nome,Descricao,Distancia,Altimetria,Percurso,Hard");
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Bicicleta(Integer.parseInt(all[0]),all[1],
@@ -1023,7 +1021,7 @@ public class Controller
                             break;
                         case "abdominais":
                             view.msg("Sigo os seguintes passos para criar :D");
-                            view.msg("Codigo,Nome,Descricao,Duracao,Repeticoes");
+                            view.msg("Codigo,Nome,Descricao,Repeticoes,Hard");
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Abdominais(Integer.parseInt(all[0]),all[1],
@@ -1042,7 +1040,7 @@ public class Controller
                             break;
                         case "alongamentos":
                             view.msg("Sigo os seguintes passos para criar :D");
-                            view.msg("Codigo,Nome,Descricao,Duracao,Repeticoes");
+                            view.msg("Codigo,Nome,Descricao,Repeticoes,Hard");
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Alongamentos(Integer.parseInt(all[0]),all[1],
@@ -1061,7 +1059,7 @@ public class Controller
                             break;
                         case "flexoes":
                             view.msg("Sigo os seguintes passos para criar :D");
-                            view.msg("Codigo,Nome,Descricao,Duracao,Repeticoes");
+                            view.msg("Codigo,Nome,Descricao,Repeticoes,Hard");
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Flexoes(Integer.parseInt(all[0]),all[1],
@@ -1080,7 +1078,7 @@ public class Controller
                             break;
                         case "levantapeso":
                             view.msg("Sigo os seguintes passos para criar :D");
-                            view.msg("Codigo,Nome,Descricao,Duracao,Repeticoes,Peso");
+                            view.msg("Codigo,Nome,Descricao,Repeticoes,Peso,Hard");
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new LevantaPeso(Integer.parseInt(all[0]),all[1],
@@ -1099,7 +1097,7 @@ public class Controller
                             break;
                         case "extensaopernas":
                             view.msg("Sigo os seguintes passos para criar :D");
-                            view.msg("Codigo,Nome,Descricao,Duracao,Repeticoes,Peso");
+                            view.msg("Codigo,Nome,Descricao,Repeticoes,Peso,Hard");
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new ExtensaoPernas(Integer.parseInt(all[0]),all[1],

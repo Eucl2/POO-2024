@@ -22,12 +22,10 @@ public class Profissional extends Utilizador
     public Profissional(String nick, String pass, String nome, String email, String genero,
     LocalDate data, double altura, double peso, int freq_cardiaca,
     double anose, String especi, double calorias,
-    ArrayList<Atividade> historico, ArrayList<PlanoTreino> planos,
-    Atividade mc, Atividade mr, Atividade mb, Atividade mp, Atividade mab , Atividade mal,
-    Atividade mlp, Atividade mep, Atividade mf) 
+    ArrayList<Atividade> historico, ArrayList<PlanoTreino> planos) 
     {
         super(nick, pass, nome, email, genero, data, altura, peso,
-            freq_cardiaca, calorias, historico, planos, mc, mr, mb, mp, mab, mal, mlp, mep, mf);
+            freq_cardiaca, calorias, historico, planos);
         this.experiencia = anose;
         this.especialidade = especi;
         setFatorMultiplicativo(this.calculaFator());
@@ -82,8 +80,7 @@ public class Profissional extends Utilizador
       return new Profissional(campo[0], campo[1], campo[2], campo[3], 
       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-      Integer.parseInt(campo[8]), Double.parseDouble(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>(),
-      null, null, null, null, null, null, null, null, null);
+      Integer.parseInt(campo[8]), Double.parseDouble(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>());
     }
     
     public String getTipoUtilizador()
@@ -110,30 +107,25 @@ public class Profissional extends Utilizador
             ufator =  ((double) idade +  getPeso() +  getAltura() + this.getAnosExp()) * 1.2;
             
         }
-        /*
-        DecimalFormat df = new DecimalFormat("#.##");
-        ufator = Double.parseDouble(df.format(ufator));
-        */
         return ufator;
     }
     
-    /*
-    public void realizaAtividade(Atividade a, Utilizador u, LocalDate d, int freq_atv)
+    public void realizaAtividade(Atividade a, Utilizador u, LocalDate d, int freq_atv, int dura)
     {   
         //adiciona data e frequencia atividade à atividade
         a.setDataRealizada(d);
         a.setFreqCardiaAtiviade(freq_atv);
         a.setCaloriasGastasAtividade(a.calcularCalorias(u));
+        a.setDurcacao(dura);
         
         //adiciona ao contador de calorias do utilizador as calorias da atividade
-        addCaloriasGastas(a.getCaloriasGastasAtividade());
+        this.addCaloriasGastas(a.getCaloriasGastasAtividade());
         
         //adiciona ao historico
-        addHistoricoU(a);
+        this.addHistoricoU(a);
     
         
     }
-    */
     
     @Override
     public String toString() 
