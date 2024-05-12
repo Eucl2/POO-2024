@@ -104,28 +104,28 @@ public class FitnessApp implements Serializable
         this.planos_treino = nplanostreino.values().stream().collect(Collectors.toMap(pt -> pt.getNomePlano(), pt -> pt.clone()));
     }
     
-    public void insereUtilizador(Utilizador utilizador) throws UtilizadorNaoExisteException 
+    public void insereUtilizador(Utilizador utilizador) throws UtilizadorExisteException 
     {
         if (this.utilizadores.containsKey(utilizador.getNick()))
-            throw new UtilizadorNaoExisteException("Utilizador ja existe");
+            throw new UtilizadorExisteException("Utilizador ja existe");
         else 
             this.utilizadores.put(utilizador.getNick(),utilizador.clone());
     
     }
     
-    public void insereAtividade(Atividade atividade) throws AtividadeNaoExisteException 
+    public void insereAtividade(Atividade atividade) throws AtividadeExisteException 
     {
         if (this.atividades.containsKey(atividade.getCodigo()))
-            throw new AtividadeNaoExisteException("Atividade ja existe");
+            throw new AtividadeExisteException("Atividade ja existe");
         else 
             this.atividades.put(atividade.getCodigo(),atividade.clone());
     
     }
     
-    public void inserePlanoTreino(PlanoTreino plano_treino) throws PlanoTreinoNaoExisteException 
+    public void inserePlanoTreino(PlanoTreino plano_treino) throws PlanoTreinoExisteException 
     {
         if (this.planos_treino.containsKey(plano_treino.getNomePlano()))
-            throw new PlanoTreinoNaoExisteException("Plano de Treino ja existe");
+            throw new PlanoTreinoExisteException("Plano de Treino ja existe");
         else 
             this.planos_treino.put(plano_treino.getNomePlano(),plano_treino.clone());
     
@@ -461,56 +461,22 @@ public class FitnessApp implements Serializable
     // 6 - qual o plano de treino mais exigente em função do dispêndio de calorias proposto
     public PlanoTreino qualMaisExigente()
     {
-        PlanoTreino teste = null;
-        return teste;
+        PlanoTreino plano = null;
+        double maximo = 0;
+        
+        for( PlanoTreino pt : planos_treino.values())
+        {
+            if(pt.getCalorias() >= maximo)
+            {
+                plano = pt.clone();
+                maximo  = pt.getCalorias();
+            }
+        }
+        
+        return plano;
     }
     
-    // 7 - listar as actividades de um utilizador
-    // ja existe na parte de cada utilizador apenas repetir nesta estatistica
-    /*
-     * Ainda nao tem utilidade por enquanto
-    public void removePlanoTreinoDoUtilizador(int idUtilizador, PlanoTreino pt)
-            throws UtilizadorNaoExisteException, PlanoTreinoNaoExisteException {
-        if (this.utilizadores.containsKey(idUtilizador)) {
-            this.utilizadores.get(idUtilizador).removePlanoTreino(pt);
-
-        } else
-            throw new UtilizadorNaoExisteException("Utilizador nao existe");// exemption
-    }
-    
-    public void removeAtividadeDePlanoTreino(String nomePlano, Atividade a)
-            throws AtividadeNaoExisteException, PlanoTreinoNaoExisteException {
-        if (this.planos_treino.containsKey(nomePlano)) {
-            this.planos_treino.get(nomePlano).removeAtividade(a);
-
-        } else
-            throw new PlanoTreinoNaoExisteException("Plano de Treino nao existe");// exemption
-    }
-    
-    public void removePlanoTreino(PlanoTreino plano_treino) throws PlanoTreinoNaoExisteException {
-        if (this.planos_treino.containsKey(plano_treino.getNomePlano())) {
-            this.planos_treino.remove(plano_treino.getNomePlano());
-
-        } else
-            throw new PlanoTreinoNaoExisteException("PlanoTreino nao existe"); // exemption
-    }
-    
-    public void removeUtilziador(Utilizador utilizador) throws UtilizadorNaoExisteException {
-        if (this.utilizadores.containsKey(utilizador.getId())) {
-            this.utilizadores.remove(utilizador.getId());
-
-        } else
-            throw new UtilizadorNaoExisteException("Utilizador nao existe"); // exemption
-    }
-    
-    public void removeAtividade(Atividade atividade) throws AtividadeNaoExisteException {
-        if (this.atividades.containsKey(atividade.getCodigo())) {
-            this.atividades.remove(atividade.getCodigo());
-
-        } else
-            throw new AtividadeNaoExisteException("Atividade nao existe"); // exemption
-    }
-    */
+    // 7 - listar as actividades de um utilizador ( dentro do utilizador)
     public String toString() {
         String r = "\n";
         for (Utilizador u : utilizadores.values()) {
@@ -530,6 +496,27 @@ public class FitnessApp implements Serializable
         String r = "\n";
         for (Atividade a : atividades.values()) {
             r += a.getCodigo() + " " + a.getNome() + "\n";
+        }
+        return r;
+    }
+    //! uma outra fomra seria simplesmente mostrar todas as atividades com o ishard na frente como tem em Cima e depois na altura de escolher nao seria possivel usar as Hard
+    public String toStringAtividadesSelecionadas(String tipo, int f)
+    {
+        String r = "\n";
+        for (Atividade a : atividades.values()) {
+            if(f == 0)
+            {
+                if(a.getTipoAtividade().equals(tipo) && a.getIsHard() == false)
+                {
+                    r += a.getCodigo() + " " + a.getNome() + "\n";
+                }
+            }else
+            {
+                if(a.getTipoAtividade().equals(tipo))
+                {
+                    r += a.getCodigo() + " " + a.getNome() + "\n";
+                }
+            }
         }
         return r;
     }

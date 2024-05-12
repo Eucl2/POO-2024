@@ -12,6 +12,8 @@ public class PlanoTreino implements Serializable
     private LocalDate data;
     private Map<Integer, Atividade> atividades;
     private int n_iteracoes;
+    private double calorias_previstas;
+    private String dias_semana;
     
 
     public PlanoTreino() 
@@ -20,14 +22,18 @@ public class PlanoTreino implements Serializable
         this.data = null;
         this.atividades = new HashMap<>();
         this.n_iteracoes = 0;
+        this.calorias_previstas = 0;
+        this.dias_semana = "";
     }
 
-    public PlanoTreino(String n, LocalDate data_executar, int it) 
+    public PlanoTreino(String n, LocalDate data_executar, int it, double calorias, String dias) 
     {
         this.nome = n;
         this.data = data_executar;
         this.atividades = new HashMap<>();
         this.n_iteracoes = it;
+        this.calorias_previstas = calorias;
+        this.dias_semana = dias;
     }
     
     public PlanoTreino(PlanoTreino pt) 
@@ -36,6 +42,8 @@ public class PlanoTreino implements Serializable
         this.data = pt.getData();
         this.atividades= pt.getAtividades();
         this.n_iteracoes = pt.getIteracoes();
+        this.calorias_previstas = pt.getCalorias();
+        this.dias_semana = pt.getDiasSemana();
     }
     
     public String getNomePlano()
@@ -59,6 +67,16 @@ public class PlanoTreino implements Serializable
     {
         return this.n_iteracoes;
     }
+        
+    public double getCalorias()
+    {
+        return this.calorias_previstas;
+    }
+    
+    public String getDiasSemana()
+    {
+        return this.dias_semana;
+    }
     
     public void setNome(String nome)
     {
@@ -81,6 +99,16 @@ public class PlanoTreino implements Serializable
     public void setIteracoes(int iteracoes)
     {
         this.n_iteracoes = iteracoes;
+    }
+    
+    public void setCalorias(double cal)
+    {
+        this.calorias_previstas = cal;
+    }
+    
+    public void setDiasSemana(String dias)
+    {
+        this.dias_semana = dias;
     }
       
     public void insereAtividade(Atividade a)
@@ -144,7 +172,9 @@ public class PlanoTreino implements Serializable
         return pt.getNomePlano().equals(this.nome)
         && pt.getData().equals(this.data)
         && pt.getAtividades().equals(this.atividades)
-        && pt.getIteracoes() == (this.n_iteracoes);
+        && pt.getIteracoes() == (this.n_iteracoes)
+        && pt.getCalorias() == (this.calorias_previstas)
+        && pt.getDiasSemana() == (this.dias_semana);
 
     }
     
@@ -152,6 +182,6 @@ public class PlanoTreino implements Serializable
         String[] campos = input.split(",");
         String[] data_execucao = campos[1].split("-");
         return new PlanoTreino(campos[0], LocalDate.of(Integer.parseInt(data_execucao[0]), Integer.parseInt(data_execucao[1]), 
-      Integer.parseInt(data_execucao[2])), Integer.parseInt(campos[2]));
+      Integer.parseInt(data_execucao[2])), Integer.parseInt(campos[2]), 0 , "");
     }
 }

@@ -72,15 +72,37 @@ public class View {
         System.out.println("------------Utilizadores----------- " + utilizadores);
 
     }
+    
+    public void printUtilizadorEstatisticaKM(String nick, double valor) {
+        System.out.println("------------Utilizadores----------- ");
+        System.out.println("NickName: " + nick);
+        System.out.println("Total de Kms: " + valor);
+
+    }
+    
+    public void printUtilizadorEstatisticaAL(String nick, double valor) {
+        System.out.println("------------Utilizadores----------- ");
+        System.out.println("NickName: " + nick);
+        System.out.println("Altimetria : " + valor);
+
+    }
+    
+    public void printUtilizadorEstatisticaCal(String nick) {
+        System.out.println("------------Utilizadores----------- ");
+        System.out.println("NickName: " + nick);
+
+    }
 
     public void printAtividade(int codigo, String nome, String descricao,
-                int duracao, String extra, int freq_at, double cal, LocalDate data_realizada) {
+                int duracao, String extra, int freq_at, double cal,
+                boolean hard, LocalDate data_realizada) {
         System.out.println("-----------Atividade----------- ");
         System.out.println("Codigo: " + codigo);
         System.out.println("Nome: " + nome);
         System.out.println("Descricao: " + descricao);
         System.out.println("Duracao: " + duracao);
         System.out.println(extra);
+        System.out.println("Atividade Hard: " + hard);
         //retirar daqui , apenas para debug
         System.out.println("Frequencia Cardiaca Ativiade: " + freq_at);
         System.out.println("Calorias Gastas: " + cal);
@@ -88,13 +110,14 @@ public class View {
     }
     
     public void printAtividadeCriada(int codigo, String nome, String descricao,
-                int duracao, String extra, LocalDate data_realizada) {
+                int duracao, String extra, boolean hard, LocalDate data_realizada) {
         System.out.println("-----------Atividade Adicionada----------- ");
         System.out.println("Codigo: " + codigo);
         System.out.println("Nome: " + nome);
         System.out.println("Descricao: " + descricao);
         System.out.println("Duracao: " + duracao);
         System.out.println(extra);
+        System.out.println("Atividade Hard: " + hard);
         //retirar daqui , apenas para debug
         System.out.println("Data a Realizar: " + data_realizada);
     }

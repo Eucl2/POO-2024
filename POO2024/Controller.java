@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.DayOfWeek;
 
 public class Controller 
 {
@@ -68,7 +69,8 @@ public class Controller
                             novoU = new Amador(campo[0], campo[1], campo[2], campo[3], 
                                       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-                                      Integer.parseInt(campo[8]), campo[9], campo[10], 0, new ArrayList<>() , new ArrayList<>());
+                                      Integer.parseInt(campo[8]), campo[9], campo[10], 0, new ArrayList<>() , new ArrayList<>(),
+                                      null, null, null, null, null, null, null, null);
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -78,7 +80,7 @@ public class Controller
                                             novoU.getPeso(),novoU.getFreqCardiaca(),
                                             novoU.getFatorMultiplicativo(),novoU.caracteristicasUExtra(),
                                             novoU.getTotalCalorias());
-                            } catch (UtilizadorNaoExisteException e) {
+                            } catch (UtilizadorExisteException e) {
                                 view.msg(e.getMessage());
                             }
                             break;
@@ -93,7 +95,8 @@ public class Controller
                             novoU = new Profissional(campo[0], campo[1], campo[2], campo[3], 
                                       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-                                      Integer.parseInt(campo[8]), Double.parseDouble(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>());
+                                      Integer.parseInt(campo[8]), Double.parseDouble(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>(),
+                                      null, null, null, null, null, null, null, null);
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -103,7 +106,7 @@ public class Controller
                                             novoU.getPeso(),novoU.getFreqCardiaca(),
                                             novoU.getFatorMultiplicativo(),novoU.caracteristicasUExtra(),
                                             novoU.getTotalCalorias());
-                            } catch (UtilizadorNaoExisteException e) {
+                            } catch (UtilizadorExisteException e) {
                                 view.msg(e.getMessage());
                             }
                             break;
@@ -118,7 +121,8 @@ public class Controller
                             novoU = new Ocasional(campo[0], campo[1], campo[2], campo[3], 
                                           campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                           Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-                                          Integer.parseInt(campo[8]), Integer.parseInt(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>());
+                                          Integer.parseInt(campo[8]), Integer.parseInt(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>(),
+                                          null, null, null, null, null, null, null, null);
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -128,7 +132,7 @@ public class Controller
                                             novoU.getPeso(),novoU.getFreqCardiaca(),
                                             novoU.getFatorMultiplicativo(),novoU.caracteristicasUExtra(),
                                             novoU.getTotalCalorias());
-                            } catch (UtilizadorNaoExisteException e) {
+                            } catch (UtilizadorExisteException e) {
                                 view.msg(e.getMessage());
                             }
                             break;
@@ -218,7 +222,7 @@ public class Controller
                         view.printAtividade(a.getCodigo(),a.getNome(),
                         a.getDescricao(),a.getDuracao(),a.caracteristicasExtra(),
                         a.getFreqCardiaAtividade(), a.getCaloriasGastasAtividade(),
-                        a.getDataRealizada());
+                        a.getIsHard(), a.getDataRealizada());
                         
                         //falta adicionar cada coisa para dar print,
                         //as toSring extras de cada atividade nas atividades
@@ -271,10 +275,10 @@ public class Controller
                     line = sc.nextLine();
                     try 
                     {
-                        PlanoTreino pt2 = ap.getPlanoTreino(line);
+                        PlanoTreino pt = ap.getPlanoTreino(line);
                         Utilizador uAtual = ap.getUtilizador(nick);
-                        ap.inserePlanoTreinoNoUtilizador(uAtual.getNick(),pt2);
-                        view.printPlanoTreinoEscolhido(uAtual.getNome(), pt2.getNomePlano());
+                        ap.inserePlanoTreinoNoUtilizador(uAtual.getNick(),pt);
+                        view.printPlanoTreinoEscolhido(uAtual.getNome(), pt.getNomePlano());
                     } 
                     catch (PlanoTreinoExisteException | PlanoTreinoNaoExisteException | UtilizadorNaoExisteException e )
                     {
@@ -290,7 +294,7 @@ public class Controller
                     switch (line.toLowerCase())
                     {
                         case "patinagem":
-                            plano_gerado = new PlanoTreino("Patinagem - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            plano_gerado = new PlanoTreino("Patinagem - Modulo 1", LocalDate.of(2024,06,07),2,0,""); // plano gerado automaticamente
                             line = "11";
                             all = line.split(",");
                             try 
@@ -302,13 +306,13 @@ public class Controller
                                     ap.insereAtiviadeNoPlanoTreino("Patinagem - Modulo 1",a);  
                                 }
                             } 
-                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            catch (PlanoTreinoExisteException | PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
                             {
                                 view.msg(e.getMessage());
                             }
                             
                         case "remo":
-                            plano_gerado = new PlanoTreino("Remo - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            plano_gerado = new PlanoTreino("Remo - Modulo 1", LocalDate.of(2024,06,07),2,0,""); // plano gerado automaticamente
                             line = "11";
                             all = line.split(",");
                             try 
@@ -320,13 +324,13 @@ public class Controller
                                     ap.insereAtiviadeNoPlanoTreino("Remo - Modulo 1",a);  
                                 }
                             } 
-                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException | PlanoTreinoExisteException e) // alterar execption do Plano
                             {
                                 view.msg(e.getMessage());
                             }
                             break;
                         case "corrida":
-                            plano_gerado = new PlanoTreino("Corrida - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            plano_gerado = new PlanoTreino("Corrida - Modulo 1", LocalDate.of(2024,06,07),2,0,""); // plano gerado automaticamente
                             line = "11";
                             all = line.split(",");
                             try 
@@ -338,13 +342,13 @@ public class Controller
                                     ap.insereAtiviadeNoPlanoTreino("Corrida - Modulo 1",a);  
                                 }
                             } 
-                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException | PlanoTreinoExisteException e) // alterar execption do Plano
                             {
                                 view.msg(e.getMessage());
                             }
                             break;
                         case "bicicleta":
-                            plano_gerado = new PlanoTreino("Bicicleta - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            plano_gerado = new PlanoTreino("Bicicleta - Modulo 1", LocalDate.of(2024,06,07),2,0,""); // plano gerado automaticamente
                             line = "11";
                             all = line.split(",");
                             try 
@@ -356,13 +360,13 @@ public class Controller
                                     ap.insereAtiviadeNoPlanoTreino("Bicicleta - Modulo 1",a);  
                                 }
                             } 
-                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException | PlanoTreinoExisteException e) // alterar execption do Plano
                             {
                                 view.msg(e.getMessage());
                             }
                             break;
                         case "abdominais":
-                            plano_gerado = new PlanoTreino("Abdominais - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            plano_gerado = new PlanoTreino("Abdominais - Modulo 1", LocalDate.of(2024,06,07),2,0,""); // plano gerado automaticamente
                             line = "11";
                             all = line.split(",");
                             try 
@@ -374,13 +378,13 @@ public class Controller
                                     ap.insereAtiviadeNoPlanoTreino("Abdominais - Modulo 1",a);  
                                 }
                             } 
-                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException | PlanoTreinoExisteException e) // alterar execption do Plano
                             {
                                 view.msg(e.getMessage());
                             }
                             break;
                         case "alongamentos":
-                            plano_gerado = new PlanoTreino("Alongamentos - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            plano_gerado = new PlanoTreino("Alongamentos - Modulo 1", LocalDate.of(2024,06,07),2,0,""); // plano gerado automaticamente
                             line = "11";
                             all = line.split(",");
                             try 
@@ -392,13 +396,13 @@ public class Controller
                                     ap.insereAtiviadeNoPlanoTreino("Alongamentos - Modulo 1",a);  
                                 }
                             } 
-                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException | PlanoTreinoExisteException e) // alterar execption do Plano
                             {
                                 view.msg(e.getMessage());
                             }
                             break;
                         case "flexoes":
-                            plano_gerado = new PlanoTreino("Flexoes - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            plano_gerado = new PlanoTreino("Flexoes - Modulo 1", LocalDate.of(2024,06,07),2,0,""); // plano gerado automaticamente
                             line = "11";
                             all = line.split(",");
                             try 
@@ -410,13 +414,13 @@ public class Controller
                                     ap.insereAtiviadeNoPlanoTreino("Flexoes - Modulo 1",a);  
                                 }
                             } 
-                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException | PlanoTreinoExisteException e) // alterar execption do Plano
                             {
                                 view.msg(e.getMessage());
                             }
                             break;
                         case "levantapeso":
-                            plano_gerado = new PlanoTreino("Levantamento de Peso - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            plano_gerado = new PlanoTreino("Levantamento de Peso - Modulo 1", LocalDate.of(2024,06,07),2,0,""); // plano gerado automaticamente
                             line = "11";
                             all = line.split(",");
                             try 
@@ -428,13 +432,13 @@ public class Controller
                                     ap.insereAtiviadeNoPlanoTreino("Levantamento de Peso - Modulo 1",a);  
                                 }
                             } 
-                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException | PlanoTreinoExisteException e) // alterar execption do Plano
                             {
                                 view.msg(e.getMessage());
                             }
                             break;
                         case "extensaopernas":
-                            plano_gerado = new PlanoTreino("Extensao Pernas - Modulo 1", LocalDate.of(2024,06,07),2); // plano gerado automaticamente
+                            plano_gerado = new PlanoTreino("Extensao Pernas - Modulo 1", LocalDate.of(2024,06,07),2,0,""); // plano gerado automaticamente
                             line = "11";
                             all = line.split(",");
                             try 
@@ -446,7 +450,7 @@ public class Controller
                                     ap.insereAtiviadeNoPlanoTreino("Extensao Pernas - Modulo 1",a);  
                                 }
                             } 
-                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException e) // alterar execption do Plano
+                            catch (PlanoTreinoNaoExisteException | AtividadeNaoExisteException | PlanoTreinoExisteException e) // alterar execption do Plano
                             {
                                 view.msg(e.getMessage());
                             }
@@ -455,6 +459,294 @@ public class Controller
                     }
                     break;
                 case 8:
+                    view.msg("Siga os passos para criar o Plano de Treino Personalizado :D\n");
+                    
+                    //verificar se o utilizador pretende ter atividades hard
+                    view.msg("Pretende incluir atividades do tipo Hard ? [Y/N]");
+                    line = sc.nextLine();
+                    String[] dias_semana;
+                    String[] datas_semana;
+                    String line4;
+                    List<LocalDate> datas_plano = new ArrayList<>();; // lista com os dias em que o plano vai se realizar inicialmente
+                    switch (line.toLowerCase())
+                    {
+                        case "y":
+                            view.msg(" Em que semana pretende começar? (data do primeiro dia da semana)");
+                            line2 = sc.nextLine();
+                            String[] ndata = line2.split("-");
+                            LocalDate data_p = LocalDate.of(Integer.parseInt(ndata[0]), Integer.parseInt(ndata[1]), 
+                                                  Integer.parseInt(ndata[2]));
+                            LocalDate data_semana = null;
+                            view.msg("Qual a recorrencia semanal das atividades ?");
+                            line3 = sc.nextLine();
+                            view.msg("Quais os dias da semana? ( Ter em atencao que apenas pode ter ate 3 dias)");
+                            view.msg("1-Segunda, 2-Terca, 3-Quarta, 4-Quinta, 5-Sexta, 6-Sabado, 7-Domingo");
+                            line2 = sc.nextLine();
+                            dias_semana = line2.split(",");
+                            if( line3.equals("2"))
+                            {
+                                while( Integer.parseInt(dias_semana[1]) - Integer.parseInt(dias_semana[0]) <= 1)
+                                {
+                                    view.msg("Escolha de novo os dias ");
+                                    view.msg("1-Segunda, 2-Terca, 3-Quarta, 4-Quinta, 5-Sexta, 6-Sabado, 7-Domingo");
+                                    line2 = sc.nextLine();
+                                    dias_semana = line2.split(",");
+                                }
+                            }
+                            else
+                            {
+                                if( line3.equals("3"))
+                                {
+                                    while( Integer.parseInt(dias_semana[1]) - Integer.parseInt(dias_semana[0]) <= 1 && 
+                                    Integer.parseInt(dias_semana[2]) - Integer.parseInt(dias_semana[1]) <= 1 )
+                                    {
+                                        view.msg("Escolha de novo os dias ");
+                                        view.msg("1-Segunda, 2-Terca, 3-Quarta, 4-Quinta, 5-Sexta, 6-Sabado, 7-Domingo");
+                                        line2 = sc.nextLine();
+                                        dias_semana = line2.split(",");
+                                    }
+                                }
+                            }
+                            
+                            //1º - Saber quantos dias e quais as datas a inicializar o plano de treino
+                            if( Integer.parseInt(line3) > 0 && Integer.parseInt(line3) <= 3)
+                            { 
+                                
+                                for( int i=0 ; i < Integer.parseInt(line3) ; i++)
+                                {
+                                    switch (dias_semana[i].toLowerCase())
+                                    {
+                                        case "1":
+                                                datas_plano.add(data_p);
+                                            break;
+                                        case "2":
+                                            data_semana = data_p.plusDays(1);
+                                            datas_plano.add(data_semana);
+                                            break;
+                                        case "3":
+                                            data_semana = data_p.plusDays(2);
+                                            datas_plano.add(data_semana);
+                                            break;
+                                        case "4":
+                                            data_semana = data_p.plusDays(3);
+                                            datas_plano.add(data_semana);
+                                            break;
+                                        case "5":
+                                            data_semana = data_p.plusDays(4);
+                                            datas_plano.add(data_semana);
+                                            break;
+                                        case "6":
+                                            data_semana = data_p.plusDays(5);
+                                            datas_plano.add(data_semana);
+                                            break;
+                                        case "7":
+                                            data_semana = data_p.plusDays(6);
+                                            datas_plano.add(data_semana);
+                                            break;
+                                    }
+                                }
+                            }
+                            view.msg("Que tipo de Atividades (pode escolher até 3)?");
+                            view.msg("Patinagem, Remo, Corrida, Bicicleta, Abdominais, Alongamentos, LevantaPeso, ExtensaoPernas, Flexoes");
+                            line3 = sc.nextLine();
+                            String[] tipo_ativ = line3.split(",");
+                            int flag = 1;
+                            for(int i = 0; i< tipo_ativ.length && i < 3 ; i++)
+                            {
+                                view.printAtividades(ap.toStringAtividadesSelecionadas(tipo_ativ[i], flag));
+                            }
+                            view.msg("Escolha as atividades de acordo com o maximo: (CodigoAtividade1,CodigoAtividade2.. ");
+                            line3 = sc.nextLine();
+                            String[] at = line3.split(",");
+                            while( at.length < 1 || at.length > 3)
+                            {
+                                view.msg("Escolha de novo as atividades de acordo com o maximo: (CodigoAtividade1,CodigoAtividade2.. ");
+                                line3 = sc.nextLine();
+                                at = line3.split(",");
+                            }
+                            List<Atividade> att = new ArrayList<>();
+                            flag = 0;
+                            for (int i=0; i<at.length; i++)
+                            {
+                                try {
+                                    Atividade a = ap.getAtividade(Integer.valueOf(at[i]));
+                                    if (flag == 0)
+                                    {
+                                        att.add(a);
+                                        if (a.getIsHard() == true)
+                                        flag = 1;
+                                    }
+                                    else
+                                    {
+                                        if (a.getIsHard() == true)
+                                            view.msg("Nao pode ter mais que 1 Hard , Atividade excluida");
+                                        else
+                                           att.add(a); 
+                                    }
+                                } catch (AtividadeNaoExisteException e) {
+                                    view.msg(e.getMessage());
+                                }
+                            }
+                            view.msg("Siga os restantes passos para criar a base do Plano de Treino :D");
+                            view.msg("Nome,Iteracoes das Atividades,Calorias Previstas");
+                            line= sc.nextLine();
+                            all = line.split(",");
+                            int incrementa = 1;
+                            for( LocalDate d : datas_plano)
+                            {
+                                String nome = all[0] + Integer.toString(incrementa);
+                                incrementa += 1;
+                                //agora os planos de treino tem calorias previstas e os dias a executar em string
+                                plano_gerado = new PlanoTreino(nome,d,Integer.parseInt(all[1]),Double.parseDouble(all[2]),line2);
+                                try {
+                                    ap.inserePlanoTreino(plano_gerado);
+                                } catch (PlanoTreinoExisteException e) {
+                                    view.msg(e.getMessage());
+                                }
+                                for (Atividade a : att)
+                                {
+                                    try {
+                                        ap.insereAtiviadeNoPlanoTreino(plano_gerado.getNomePlano(),a);
+                                        view.printAtividadeAdicionada(a.toString2());
+                                    } catch (AtividadeNaoExisteException | PlanoTreinoNaoExisteException e) {
+                                        view.msg(e.getMessage());
+                                    }
+                                }   
+                            }
+                            break;
+                        case "n":
+                            view.msg(" Em que semana pretende começar? (data do primeiro dia da semana)");
+                            line2 = sc.nextLine();
+                            String[] ndata2 = line2.split("-");
+                            LocalDate data_p2 = LocalDate.of(Integer.parseInt(ndata2[0]), Integer.parseInt(ndata2[1]), 
+                                                  Integer.parseInt(ndata2[2]));
+                            LocalDate data_semana2 = null;
+                            view.msg("Qual a recorrencia semanal das atividades ?");
+                            line3 = sc.nextLine();
+                            view.msg("Quais os dias da semana? ( Ter em atencao que apenas pode ter ate 3 dias)");
+                            view.msg("1-Segunda, 2-Terca, 3-Quarta, 4-Quinta, 5-Sexta, 6-Sabado, 7-Domingo");
+                            line2 = sc.nextLine();
+                            String[] dias_semana2 = line2.split(",");
+                            if( line3.equals("2"))
+                            {
+                                while( Integer.parseInt(dias_semana2[1]) - Integer.parseInt(dias_semana2[0]) <= 1)
+                                {
+                                    view.msg("Escolha de novo os dias ");
+                                    view.msg("1-Segunda, 2-Terca, 3-Quarta, 4-Quinta, 5-Sexta, 6-Sabado, 7-Domingo");
+                                    line2 = sc.nextLine();
+                                    dias_semana2 = line2.split(",");
+                                }
+                            }
+                            else
+                            {
+                                if( line3.equals("3"))
+                                {
+                                    while( Integer.parseInt(dias_semana2[1]) - Integer.parseInt(dias_semana2[0]) <= 1 && 
+                                    Integer.parseInt(dias_semana2[2]) - Integer.parseInt(dias_semana2[1]) <= 1 )
+                                    {
+                                        view.msg("Escolha de novo os dias ");
+                                        view.msg("1-Segunda, 2-Terca, 3-Quarta, 4-Quinta, 5-Sexta, 6-Sabado, 7-Domingo");
+                                        line2 = sc.nextLine();
+                                        dias_semana2 = line2.split(",");
+                                    }
+                                }
+                            }
+                            
+                            //1º - Saber quantos dias e quais as datas a inicializar o plano de treino
+                            if( Integer.parseInt(line3) > 0 && Integer.parseInt(line3) <= 3)
+                            { 
+                                
+                                for( int i=0 ; i < Integer.parseInt(line3) ; i++)
+                                {
+                                    switch (dias_semana2[i].toLowerCase())
+                                    {
+                                        case "1":
+                                                datas_plano.add(data_p2);
+                                            break;
+                                        case "2":
+                                            data_semana2 = data_p2.plusDays(1);
+                                            datas_plano.add(data_semana2);
+                                            break;
+                                        case "3":
+                                            data_semana = data_p2.plusDays(2);
+                                            datas_plano.add(data_semana2);
+                                            break;
+                                        case "4":
+                                            data_semana = data_p2.plusDays(3);
+                                            datas_plano.add(data_semana2);
+                                            break;
+                                        case "5":
+                                            data_semana = data_p2.plusDays(4);
+                                            datas_plano.add(data_semana2);
+                                            break;
+                                        case "6":
+                                            data_semana = data_p2.plusDays(5);
+                                            datas_plano.add(data_semana2);
+                                            break;
+                                        case "7":
+                                            data_semana = data_p2.plusDays(6);
+                                            datas_plano.add(data_semana2);
+                                            break;
+                                    }
+                                }
+                            }
+                            view.msg("Que tipo de Atividades (pode escolher até 3)?");
+                            view.msg("Patinagem, Remo, Corrida, Bicicleta, Abdominais, Alongamentos, LevantaPeso, ExtensaoPernas, Flexoes");
+                            line3 = sc.nextLine();
+                            String[] tipo_ativ2 = line3.split(",");
+                            int flag2 = 0;
+                            for(int i = 0; i< tipo_ativ2.length && i < 3 ; i++)
+                            {
+                                view.printAtividades(ap.toStringAtividadesSelecionadas(tipo_ativ2[i], flag2));
+                            }
+                            view.msg("Escolha as atividades de acordo com o maximo: (CodigoAtividade1,CodigoAtividade2.. ");
+                            line3 = sc.nextLine();
+                            String[] at2 = line3.split(",");
+                            while( at2.length < 1 || at2.length > 3)
+                            {
+                                view.msg("Escolha de novo as atividades de acordo com o maximo: (CodigoAtividade1,CodigoAtividade2.. ");
+                                line3 = sc.nextLine();
+                                at2 = line3.split(",");
+                            }
+                            List<Atividade> att2 = new ArrayList<>();
+                            for (int i=0; i<at2.length; i++)
+                            {
+                                try {
+                                    Atividade a = ap.getAtividade(Integer.valueOf(at2[i]));
+                                    att2.add(a);
+                                    
+                                } catch (AtividadeNaoExisteException e) {
+                                    view.msg(e.getMessage());
+                                }
+                            }
+                            view.msg("Siga os restantes passos para criar a base do Plano de Treino :D");
+                            view.msg("Nome,Iteracoes das Atividades,Calorias Previstas");
+                            line= sc.nextLine();
+                            all = line.split(",");
+                            int incrementa2 = 1;
+                            for( LocalDate d : datas_plano)
+                            {
+                                String nome = all[0] + Integer.toString(incrementa2);
+                                incrementa2 += 1;
+                                //agora os planos de treino tem calorias previstas e os dias a executar em string
+                                plano_gerado = new PlanoTreino(nome,d,Integer.parseInt(all[1]),Double.parseDouble(all[2]),line2);
+                                try {
+                                    ap.inserePlanoTreino(plano_gerado);
+                                } catch (PlanoTreinoExisteException e) {
+                                    view.msg(e.getMessage());
+                                }
+                                for (Atividade a : att2)
+                                {
+                                    try {
+                                        ap.insereAtiviadeNoPlanoTreino(plano_gerado.getNomePlano(),a);
+                                        view.printAtividadeAdicionada(a.toString2());
+                                    } catch (AtividadeNaoExisteException | PlanoTreinoNaoExisteException e) {
+                                        view.msg(e.getMessage());
+                                    }
+                                }   
+                            }
+                            break;
+                    }
                     break;
                 case 9:
                     try
@@ -504,18 +796,128 @@ public class Controller
     }
 
     public static void menuEstatistica(FitnessApp ap) {
-        String[] s = { "Estatisticas"};
+        String[] s = { "Qual O Utilizador que mais calorias gastou (Sempre)","Qual O Utilizador que mais calorias gastou (Periodo)",
+        "Qual O Utilizador que mais atividades realizou (Sempre)","Qual O Utilizador que mais atividades realizou (Periodo)",
+        "Qual o tipo de Atividade mais realizada","Quantos kms totalizou um Utilizador (Sempre)",
+        "Quantos kms totalizou um Utilizador (Periodo)","Quantos metros totalizou um Utilizador (Sempre)",
+        "Quantos metros totalizou um Utilizador (Periodo)","Plano de Treino Mais Exigente em Calorias Propostas"};
         Menu menuVer = new Menu(s);
         int op = -1;
         Scanner sc = new Scanner(System.in);
         View view = new View();
         String line;
+        Utilizador u = null;
+        PlanoTreino p = null;
+        String[] data;
+        LocalDate inicio = null;
+        LocalDate fim = null;
         while (op != 0) {
             menuVer.executa();
             op = menuVer.getOpcao();
             System.out.println(op);
             switch (op) {
                 case 1:
+                    u = ap.maisCaloriasDespendidasSempre();
+                    view.printUtilizadorEstatisticaCal(u.getNick());
+                    break;
+                case 2:
+                    view.msg("Qual é a data de inicio ? (ano-mes-dia)");
+                    line= sc.nextLine();  
+                    data = line.split("-");
+                    inicio = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), 
+                                        Integer.parseInt(data[2]));
+                    view.msg("Qual é a data de fim ? (ano-mes-dia)");
+                    line= sc.nextLine();
+                    fim = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), 
+                                        Integer.parseInt(data[2]));
+                    u = ap.maisCaloriasDespendidasPeriodo(inicio, fim);
+                    view.printUtilizadorEstatisticaCal(u.getNick());
+                    break;
+                case 3:
+                    u = ap.maisAtividadesSempre();
+                    view.printUtilizadorEstatisticaCal(u.getNick());
+                    break;
+                case 4:
+                    view.msg("Qual é a data de inicio ? (ano-mes-dia)");
+                    line= sc.nextLine();  
+                    data = line.split("-");
+                    inicio = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), 
+                                        Integer.parseInt(data[2]));
+                    view.msg("Qual é a data de fim ? (ano-mes-dia)");
+                    line= sc.nextLine();
+                    fim = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), 
+                                        Integer.parseInt(data[2]));
+                    view.printUtilizadorEstatisticaCal(u.getNick());
+                    break;
+                case 5:
+                    line = ap.maisRealizada() + "\n";
+                    view.printAtividades(line);
+                    break;
+                case 6:
+                    view.msg("Insira o Nickname:");
+                    line = sc.nextLine();
+                    try {
+                        u = ap.getUtilizador(line);
+                        double km = ap.quantoKmsUtilizadorSempre(u);
+                        view.printUtilizadorEstatisticaKM(u.getNick(), km);
+                    } catch (UtilizadorNaoExisteException e) {
+                        view.msg(e.getMessage());
+                    } 
+                    break;
+                case 7:
+                    view.msg("Qual é a data de inicio ? (ano-mes-dia)");
+                    line= sc.nextLine();  
+                    data = line.split("-");
+                    inicio = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), 
+                                        Integer.parseInt(data[2]));
+                    view.msg("Qual é a data de fim ? (ano-mes-dia)");
+                    line= sc.nextLine();
+                    fim = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), 
+                                        Integer.parseInt(data[2]));
+                    view.msg("Insira o Nickname:");
+                    line = sc.nextLine();
+                    try {
+                        u = ap.getUtilizador(line);
+                        double km = ap.quantoKmsUtilizadorPeriodo(u,inicio,fim);
+                        view.printUtilizadorEstatisticaKM(u.getNick(), km);
+                    } catch (UtilizadorNaoExisteException e) {
+                        view.msg(e.getMessage());
+                    }
+                    break;
+                case 8:
+                    view.msg("Insira o Nickname:");
+                    line = sc.nextLine();
+                    try {
+                        u = ap.getUtilizador(line);
+                        double alt = ap.quantoAltUtilizadorSempre(u);
+                        view.printUtilizadorEstatisticaAL(u.getNick(), alt);
+                    } catch (UtilizadorNaoExisteException e) {
+                        view.msg(e.getMessage());
+                    } 
+                    break;
+                case 9:
+                    view.msg("Qual é a data de inicio ? (ano-mes-dia)");
+                    line= sc.nextLine();  
+                    data = line.split("-");
+                    inicio = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), 
+                                        Integer.parseInt(data[2]));
+                    view.msg("Qual é a data de fim ? (ano-mes-dia)");
+                    line= sc.nextLine();
+                    fim = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), 
+                                        Integer.parseInt(data[2]));
+                    view.msg("Insira o Nickname:");
+                    line = sc.nextLine();
+                    try {
+                        u = ap.getUtilizador(line);
+                        double alt = ap.quantoAltUtilizadorPeriodo(u,inicio,fim);
+                        view.printUtilizadorEstatisticaAL(u.getNick(), alt);
+                    } catch (UtilizadorNaoExisteException e) {
+                        view.msg(e.getMessage());
+                    }
+                    break;
+                case 10:
+                    p = ap.qualMaisExigente();
+                    view.printPlanosTreino(p.getNomePlano());
                     break;
                 
             }
@@ -559,9 +961,9 @@ public class Controller
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
                                     atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
 
-                                } catch (AtividadeNaoExisteException e) {
+                                } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
                                 }
                             break;
@@ -578,9 +980,9 @@ public class Controller
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
                                     atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
 
-                                } catch (AtividadeNaoExisteException e) {
+                                } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
                                 }
                             break;
@@ -597,9 +999,9 @@ public class Controller
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
                                     atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
 
-                                } catch (AtividadeNaoExisteException e) {
+                                } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
                                 }
                             break;
@@ -616,9 +1018,9 @@ public class Controller
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
                                     atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
 
-                                } catch (AtividadeNaoExisteException e) {
+                                } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
                                 }
                             break;
@@ -635,9 +1037,9 @@ public class Controller
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
                                     atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
 
-                                } catch (AtividadeNaoExisteException e) {
+                                } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
                                 }
                             break;
@@ -654,9 +1056,9 @@ public class Controller
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
                                     atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
 
-                                } catch (AtividadeNaoExisteException e) {
+                                } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
                                 }
                             break;
@@ -673,9 +1075,9 @@ public class Controller
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
                                     atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
 
-                                } catch (AtividadeNaoExisteException e) {
+                                } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
                                 }
                             break;
@@ -692,9 +1094,9 @@ public class Controller
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
                                     atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
 
-                                } catch (AtividadeNaoExisteException e) {
+                                } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
                                 }
                             break;
@@ -711,9 +1113,9 @@ public class Controller
                                     ap.insereAtividade(atividade_nova);
                                     view.printAtividadeCriada(atividade_nova.getCodigo(),atividade_nova.getNome(),
                                     atividade_nova.getDescricao(),atividade_nova.getDuracao(),
-                                    atividade_nova.caracteristicasExtra(),atividade_nova.getDataRealizada());
+                                    atividade_nova.caracteristicasExtra(), atividade_nova.getIsHard(), atividade_nova.getDataRealizada());
 
-                                } catch (AtividadeNaoExisteException e) {
+                                } catch (AtividadeExisteException e) {
                                     view.msg(e.getMessage());
                                 }
                             break;
@@ -728,18 +1130,18 @@ public class Controller
                     all = line.split(",");
                     String[] data_execucao = all[1].split("-");
                     planoTreino_novo = new PlanoTreino(all[0], LocalDate.of(Integer.parseInt(data_execucao[0]), Integer.parseInt(data_execucao[1]), 
-                                          Integer.parseInt(data_execucao[2])), Integer.parseInt(all[2]));
+                                          Integer.parseInt(data_execucao[2])), Integer.parseInt(all[2]), 0, "");
                     try {
                             ap.inserePlanoTreino(planoTreino_novo);
                             view.printPlanoTreinoCriado(planoTreino_novo.getNomePlano(), 
                     planoTreino_novo.getData(),planoTreino_novo.getIteracoes());
-                        } catch (PlanoTreinoNaoExisteException e) {
+                        } catch (PlanoTreinoExisteException e) {
                             view.msg(e.getMessage());
                         }
                     view.msg("Lista Atividades: ");
                     view.printAtividades(ap.toStringAtividades());
                     view.msg("Que atividades quer no Novo Plano ?:D");
-                    view.msg("Codgido da Atividade1,Codigo da Atividade2...");
+                    view.msg("Codigo da Atividade1,Codigo da Atividade2...");
                     line = sc.nextLine();
                     all = line.split(",");
                     for (int i=0; i<all.length; i++)

@@ -44,12 +44,20 @@ public abstract class  Utilizador implements Serializable
         this.total_calorias =0;
         this.historico_atividades = new ArrayList<>();
         this.planos_treino = new ArrayList<>();
-        
-        
+        this.mCorrida = null;
+        this.mRemo = null;
+        this.mPatinagem = null;
+        this.mAbdominal = null;
+        this.mAlongamento = null;
+        this.mLevantaPeso = null;
+        this.mExtensaoPernas = null;
+        this.mFlexoes = null;
     }
 
     public Utilizador(String nick, String pass, String nome, String email, String genero,
-    LocalDate data, double altura, double peso, int freq_cardiaca, double calorias, List<Atividade> historico, List<PlanoTreino> planos) 
+    LocalDate data, double altura, double peso, int freq_cardiaca, double calorias, List<Atividade> historico, List<PlanoTreino> planos,
+    Atividade mc, Atividade mr, Atividade mp, Atividade mab , Atividade mal, Atividade mlp,
+    Atividade mep, Atividade mf) 
     {
         this.nickname = nick;
         this.password = pass;
@@ -64,7 +72,14 @@ public abstract class  Utilizador implements Serializable
         this.total_calorias = calorias;
         this.historico_atividades = historico;
         this.planos_treino = planos;
-        
+        this.mCorrida = mc;
+        this.mRemo = mr;
+        this.mPatinagem = mp;
+        this.mAbdominal = mab;
+        this.mAlongamento = mal;
+        this.mLevantaPeso = mlp;
+        this.mExtensaoPernas = mep;
+        this.mFlexoes = mf;
         
     }
 
@@ -83,6 +98,15 @@ public abstract class  Utilizador implements Serializable
         this.total_calorias = u.getTotalCalorias();
         this.historico_atividades = u.getHistorico();
         this.planos_treino = u.getPlanosTreino();
+        this.mCorrida = u.getMelhorCorrida();
+        this.mRemo = u.getMelhorRemo();
+        this.mPatinagem = u.getMelhorPatinagem();
+        this.mAbdominal = u.getMelhorAbdominal();
+        this.mAlongamento = u.getMelhorAlongamento();
+        this.mLevantaPeso = u.getMelhorLevantaPeso();
+        this.mExtensaoPernas = u.getMelhorExtensaoPernas();
+        this.mFlexoes = u.getMelhorFlexoes();
+
     }
     
     //calcular fator
@@ -141,6 +165,47 @@ public abstract class  Utilizador implements Serializable
     public double getTotalCalorias() 
     {
         return this.total_calorias;
+    }
+    
+    //melhores atividades de um utilizador
+    public Atividade getMelhorCorrida()
+    {
+        return this.mCorrida;
+    }
+    
+    public Atividade getMelhorRemo()
+    {
+        return this.mRemo;
+    }
+    
+    public Atividade getMelhorPatinagem()
+    {
+        return this.mPatinagem;
+    }
+    
+    public Atividade getMelhorAbdominal()
+    {
+        return this.mAbdominal;
+    }
+    
+    public Atividade getMelhorAlongamento()
+    {
+        return this.mAlongamento;
+    }
+    
+    public Atividade getMelhorLevantaPeso()
+    {
+        return this.mLevantaPeso;
+    }
+    
+    public Atividade getMelhorExtensaoPernas()
+    {
+        return this.mExtensaoPernas;
+    }
+    
+    public Atividade getMelhorFlexoes()
+    {
+        return this.mFlexoes;
     }
     
     public List<Atividade> getHistorico() 
@@ -236,6 +301,47 @@ public abstract class  Utilizador implements Serializable
                 
     }
     
+    //set das melhores atividades
+    public void setMelhorCorrida(Atividade m)
+    {
+        this.mCorrida = m;
+    }
+    
+    public void setMelhorRemo(Atividade m)
+    {
+        this.mRemo = m;
+    }
+    
+    public void setMelhorPatinagem(Atividade m)
+    {
+        this.mPatinagem = m;
+    }
+    
+    public void setMelhorAbdominal(Atividade m)
+    {
+        this.mAbdominal = m;
+    }
+    
+    public void setMelhorAlongamento(Atividade m)
+    {
+        this.mAlongamento = m;
+    }
+    
+    public void setMelhorLevantaPeso(Atividade m)
+    {
+        this.mLevantaPeso = m;
+    }
+    
+    public void setMelhorExtensaoPernas(Atividade m)
+    {
+        this.mExtensaoPernas = m;
+    }
+    
+    public void setMelhorFlexoes(Atividade m)
+    {
+        this.mFlexoes = m;
+    }
+    
     public void addPlanoU(PlanoTreino pt)
     {
         this.planos_treino.add(pt.clone());
@@ -246,59 +352,29 @@ public abstract class  Utilizador implements Serializable
         this.historico_atividades.add(ar.clone());
     }
     
+    public void realizaAtividade(Atividade a, Utilizador u, LocalDate d, int freq_atv)
+    {   
+        //adiciona data e frequencia atividade à atividade
+        a.setDataRealizada(d);
+        a.setFreqCardiaAtiviade(freq_atv);
+        a.setCaloriasGastasAtividade(a.calcularCalorias(u));
+        
+        //adiciona ao contador de calorias do utilizador as calorias da atividade
+        addCaloriasGastas(a.getCaloriasGastasAtividade());
+        
+        //adiciona ao historico
+        addHistoricoU(a);
+    
+        
+    }
+    
     public abstract Utilizador clone();
     
     public abstract String getTipoUtilizador();
 
     public abstract String caracteristicasUExtra();
     
-    public abstract void realizaAtividade(Atividade a, Utilizador u, LocalDate d, int freq_atv);
-    /*
-    {
-        this.historico_atividades.add(a.clone());
     
-        if (this.historico_atividades.containsKey(a.getCodigo()))
-        {
-            this.historico_atividades.get(a.getCodigo()).setDataRealizada(d);
-        }
-        
-        //alterar a data
-        //this.historico_atividades.get(a.getCodigo()).setDataRealizada(d);
-    */   
-    /*
-    public void adicionaPlanoTreino(PlanoTreino pt) throws PlanoTreinoExisteException {
-        if (this.planos_treino.containsKey(pt.getNomePlano()))
-            throw new PlanoTreinoExisteException("Plano de Treino ja adicionado");
-        else
-            this.planos_treino.put(pt.getNomePlano(), pt.clone());
-
-    }
-    */
-    // verificar se é necessaria
-    /*
-    public void setPlanoTreino(PlanoTreino pt) throws PlanoTreinoExisteException {
-        if (this.planos_treino.containsKey(pt.getNomePlano()))
-            throw new PlanoTreinoExisteException("Plano de Treino ja adicionado");
-        else
-            this.planos_treino.put(pt.getNomePlano(), pt.clone());
-    }
-
-    /*
-    public static Utilizador parse(String linha) 
-    {
-      String[] campo = linha.split(",");
-      if (campo.length != 9) 
-      {
-        throw new IllegalArgumentException("Input inválido.");
-      }
-      String[] data_nascimento = campo[5].split("-");
-      
-      return new Utilizador(Integer.parseInt(campo[0]), campo[1], campo[2], campo[3], 
-      campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
-      Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
-      Integer.parseInt(campo[8]));
-    }
-    */
     @Override
     public String toString() 
     {
