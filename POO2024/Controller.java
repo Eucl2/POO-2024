@@ -70,7 +70,7 @@ public class Controller
                                       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
                                       Integer.parseInt(campo[8]), campo[9], campo[10], 0, new ArrayList<>() , new ArrayList<>(),
-                                      null, null, null, null, null, null, null, null);
+                                      null, null, null, null, null, null, null, null, null);
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -96,7 +96,7 @@ public class Controller
                                       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
                                       Integer.parseInt(campo[8]), Double.parseDouble(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>(),
-                                      null, null, null, null, null, null, null, null);
+                                      null, null, null, null, null, null, null, null, null);
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -122,7 +122,7 @@ public class Controller
                                           campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
                                           Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
                                           Integer.parseInt(campo[8]), Integer.parseInt(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>(),
-                                          null, null, null, null, null, null, null, null);
+                                          null, null, null, null, null, null, null, null, null);
                             
                             try {
                                 ap.insereUtilizador(novoU);
@@ -255,11 +255,13 @@ public class Controller
                                     Integer.parseInt(data[2]));
                     view.msg("Que frequencia Cardiaca teve durante a Atividade? :D");
                     line3 = sc.nextLine();
+                    view.msg("Quanto tempo demorou? (minutos) :D");
+                    line2 = sc.nextLine();
                     try 
                     {
                         Atividade a = ap.getAtividade(Integer.valueOf(line));
                         Utilizador uAtual = ap.getUtilizador(nick);
-                        ap.insereAtividadeNoHistoricoUtilizador(uAtual,a,Integer.valueOf(line3),dia);
+                        ap.insereAtividadeNoHistoricoUtilizador(uAtual,a,Integer.valueOf(line3),dia,Integer.valueOf(line2));
                         view.printAtividadeRealizada(uAtual.getNome(), dia, 
                             a.getCodigo(), a.getNome());
                     } 
@@ -954,8 +956,8 @@ public class Controller
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Patinagem(Integer.parseInt(all[0]),all[1],
-                                                        all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        all[5], null, 0, 0, Boolean.parseBoolean(all[5]));
+                                                        all[2],0,Double.parseDouble(all[3]),
+                                                        all[4], null, 0, 0, Boolean.parseBoolean(all[5]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -973,8 +975,8 @@ public class Controller
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Remo(Integer.parseInt(all[0]),all[1],
-                                                        all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        all[5], null, 0, 0, Boolean.parseBoolean(all[6]));
+                                                        all[2],0,Double.parseDouble(all[3]),
+                                                        all[4], null, 0, 0, Boolean.parseBoolean(all[5]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -992,8 +994,8 @@ public class Controller
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Corrida(Integer.parseInt(all[0]),all[1],
-                                                        all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        Double.parseDouble(all[5]),all[6], null, 0, 0, Boolean.parseBoolean(all[7]));
+                                                        all[2],0,Double.parseDouble(all[3]),
+                                                        Double.parseDouble(all[4]),all[5], null, 0, 0, Boolean.parseBoolean(all[6]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -1011,8 +1013,8 @@ public class Controller
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Bicicleta(Integer.parseInt(all[0]),all[1],
-                                                        all[2],Integer.parseInt(all[3]),Double.parseDouble(all[4]),
-                                                        Double.parseDouble(all[5]),all[6], null, 0, 0, Boolean.parseBoolean(all[7]));
+                                                        all[2],0,Double.parseDouble(all[3]),
+                                                        Double.parseDouble(all[4]),all[5], null, 0, 0, Boolean.parseBoolean(all[6]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -1030,8 +1032,8 @@ public class Controller
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Abdominais(Integer.parseInt(all[0]),all[1],
-                                                        all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        null, 0, 0, Boolean.parseBoolean(all[5]));
+                                                        all[2],0,Integer.parseInt(all[3]),
+                                                        null, 0, 0, Boolean.parseBoolean(all[4]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -1049,8 +1051,8 @@ public class Controller
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Alongamentos(Integer.parseInt(all[0]),all[1],
-                                                        all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        null, 0, 0, Boolean.parseBoolean(all[5]));
+                                                        all[2],0,Integer.parseInt(all[3]),
+                                                        null, 0, 0, Boolean.parseBoolean(all[4]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -1068,8 +1070,8 @@ public class Controller
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new Flexoes(Integer.parseInt(all[0]),all[1],
-                                                        all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        null, 0, 0, Boolean.parseBoolean(all[5]));
+                                                        all[2],0,Integer.parseInt(all[3]),
+                                                        null, 0, 0, Boolean.parseBoolean(all[4]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -1087,8 +1089,8 @@ public class Controller
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new LevantaPeso(Integer.parseInt(all[0]),all[1],
-                                                        all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        Double.parseDouble(all[5]),null, 0, 0, Boolean.parseBoolean(all[6]));
+                                                        all[2],0,Integer.parseInt(all[3]),
+                                                        Double.parseDouble(all[4]),null, 0, 0, Boolean.parseBoolean(all[5]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -1106,8 +1108,8 @@ public class Controller
                             line = sc.nextLine();
                             all = line.split(",");
                             atividade_nova = new ExtensaoPernas(Integer.parseInt(all[0]),all[1],
-                                                        all[2],Integer.parseInt(all[3]),Integer.parseInt(all[4]),
-                                                        Double.parseDouble(all[5]),null, 0, 0, Boolean.parseBoolean(all[6]));
+                                                        all[2],0,Integer.parseInt(all[3]),
+                                                        Double.parseDouble(all[4]),null, 0, 0, Boolean.parseBoolean(all[5]));
                             
                             try {
                                     ap.insereAtividade(atividade_nova);
@@ -1134,7 +1136,7 @@ public class Controller
                     try {
                             ap.inserePlanoTreino(planoTreino_novo);
                             view.printPlanoTreinoCriado(planoTreino_novo.getNomePlano(), 
-                    planoTreino_novo.getData(),planoTreino_novo.getIteracoes());
+                        planoTreino_novo.getData(),planoTreino_novo.getIteracoes());
                         } catch (PlanoTreinoExisteException e) {
                             view.msg(e.getMessage());
                         }

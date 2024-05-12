@@ -77,8 +77,8 @@ public class Corrida extends Atividade
         String[] campos = input.split(",");
 
         return new Corrida(Integer.parseInt(campos[0]),campos[1],
-        campos[2],Integer.parseInt(campos[3]),Double.parseDouble(campos[4]),
-        Double.parseDouble(campos[5]), campos[6], null, 0, 0, Boolean.parseBoolean(campos[7]));
+        campos[2],0,Double.parseDouble(campos[3]),
+        Double.parseDouble(campos[4]), campos[5], null, 0, 0, Boolean.parseBoolean(campos[6]));
     }
     
     public String getTipoAtividade()

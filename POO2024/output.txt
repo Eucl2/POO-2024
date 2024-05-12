@@ -1,22 +1,35 @@
-Profissional:6,teste6,Ana,ana.silva@gmail.com,F,2000-05-12,1.50,69.6,70,15,BodyBuilder
-Profissional:7,teste6,Ana,ana.silva@gmail.com,F,1966-05-12,1.50,69.6,70,15,Remo
-Amador:1,teste1,Joana,joana.silva@gmail.com,F,2000-07-13,1.81,64.9,50,Iniciante,Corrida
-Amador:2,teste2,Alberto,alberto.silva@gmail.com,M,2000-08-16,1.61,65.9,60,Avancado,Bicicleta
-Amador:3,teste3,Maria,maria.silva@gmail.com,F,2000-09-25,1.41,66.9,90,Intermedio,Remo
-Ocasional:5,teste5,Ana,ana.silva@gmail.com,F,2000-05-12,1.50,69.6,70,4,Bem Estar
-Corrida:31,Corrida Matinal,Pequena corrida para iniciantes,2,10,5,6 voltas ao parque da cidade,false
-Remo:21,Paceio de Barco,Para iniciantes,2,15.3, tres voltas ao lago,true
-Patinagem:11,Paceio de Patins,Para iniciantes,2,20, tres voltas ao ringue,true
-Bicicleta:41,Bicicleta de Monte,Para iniciantes,2,20,5,7 voltas pelo monte,false
-Abdominais:51,Abs de verao,Para iniciantes,2,30,false
-LevantaPeso:71,Biceps,Para iniciantes,2,20,12,false
-Alongamentos:61,Yoga,Para iniciantes,2,40,false
-ExtensaoPernas:81,Leg Day,Para iniciantes,2,20,50,true
-Flexoes:91,Projeto Verao,Para iniciantes,3,60,true
+Profissional:Anne,123,Ana,ana.silva@gmail.com,F,2000-05-12,1.96,83.6,70,15,BodyBuilder
+Profissional:Anasilva,1234,Ana,ana.coelho@sapo.com,F,1966-05-12,1.80,69.6,70,15,Remo
+Amador:josilva,1234567,Joana,joana.mendes@gmail.com,F,2002-07-13,1.81,64.9,50,Iniciante,Corrida
+Amador:asilva,123456,Alberto,alberto.caeiro@gmail.com,M,2000-08-16,1.71,65.9,60,Avancado,Bicicleta
+Amador:mary,1234,Maria,maria.fernandes@outlook.com,F,2000-09-25,1.41,66.9,90,Intermedio,Remo
+Ocasional:paula01,1234567,Paula,paula.magalhães@yahoo.com,F,2001-05-12,1.50,69.6,70,4,Conviver e conhecer novas atividades
+Ocasional:eins02,123456,Tiago,tiago.einstein@yahoo.com,M,2002-03-27,1.86,78.9,70,4,Manter a saude mental
+Corrida:11,Corrida Matinal,Pequena corrida para iniciantes,5,2,três voltas ao parque da cidade,false
+Corrida:110,Maratona,Maratona do Porto,42,2,percurso circular entre as cidades do Porto e Gaia,true
+Remo:21,Treino de velocidade,Para melhorar a velocidade,15.3,percurso marcado no rio com boias,true
+Remo:210,Introducao ao remo,introducao ao remo para iniciantes,10,percurso marcado no rio guiado por treinadores do clube de treino,false
+Patinagem:31,Passeio de Patins,Para iniciantes,2, tres voltas ao ringue,false
+Bicicleta:41,BTT,Treino de preparação para o campeonato de BTT,60,8,nove voltas pelo percurso com fitas azuis,true
+Bicicleta:410,Treino de estrada,Treino para praticantes de ciclismo de estrada,20,5,percurso circular pelas estradas do distrito,false
+Abdominais:51,Treino de abdominais,Para iniciantes,40,false
+LevantaPeso:61,Biceps e triceps,Treino geral para biceps e triceps,20,15,false
+Alongamentos:71,Alongamento de flexores,Para preparar para um treino de pernas intenso,20,false
+ExtensaoPernas:81,Leg Day,Para iniciantes,20,50,false
+ExtensaoPernas:810,Extensao Pernas,Para corredores,20,85,false
+Flexoes:91,Treino de Flexoes,Para iniciantes,60,true
 PlanoTreino:Bem Estar,2024-05-29,5
-Bicicleta:41,Bicicleta de Monte,Para iniciantes,2,20,5,7 voltas pelo monte,false
-Alongamentos:61,Yoga,Para iniciantes,2,40,false
+Bicicleta:410,Treino de estrada,Treino para praticantes de ciclismo de estrada,20,5,percurso circular pelas estradas do distrito,false
+Alongamentos:71,Alongamento de flexores,Para preparar para um treino de pernas intenso,20,false
 PlanoTreino:Verao Incoming,2024-05-29,2
-ExtensaoPernas:81,Leg Day,Para iniciantes,2,20,50,true
-Flexoes:91,Projeto Verao,Para iniciantes,3,60,true
-Abdominais:51,Abs de verao,Para iniciantes,2,30,false
+ExtensaoPernas:81,Leg Day,Para iniciantes,20,50,false
+Flexoes:91,Treino de Flexoes,Para iniciantes,60,true
+Abdominais:51,Treino de abdominais,Para iniciantes,40,false
+PlanoTreino:Introducao a desportos,2024-05-30,3
+Patinagem:31,Passeio de Patins,Para iniciantes,2, tres voltas ao ringue,false
+Flexoes:91,Treino de Flexoes,Para iniciantes,60,true
+Remo:210,Introducao ao remo,introducao ao remo para iniciantes,10,percurso marcado no rio guiado por treinadores do clube de treino,false
+PlanoTreino:Plano de corrida,2024-05-30,3
+Alongamentos:71,Alongamento de flexores,Para preparar para um treino de pernas intenso,15,20,false
+ExtensaoPernas:810,Extensao Pernas,Para corredores,15,20,85,false
+Corrida:110,Maratona,Maratona do Porto,310,42,2,percurso circular entre as cidades do Porto e Gaia,true

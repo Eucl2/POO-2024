@@ -64,8 +64,8 @@ public class Patinagem extends Atividade
         String[] campos = input.split(",");
 
         return new Patinagem(Integer.parseInt(campos[0]),campos[1],
-        campos[2],Integer.parseInt(campos[3]),Double.parseDouble(campos[4]),
-        campos[5], null, 0, 0, Boolean.parseBoolean(campos[6]));
+        campos[2],0 ,Double.parseDouble(campos[3]),
+        campos[4], null, 0, 0, Boolean.parseBoolean(campos[5]));
     }
     
     public String getTipoAtividade()

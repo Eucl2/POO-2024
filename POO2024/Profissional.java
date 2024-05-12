@@ -23,11 +23,11 @@ public class Profissional extends Utilizador
     LocalDate data, double altura, double peso, int freq_cardiaca,
     double anose, String especi, double calorias,
     ArrayList<Atividade> historico, ArrayList<PlanoTreino> planos,
-    Atividade mc, Atividade mr, Atividade mp, Atividade mab , Atividade mal,
+    Atividade mc, Atividade mr, Atividade mb, Atividade mp, Atividade mab , Atividade mal,
     Atividade mlp, Atividade mep, Atividade mf) 
     {
         super(nick, pass, nome, email, genero, data, altura, peso,
-            freq_cardiaca, calorias, historico, planos, mc, mr, mp, mab, mal, mlp, mep, mf);
+            freq_cardiaca, calorias, historico, planos, mc, mr, mb, mp, mab, mal, mlp, mep, mf);
         this.experiencia = anose;
         this.especialidade = especi;
         setFatorMultiplicativo(this.calculaFator());
@@ -83,7 +83,7 @@ public class Profissional extends Utilizador
       campo[4], LocalDate.of(Integer.parseInt(data_nascimento[0]), Integer.parseInt(data_nascimento[1]), 
       Integer.parseInt(data_nascimento[2])),Double.parseDouble(campo[6]), Double.parseDouble(campo[7]), 
       Integer.parseInt(campo[8]), Double.parseDouble(campo[9]), campo[10], 0, new ArrayList<>() , new ArrayList<>(),
-      null, null, null, null, null, null, null, null);
+      null, null, null, null, null, null, null, null, null);
     }
     
     public String getTipoUtilizador()

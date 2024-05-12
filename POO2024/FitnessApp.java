@@ -144,11 +144,11 @@ public class FitnessApp implements Serializable
     }
     
     //registar atividade realizada
-    public void insereAtividadeNoHistoricoUtilizador(Utilizador u, Atividade a, int freq_atv, LocalDate d)
+    public void insereAtividadeNoHistoricoUtilizador(Utilizador u, Atividade a, int freq_atv, LocalDate d, int dur)
             throws UtilizadorNaoExisteException, AtividadeNaoExisteException {
 
         if (this.utilizadores.containsKey(u.getNick())) {
-            this.utilizadores.get(u.getNick()).realizaAtividade(a,u,d,freq_atv);
+            this.utilizadores.get(u.getNick()).realizaAtividade(a,u,d,freq_atv,dur);
 
         } else
             throw new UtilizadorNaoExisteException("Utilizador nao existe");
@@ -193,6 +193,7 @@ public class FitnessApp implements Serializable
             int idade =  (int) ChronoUnit.YEARS.between(u.getDataNascimento(),LocalDate.now());
             
             int freq_media = u.getFreqCardiaca();
+            
             for( PlanoTreino pt : u.getPlanosTreino())
             {
                 int contador = 0;
@@ -202,13 +203,18 @@ public class FitnessApp implements Serializable
                     {
                         //valor random para freq_atividade
                         int freq_atividade = rand.nextInt((220-idade) - freq_media + 1) + freq_media;
+                        
+                        //valor random para duracao
+                        int dur = rand.nextInt(180 - 10 + 1) + 10;
                         //verificar se posso usar o CompareTo
+                        
                         if ( (pt.getData()).compareTo(dia_atual) >= 0 && 
                         (pt.getData()).compareTo(data_final) <= 0)
                         {
                             //insereAtividadeNoHistoricoUtilizador(u,a,90,pt.getData());
-                            this.utilizadores.get(u.getNick()).realizaAtividade(a,u,pt.getData(),freq_atividade);
+                            this.utilizadores.get(u.getNick()).realizaAtividade(a,u,pt.getData(),freq_atividade,dur);
                         }
+                        
                     }
                     contador++;
                 } 
@@ -356,17 +362,17 @@ public class FitnessApp implements Serializable
                 Corrida c  = (Corrida) a;
                 maxkms += c.getDistancia();
             }
-            if (a instanceof Patinagem)
+            else if (a instanceof Patinagem)
             {
                 Patinagem p = (Patinagem) a;
                 maxkms += p.getDistancia();
             }
-            if ( a instanceof Remo)
+            else if ( a instanceof Remo)
             {
                 Remo r = (Remo) a;
                 maxkms += r.getDistancia();
             }
-            if( a instanceof Bicicleta)
+            else if( a instanceof Bicicleta)
             {
                 Bicicleta b = (Bicicleta) a;
                 maxkms += b.getDistancia();
@@ -390,17 +396,17 @@ public class FitnessApp implements Serializable
                     Corrida c  = (Corrida) a;
                     maxkms += c.getDistancia();
                 }
-                if (a instanceof Patinagem)
+                else if (a instanceof Patinagem)
                 {
                     Patinagem p = (Patinagem) a;
                     maxkms += p.getDistancia();
                 }
-                if ( a instanceof Remo)
+                else if ( a instanceof Remo)
                 {
                     Remo r = (Remo) a;
                     maxkms += r.getDistancia();
                 }
-                if( a instanceof Bicicleta)
+                else if( a instanceof Bicicleta)
                 {
                     Bicicleta b = (Bicicleta) a;
                     maxkms += b.getDistancia();
@@ -531,17 +537,18 @@ public class FitnessApp implements Serializable
     }
     
     //!
-    public void save() throws IOException {
-
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("FitnessApp.obj"));
+    public void save() throws IOException, FileNotFoundException {
+        FileOutputStream fos = new FileOutputStream("FitnessApp.obj");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(this);
         oos.flush();
         oos.close();
     }
     
     //!
-    public void load() throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("FitnessApp.obj"));
+    public void load() throws FileNotFoundException, IOException, ClassNotFoundException {
+        FileInputStream fis = new FileInputStream("FitnessApp.obj");
+        ObjectInputStream ois = new ObjectInputStream(fis);
         FitnessApp ap = (FitnessApp) ois.readObject();
         ois.close();
         this.utilizadores = ap.utilizadores;
